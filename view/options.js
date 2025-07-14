@@ -200,7 +200,7 @@ document.querySelector('#application').addEventListener('change', (e) => {
         document.querySelector('[data-panel="directories"]').style.display =
             client.clientCapabilities && client.clientCapabilities.includes('path') ? 'flex' : 'none';
 
-        document.querySelector('[data-panel="labels"]').style.display =
+        document.querySelector('[data-panel="label"]').style.display =
             isLabelsSupported(options.servers) || (client.clientCapabilities && client.clientCapabilities.includes('label')) ? 'flex' : 'none';
 
         if (client.id === 'deluge')
