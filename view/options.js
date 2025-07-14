@@ -1,254 +1,236 @@
-console.log("✅ options.js loaded");
-
+/* ========= Imports ========= */
 import {
-    clientList,
-    loadOptions,
-    saveOptions,
+  clientList,
+  loadOptions,
+  saveOptions,
 } from '../util.js';
 
-var options;
-
+/* ========= Globals ========= */
+let options;
+const saveButton   = document.querySelector('#save-options');
 const serverSelect = document.querySelector('#server-list');
-const saveButton = document.querySelector('#save-options');
 
-const isLabelsSupported = (servers) => servers.some((server) => {
-    const client = clientList.find((client) => client.id === server.application);
+/* ========= Helpers ========= */
+const $(q, ctx = document) => ctx.querySelector(q);
+const $all = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
 
-    if (client && client.clientCapabilities && client.clientCapabilities.includes('label')) {
-        return true;
-    }
-    return false;
+const isLabelsSupported = (servers) =>
+  servers.some((s) => {
+    const client = clientList.find((c) => c.id === s.application);
+    return client?.clientCapabilities?.includes('label');
+  });
+
+/* === Permission helper === */
+async function requestOriginPermission(hostname) {
+  // ensure scheme & trailing slash
+  const origin = hostname.match(/^https?:\/\//)
+    ? hostname
+    : `http://${hostname}`;
+  return new Promise((res) => {
+    chrome.permissions.request({ origins: [`${origin}*`] }, (granted) => res(granted));
+  });
+}
+
+/* ========= Persist ========= */
+async function persistOptions() {
+  // —— globals
+  options.globals.contextMenu        = ~~$('[name="contextmenu"]:checked').value;
+  options.globals.catchUrls          = $('#catchurls').checked;
+  options.globals.addPaused          = $('#addpaused').checked;
+  options.globals.addAdvanced        = $('#addadvanced').checked;
+  options.globals.enableNotifications= $('#enablenotifications').checked;
+
+  options.globals.labels = $('#labels').value
+    .split(/\n/g).map((l) => l.trim()).filter(Boolean);
+
+  // —— server‑specific
+  const idx      = ~~serverSelect.value;
+  const srvElm   = {
+    name       : $('#name').value,
+    application: $('#application').value,
+    hostname   : $('#hostname').value.trim().replace(/\/?$/, '/'),
+    username   : $('#username').value,
+    password   : $('#password').value,
+    directories: $('#directories').value.split(/\n/g).map((d) => d.trim()).filter(Boolean),
+    clientOptions: {},
+  };
+
+  // collect any dynamic client options
+  $all('[id^="clientOptions"]').forEach((el) => {
+    const key = el.id.match(/\[(.+?)]$/)[1];
+    srvElm.clientOptions[key] = el.checked;
+  });
+
+  /* ——— request host permission if we don't already have it ——— */
+  const granted = await requestOriginPermission(srvElm.hostname);
+  if (!granted) {
+    alert('Permission denied. Server not saved.');
+    return;
+  }
+
+  // save + UI
+  options.servers[idx] = srvElm;
+  saveOptions(options);
+  saveButton.setAttribute('disabled', 'true');
+}
+
+/* ========= Restore options/UI ========= */
+function restoreOptions() {
+  // enable save‑button dirty‑state tracking
+  $all('textarea, input, select:not(#server-list)').forEach((el) =>
+    el.addEventListener('input', () => saveButton.removeAttribute('disabled'), { passive: true })
+  );
+
+  // placeholders, i18n, populate client dropdown
+  $('#labels').placeholder      = 'Label\nAnother label';
+  $('#directories').placeholder = '/home/user/downloads\n/data/incomplete';
+
+  $all('[data-i18n]').forEach((el) =>
+    (el.textContent = chrome.i18n.getMessage(el.dataset.i18n))
+  );
+
+  clientList.forEach((c) => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.name;
+    $('#application').appendChild(opt);
+  });
+
+  loadOptions().then((o) => {
+    options = o;
+    $(`[name="contextmenu"][value="${options.globals.contextMenu}"]`).checked = true;
+    $('#catchurls').checked          = options.globals.catchUrls;
+    $('#addpaused').checked          = options.globals.addPaused;
+    $('#addadvanced').checked        = options.globals.addAdvanced;
+    $('#enablenotifications').checked= options.globals.enableNotifications;
+    $('#labels').value               = options.globals.labels.join('\n');
+
+    restoreServerList();
+    restoreServer(serverSelect.value);
+  });
+
+  saveButton.setAttribute('disabled', 'true');
+}
+
+function restoreServerList() {
+  const sel = serverSelect.value || 0;
+  serverSelect.innerHTML = '';
+  options.servers.forEach((s, id) => {
+    const o = document.createElement('option');
+    o.value = id; o.textContent = s.name;
+    serverSelect.appendChild(o);
+  });
+  const add = document.createElement('option');
+  add.value = 'add'; add.textContent = chrome.i18n.getMessage('addServerAction');
+  serverSelect.appendChild(add);
+  serverSelect.value = sel;
+}
+
+function restoreServer(id) {
+  const s = options.servers[~~id];
+  serverSelect.value = id;
+  options.globals.currentServer = ~~id;
+  saveOptions(options);          // persist current index
+
+  $('#name').value        = s.name;
+  $('#application').value = s.application;
+  $('#hostname').value    = s.hostname;
+  $('#username').value    = s.username;
+  $('#password').value    = s.password;
+  $('#directories').value = s.directories.join('\n');
+
+  $('#application').dispatchEvent(new Event('change'));
+
+  // enable / disable remove button
+  $('#remove-server').toggleAttribute('disabled', options.servers.length <= 1);
+}
+
+/* ========= Server list edits ========= */
+function addServer() {
+  options.servers.push({
+    name: 'New server',
+    application: clientList[0].id,
+    hostname: '',
+    username: '',
+    password: '',
+    directories: [],
+    clientOptions: {}
+  });
+  restoreServerList();
+  restoreServer(options.servers.length - 1);
+  saveButton.removeAttribute('disabled');
+}
+
+function removeServer(id) {
+  if (options.servers.length > 1) options.servers.splice(~~id, 1);
+  if (options.globals.currentServer === ~~id) options.globals.currentServer = 0;
+  restoreServerList(); restoreServer(0); saveButton.removeAttribute('disabled');
+}
+
+/* ========= Validation ========= */
+const validURL = (str) => {
+  try { new URL(str.match(/^https?:\/\//) ? str : `http://${str}`); return true; }
+  catch { return false; }
+};
+
+/* ========= Dynamic UI handlers ========= */
+$('#application').addEventListener('change', (e) => {
+  const c = clientList.find((cl) => cl.id === e.target.value);
+  if (!c) return;
+
+  $('#hostname').placeholder = c.addressPlaceholder;
+  if (!$('#hostname').value || clientList.some((cl) => cl.addressPlaceholder === $('#hostname').value))
+    $('#hostname').value = c.addressPlaceholder;
+
+  // safe panel toggles
+  const show = (sel, on) => { const p = $(`[data-panel="${sel}"]`); if (p) p.style.display = on ? 'flex' : 'none'; };
+
+  show('directories', c.clientCapabilities?.includes('path'));
+  show('label', isLabelsSupported(options.servers) || c.clientCapabilities?.includes('label'));
+
+  $('#username').toggleAttribute('disabled', c.id === 'deluge');
+
+  /* build client‑specific options */
+  const panel = $('[data-panel="clientOptions"]');
+  panel.innerHTML = '';                 // clear
+  panel.style.display = c.clientOptions ? 'flex' : 'none';
+
+  c.clientOptions?.forEach((opt) => {
+    const wrap   = document.createElement('div');
+    wrap.className= 'panel-formElements-item browser-style';
+
+    const chk    = document.createElement('input');
+    chk.type     = 'checkbox';
+    chk.id       = `clientOptions[${opt.name}]`;
+    chk.checked  = !!options.servers[options.globals.currentServer].clientOptions[opt.name];
+    chk.addEventListener('input', () => saveButton.removeAttribute('disabled'), { passive: true });
+
+    const lbl    = document.createElement('label');
+    lbl.htmlFor  = chk.id;
+    lbl.textContent = opt.description;
+
+    wrap.append(chk, lbl);
+    panel.appendChild(wrap);
+  });
 });
 
-const persistOptions = () => {
-    options.globals.contextMenu = ~~document.querySelector('[name="contextmenu"]:checked').value;
-    options.globals.catchUrls = document.querySelector('#catchurls').checked;
-    options.globals.addPaused = document.querySelector('#addpaused').checked;
-    options.globals.addAdvanced = document.querySelector('#addadvanced').checked;
-    options.globals.enableNotifications = document.querySelector('#enablenotifications').checked;
+/* ========= Live hostname validation ========= */
+$('#hostname').addEventListener('input', (e) => {
+  const txt = e.target.value.trim().replace(/\/?$/, '/');
+  e.target.style.borderColor = validURL(txt) ? '' : 'red';
+});
 
-    const labels = document.querySelector('#labels').value.split(/\n/g) || [];
-    options.globals.labels = labels.map((label) => label.trim()).filter((label) => label.length);
+/* ========= Event wiring ========= */
+serverSelect.addEventListener('change', (e) =>
+  e.target.value === 'add' ? addServer() : restoreServer(e.target.value)
+);
+$('#remove-server').addEventListener('click', (e) => { e.preventDefault(); removeServer(serverSelect.value); });
+$('#save-options').addEventListener('click', async (e) => {
+  e.preventDefault();
+  const host = $('#hostname').value.trim().replace(/\/?$/, '/');
+  if (!validURL(host)) return alert('Server address is invalid');
+  await persistOptions();
+  restoreServerList();
+});
 
-    const directories = document.querySelector('#directories').value.split(/\n/g) || [];
-
-    let clientOptions = {};
-    Array.from(document.querySelectorAll('*[id^="clientOptions"]')).forEach((element) => {
-        clientOptions[element.id.match(/\[(.+?)]$/)[1]] = element.checked;
-    });
-
-    options.servers[~~serverSelect.value] = {
-        name: document.querySelector('#name').value,
-        application: document.querySelector('#application').value,
-        hostname: document.querySelector('#hostname').value.replace(/\s+/, '').replace(/\/?$/, '/'),
-        username: document.querySelector('#username').value,
-        password: document.querySelector('#password').value,
-        directories: directories.map((directory) => directory.trim()).filter((directory) => directory.length),
-        clientOptions: clientOptions
-    };
-
-    saveOptions(options);
-
-    saveButton.setAttribute('disabled', 'true');
-}
-
-const restoreOptions = () => {
-    document.querySelectorAll('textarea, input, select:not(#server-list)').forEach((element) => {
-        element.addEventListener('input', () => {
-            saveButton.removeAttribute('disabled');
-        }, { passive: true });
-    });
-
-    document.querySelector('#labels').placeholder = 'Label\nAnother label'.replace(/\\n/g, '\n');
-    document.querySelector('#directories').placeholder = '/home/user/downloads\n/data/incomplete'.replace(/\\n/g, '\n');
-
-    document.querySelectorAll('[data-i18n]').forEach((element) => {
-        element.textContent = chrome.i18n.getMessage(element.getAttribute('data-i18n'));
-    });
-
-    clientList.forEach((client) => {
-        let element = document.createElement('option');
-        element.setAttribute('value', client.id);
-        element.textContent = client.name;
-        document.querySelector('#application').appendChild(element);
-    });
-
-    loadOptions().then((newOptions) => {
-        options = newOptions;
-
-        document.querySelector('[name="contextmenu"][value="' + options.globals.contextMenu + '"]').checked = true;
-        document.querySelector('#catchurls').checked = options.globals.catchUrls;
-        document.querySelector('#addpaused').checked = options.globals.addPaused;
-        document.querySelector('#addadvanced').checked = options.globals.addAdvanced;
-        document.querySelector('#enablenotifications').checked = options.globals.enableNotifications;
-
-        document.querySelector('#labels').value = options.globals.labels.join('\n');
-
-        restoreServerList();
-        restoreServer(serverSelect.value);
-    });
-
-    saveButton.setAttribute('disabled', 'true');
-}
-
-const restoreServerList = () => {
-    const selectedServer = serverSelect.value || 0;
-    serverSelect.innerHTML = '';
-
-    options.servers.forEach((server, id) => {
-        let element = document.createElement('option');
-        element.setAttribute('value', id.toString());
-        element.textContent = server.name;
-        serverSelect.appendChild(element);
-    });
-
-    let element = document.createElement('option');
-    element.setAttribute('value', 'add');
-    element.textContent = chrome.i18n.getMessage('addServerAction');
-    serverSelect.appendChild(element);
-
-    serverSelect.value = selectedServer;
-}
-
-const restoreServer = (id) => {
-    const server = options.servers[~~id];
-    serverSelect.value = id;
-    options.globals.currentServer = ~~id;
-    saveOptions(options);
-
-    document.querySelector('#name').value = server.name;
-    document.querySelector('#application').value = server.application;
-    document.querySelector('#hostname').value = server.hostname;
-    document.querySelector('#username').value = server.username;
-    document.querySelector('#password').value = server.password;
-    document.querySelector('#directories').value = server.directories.join('\n');
-
-    document.querySelector('#application').dispatchEvent(new Event('change'));
-
-    if (options.servers.length > 1)
-        document.querySelector('#remove-server').removeAttribute('disabled');
-    else
-        document.querySelector('#remove-server').setAttribute('disabled', 'true');
-}
-
-const addServer = () => {
-    options.servers.push({
-        name: 'New server',
-        application: clientList[0].id,
-        hostname: '',
-        username: '',
-        password: '',
-        directories: []
-    });
-
-    restoreServerList();
-    restoreServer(options.servers.length - 1);
-    persistOptions();
-}
-
-const removeServer = (id) => {
-    if (options.servers.length > 1)
-        options.servers.splice(~~id, 1);
-
-    if (options.globals.currentServer === ~~id)
-        options.globals.currentServer = 0;
-
-    restoreServerList();
-    restoreServer(0);
-    persistOptions();
-}
-
-const validateUrl = (str) => {
-    try {
-        const url = new URL(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
-
-serverSelect.addEventListener('change', (e) => e.target.value === 'add' ? addServer() : restoreServer(e.target.value));
 document.addEventListener('DOMContentLoaded', restoreOptions);
-document.querySelector('#remove-server').addEventListener('click', (e) => {
-    e.preventDefault();
-    removeServer(serverSelect.value);
-    restoreServerList();
-});
-document.querySelector('#save-options').addEventListener('click', (e) => {
-    e.preventDefault();
-
-    const hostname = document.querySelector('#hostname').value.replace(/\s+/, '').replace(/\/?$/, '/');
-
-    if (validateUrl(hostname)) {
-        persistOptions();
-        restoreServerList();
-    } else {
-        alert('Server address is invalid');
-    }
-});
-document.querySelector('#application').addEventListener('change', (e) => {
-    const client = clientList.find((client) => client.id === e.target.value);
-
-    if (client) {
-        document.querySelector('#hostname').setAttribute('placeholder', client.addressPlaceholder);
-
-        const currentAddress = document.querySelector('#hostname').value;
-
-        if (currentAddress === '' || clientList.find((client) => client.addressPlaceholder === currentAddress))
-            document.querySelector('#hostname').value = client.addressPlaceholder;
-
-        document.querySelector('[data-panel="directories"]').style.display =
-            client.clientCapabilities && client.clientCapabilities.includes('path') ? 'flex' : 'none';
-
-        document.querySelector('[data-panel="label"]').style.display =
-            isLabelsSupported(options.servers) || (client.clientCapabilities && client.clientCapabilities.includes('label')) ? 'flex' : 'none';
-
-        if (client.id === 'deluge')
-            document.querySelector('#username').setAttribute('disabled', 'true');
-        else
-            document.querySelector('#username').removeAttribute('disabled');
-
-        let clientOptionsPanel = document.querySelector('[data-panel="clientOptions"]');
-        Array.from(clientOptionsPanel.childNodes).forEach((element) =>
-            element.parentNode.removeChild(element));
-
-        if (client.clientOptions) {
-            clientOptionsPanel.style.display = 'flex'
-            const server = options.servers[options.globals.currentServer];
-
-            client.clientOptions.forEach((option) => {
-                let container = document.createElement('div');
-                container.className = 'panel-formElements-item browser-style';
-
-                let input = document.createElement('input');
-                input.type = 'checkbox';
-                input.id = 'clientOptions[' + option.name + ']';
-                input.checked = server.application === client.id ? !!server.clientOptions[option.name] : false;
-                input.addEventListener('input', () => {
-                    saveButton.removeAttribute('disabled');
-                }, { passive: true });
-                container.appendChild(input);
-
-                let label = document.createElement('label');
-                label.htmlFor = 'clientOptions[' + option.name + ']';
-                label.textContent = option.description;
-                container.appendChild(label);
-
-                clientOptionsPanel.appendChild(container);
-            });
-        } else {
-            clientOptionsPanel.style.display = 'none'
-        }
-    }
-});
-document.querySelector('#hostname').addEventListener('input', (e) => {
-    const hostname = e.target.value.replace(/\s+/, '').replace(/\/?$/, '/');
-
-    if (validateUrl(hostname))
-        document.querySelector('#hostname').setAttribute('style', '');
-    else
-        document.querySelector('#hostname').setAttribute('style', 'border-color:red;');
-});
-
-console.log("✅ options.js is loaded");
-
+console.log('✅ options.js loaded (with dynamic permissions)');
