@@ -227,7 +227,7 @@ const notify = (msg) => {
     {
       type: 'basic',
       iconUrl: chrome.runtime.getURL('icon/default-48.png'),
-      title: 'Torrent Clipper',
+      title: 'Purefusion TorrentBridge',
       message: msg
     },
     (id) => setTimeout(() => chrome.notifications.clear(id), 3000)
