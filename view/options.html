@@ -3,59 +3,19 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="extension.css">
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-      font-family: sans-serif;
-    }
-
-    .container {
-      max-width: 800px;
-      width: 100%;
-    }
-
-    .panel-formElements-item input[type="text"],
-    .panel-formElements-item input[type="password"],
-    .panel-formElements-item select,
-    .panel-formElements-item textarea {
-      width: 100%;
-      max-width: 500px;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-
-    .panel-formElements-item {
-      margin-bottom: 12px;
-    }
-
-    .panel-section-footer {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 20px;
-    }
-
-    .panel-section-footer-button {
-      min-width: 120px;
-    }
-  </style>
 </head>
 <body>
 
-<div class="container">
+<div class="options-container">
 
-  <section class="panel" id="options-section">
+  <section class="panel">
     <header class="panel-section panel-section-header">
       <span class="text-section-header" data-i18n="addonConfigurationTitle"></span>
     </header>
 
     <div class="panel-section panel-section-formElements">
       <div class="panel-formElements-item browser-style">
-        <label data-i18n="contextMenuOption"></label><br>
+        <label data-i18n="contextMenuOption"></label>
         <input type="radio" name="contextmenu" value="1" id="contextmenuDefault">
         <label for="contextmenuDefault" data-i18n="contextMenuDefaultOption"></label>
 
@@ -67,40 +27,40 @@
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <input type="checkbox" id="catchurls">
+        <input type="checkbox" id="catchurls" />
         <label for="catchurls" data-i18n="catchUrlsOption"></label>
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <input type="checkbox" id="addpaused">
+        <input type="checkbox" id="addpaused" />
         <label for="addpaused" data-i18n="addPausedOption"></label>
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <input type="checkbox" id="addadvanced">
+        <input type="checkbox" id="addadvanced" />
         <label for="addadvanced" data-i18n="addAdvancedOption"></label>
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <input type="checkbox" id="enablenotifications">
+        <input type="checkbox" id="enablenotifications" />
         <label for="enablenotifications" data-i18n="enableNotificationsOption"></label>
       </div>
 
-      <div class="panel-formElements-item browser-style" data-panel="labels">
-        <label for="labels" data-i18n="torrentLabelsOption"></label><br>
-        <textarea id="labels" class="browser-style"></textarea>
+      <div class="panel-formElements-item browser-style" style="align-items:flex-start;flex-direction:column" data-panel="labels">
+        <label for="labels" data-i18n="torrentLabelsOption"></label>
+        <textarea id="labels" class="browser-style" rows="2"></textarea>
       </div>
     </div>
   </section>
 
-  <section class="panel" id="options-section">
+  <section class="panel">
     <header class="panel-section panel-section-header">
       <span class="text-section-header" data-i18n="serverConfigurationTitle"></span>
     </header>
 
     <div class="panel-section panel-section-formElements">
       <div class="panel-formElements-item browser-style">
-        <label data-i18n="serverSelect"></label><br>
+        <label data-i18n="serverSelect"></label>
         <select id="server-list" class="browser-style"></select>
       </div>
     </div>
@@ -109,48 +69,46 @@
 
     <div class="panel-section panel-section-formElements">
       <div class="panel-formElements-item browser-style">
-        <label data-i18n="serverNameOption"></label><br>
-        <input type="text" id="name">
+        <label data-i18n="serverNameOption"></label>
+        <input type="text" id="name" />
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <label data-i18n="bittorrentClientOption"></label><br>
+        <label data-i18n="bittorrentClientOption"></label>
         <select id="application" class="browser-style"></select>
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <label data-i18n="serverAddressOption"></label><br>
-        <input type="text" id="hostname">
+        <label data-i18n="serverAddressOption"></label>
+        <input type="text" id="hostname" />
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <label data-i18n="usernameOption"></label><br>
-        <input type="text" id="username">
+        <label data-i18n="usernameOption"></label>
+        <input type="text" id="username" />
       </div>
 
       <div class="panel-formElements-item browser-style">
-        <label data-i18n="passwordOption"></label><br>
-        <input type="password" id="password">
+        <label data-i18n="passwordOption"></label>
+        <input type="password" id="password" />
       </div>
 
       <div class="panel-section-formElements" data-panel="clientOptions"></div>
 
-      <div class="panel-formElements-item browser-style" data-panel="directories">
-        <label for="directories" data-i18n="serverDirectoriesOption"></label><br>
-        <textarea id="directories" class="browser-style"></textarea>
+      <div class="panel-formElements-item browser-style" style="align-items:flex-start;flex-direction:column" data-panel="directories">
+        <label for="directories" data-i18n="serverDirectoriesOption"></label>
+        <textarea id="directories" class="browser-style" rows="2"></textarea>
       </div>
     </div>
   </section>
 
   <footer class="panel-section panel-section-footer">
     <button id="save-options" class="panel-section-footer-button default disabled" data-i18n="saveAction"></button>
-    <div class="panel-section-footer-separator"></div>
     <button id="remove-server" class="panel-section-footer-button disabled" data-i18n="removeAction"></button>
   </footer>
 
 </div>
 
-<!-- JS -->
 <script type="module" src="./options.js"></script>
 
 </body>
