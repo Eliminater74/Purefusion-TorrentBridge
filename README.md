@@ -1,7 +1,3 @@
-Absolutely! Here's a polished, professional, and GitHub-optimized `README.md` for your **Purefusion TorrentBridge** project:
-
----
-
 ````md
 # 🔗 Purefusion TorrentBridge
 
