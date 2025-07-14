@@ -11,7 +11,7 @@ const saveButton   = document.querySelector('#save-options');
 const serverSelect = document.querySelector('#server-list');
 
 /* ========= Helpers ========= */
-const $(q, ctx = document) => ctx.querySelector(q);
+const $ = (q, ctx = document) => ctx.querySelector(q);
 const $all = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
 
 const isLabelsSupported = (servers) =>
