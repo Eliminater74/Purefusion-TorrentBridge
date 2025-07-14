@@ -11,28 +11,35 @@ import {
   getURL
 } from './util.js';
 
+/* ========= Constants ========= */
+const APP_NAME = 'Purefusion TorrentBridge';
+const ICON_48  = 'icon/icon_48.png';
+
 /* ========= Globals ========= */
 let options = {};
 
-/* ========= Service-worker lifecycle logs ========= */
+/* ========= Service‑worker lifecycle logs ========= */
 chrome.runtime.onInstalled.addListener(() =>
-  console.log('[Torrent Clipper] service worker installed')
+  console.log(`[${APP_NAME}] service worker installed`)
 );
 chrome.runtime.onStartup.addListener(() =>
-  console.log('[Torrent Clipper] service worker started')
+  console.log(`[${APP_NAME}] service worker started`)
 );
 
 /* ========= Load user options, then build menus ========= */
-loadOptions().then((loaded) => {
-  options = loaded;
-  buildMenus();
-  registerListeners();
-});
+loadOptions()
+  .then((loaded) => {
+    options = loaded;
+    buildMenus();
+    registerListeners();
+  })
+  .catch((e) => console.error(`[${APP_NAME}] failed to load options`, e));
 
 /* ========= Helpers ========= */
 const isConfigured = () =>
-  options.servers?.[options.globals.currentServer]?.hostname !== '';
+  options.servers?.[options.globals.currentServer]?.hostname;
 
+/* ========= Context‑menu builders ========= */
 const buildMenus = () => {
   chrome.contextMenus.removeAll(() => {
     createDefaultMenu();
@@ -41,7 +48,6 @@ const buildMenus = () => {
   });
 };
 
-/* ========= Context-menu builders ========= */
 const createDefaultMenu = () => {
   chrome.contextMenus.create({
     id: 'catch-urls',
@@ -125,30 +131,35 @@ const registerListeners = () => {
 };
 
 const handleMenuClick = (info) => {
-  if (info.menuItemId === 'catch-urls') return toggleCatchUrls();
-  if (info.menuItemId === 'add-paused') return toggleAddPaused();
-
-  if (info.menuItemId === 'add-torrent')
-    return addTorrent(info.linkUrl, info.pageUrl);
-  if (info.menuItemId === 'add-torrent-paused')
-    return addTorrent(info.linkUrl, info.pageUrl, { paused: true });
-  if (info.menuItemId === 'add-rss-feed')
-    return addRssFeed(info.linkUrl || info.selectionText?.trim());
-
-  const serverSel = info.menuItemId.match(/^current-server-(\d+)$/);
-  if (serverSel) return setCurrentServer(Number(serverSel[1]));
+  switch (info.menuItemId) {
+    case 'catch-urls':
+      return toggleCatchUrls();
+    case 'add-paused':
+      return toggleAddPaused();
+    case 'add-torrent':
+      return addTorrent(info.linkUrl, info.pageUrl);
+    case 'add-torrent-paused':
+      return addTorrent(info.linkUrl, info.pageUrl, { paused: true });
+    case 'add-rss-feed':
+      return addRssFeed(info.linkUrl || info.selectionText?.trim());
+    default: {
+      const serverSel = info.menuItemId.match(/^current-server-(\d+)$/);
+      if (serverSel) setCurrentServer(Number(serverSel[1]));
+    }
+  }
 };
 
-/* ========= Core torrent / RSS handlers (unchanged) ========= */
+/* ========= Core torrent / RSS handlers ========= */
 const addTorrent = (url, referer = null, opts = {}) => {
   opts = { paused: false, path: null, label: null, ...opts };
-  const svrIdx =
-    opts.server !== undefined ? opts.server : options.globals.currentServer;
+  const svrIdx = opts.server ?? options.globals.currentServer;
   const svr = options.servers[svrIdx];
   const conn = getClient(svr);
 
   const done = (name) =>
-    notify(chrome.i18n.getMessage('torrentAddedNotification') + (name ? ' ' + name : ''));
+    notify(
+      chrome.i18n.getMessage('torrentAddedNotification') + (name ? ' ' + name : '')
+    );
 
   const fail = (e) =>
     notify(
@@ -193,17 +204,21 @@ const fetchTorrent = async (url, referer) => {
   if (referer) headers.append('Referer', referer);
 
   const res = await fetch(url, { headers });
-  if (!res.ok)
+  if (!res.ok) {
     throw new Error(
       chrome.i18n.getMessage(
         'torrentFetchError',
         `${res.status}: ${res.statusText}`
       )
     );
+  }
 
-  const ct = res.headers.get('content-type');
-  if (!/(application\/x-bittorrent|application\/octet-stream)/i.test(ct))
-    throw new Error(chrome.i18n.getMessage('torrentParseError', `Type: ${ct}`));
+  const ct = res.headers.get('content-type') || '';
+  if (!/(application\/x-bittorrent|application\/octet-stream)/i.test(ct)) {
+    throw new Error(
+      chrome.i18n.getMessage('torrentParseError', `Type: ${ct}`)
+    );
+  }
 
   const blob = await res.blob();
   return { torrent: blob, torrentName: await getTorrentName(blob) };
@@ -226,8 +241,8 @@ const notify = (msg) => {
   chrome.notifications.create(
     {
       type: 'basic',
-      iconUrl: chrome.runtime.getURL('icon/default-48.png'),
-      title: 'Purefusion TorrentBridge',
+      iconUrl: chrome.runtime.getURL(ICON_48),
+      title: APP_NAME,
       message: msg
     },
     (id) => setTimeout(() => chrome.notifications.clear(id), 3000)
