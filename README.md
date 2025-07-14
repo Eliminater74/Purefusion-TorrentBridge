@@ -120,17 +120,10 @@ Feel free to suggest:
 ## 📜 License
 
 MIT License
-© 2025 Michael Harrell (aka Eliminater74)
+© 2025 Eliminater74
 
 ```
 
 ---
 
 ### ✅ What to do next:
-- Save the above into your repo as `README.md`
-- Create a `screenshots/` folder and drop a couple PNGs:
-  - `context-menu.png`
-  - `notification.png`
-
-Want me to generate a GitHub-style badge row or contribution template too? Just say the word.
-```
