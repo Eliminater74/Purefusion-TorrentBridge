@@ -1,0 +1,174 @@
+{
+   "addAdvancedOption": {
+      "description": "Add torrents via advanced dialog",
+      "message": "Lisää kehittyneellä dialogilla"
+   },
+   "addAsPausedOption": {
+      "description": "Add as paused",
+      "message": "Lisää keskeytettynä"
+   },
+   "addPausedOption": {
+      "description": "Add as paused by default",
+      "message": "Lisää torrentit keskeytettynä"
+   },
+   "addRssFeedAction": {
+      "description": "Context menu action",
+      "message": "Lisää RSS-syöte"
+   },
+   "addServerAction": {
+      "description": "Add server action",
+      "message": "Lisää uusi palvelin"
+   },
+   "addTorrentAction": {
+      "description": "Context menu action",
+      "message": "Lisää torrent"
+   },
+   "addTorrentLabelAction": {
+      "description": "Context menu action",
+      "message": "Lisää torrent tunnisteella"
+   },
+   "addTorrentPathAction": {
+      "description": "Context menu action",
+      "message": "Lisää torrent polulla"
+   },
+   "addTorrentPausedAction": {
+      "description": "Context menu action",
+      "message": "Lisää torrent (Keskeytettynä)"
+   },
+   "addTorrentTitle": {
+      "description": "Add torrent",
+      "message": "Lisää torrentti"
+   },
+   "addonConfigurationTitle": {
+      "description": "Addon configuration",
+      "message": "Lisäosan asetukset"
+   },
+   "advancedModifier": {
+      "description": "Advanced modifier",
+      "message": "Edistynyt"
+   },
+   "apiError": {
+      "description": "Unknown response.",
+      "message": "Tuntematon vastaus. ($1)"
+   },
+   "bittorrentClientOption": {
+      "description": "Bittorrent client option",
+      "message": "Bittorrent-sovellus"
+   },
+   "catchUrlsOption": {
+      "description": "Catch torrent URLs",
+      "message": "Kaappaa torrent osoitteet"
+   },
+   "contextmenuOption": {
+      "description": "Show context menu",
+      "message": "Näytä kontekstivalikko"
+   },
+   "defaultOption": {
+      "description": "Default option",
+      "message": "Oletus"
+   },
+   "downloadLocationSelect": {
+      "description": "Download location select",
+      "message": "Lataushakemisto"
+   },
+   "enableNotificationsOption": {
+      "description": "Enable notifications option",
+      "message": "Näytä ilmoitukset"
+   },
+   "firstLastPiecePriorityOption": {
+      "description": "Client option",
+      "message": "Lataa ensin ensimmäinen ja viimeinen osa"
+   },
+   "labelSelect": {
+      "description": "Label select",
+      "message": "Tunniste"
+   },
+   "loginError": {
+      "description": "Login error.",
+      "message": "Sisäänkirjautuminen epäonnistui"
+   },
+   "noneOption": {
+      "description": "None option",
+      "message": "Ei valittu"
+   },
+   "passwordOption": {
+      "description": "Password option",
+      "message": "Salasana"
+   },
+   "removeAction": {
+      "description": "Remove action",
+      "message": "Poista palvelin"
+   },
+   "rssFeedAddError": {
+      "description": "Add error.",
+      "message": "RSS-syötteen lisäys epäonnistui. $1"
+   },
+   "rssFeedAddedNotification": {
+      "description": "Rss feed added notification.",
+      "message": "RSS-syöte lisätty"
+   },
+   "saveAction": {
+      "description": "Save action",
+      "message": "Tallenna"
+   },
+   "sequentialDownloadOption": {
+      "description": "Client option",
+      "message": "Lataa järjestyksessä"
+   },
+   "serverAddressOption": {
+      "description": "Server address option",
+      "message": "Palvelimen osoite"
+   },
+   "serverConfigurationTitle": {
+      "description": "Server configuration title",
+      "message": "Palvelimen asetukset"
+   },
+   "serverDirectoriesOption": {
+      "description": "Server directories option",
+      "message": "Lataushakemistot"
+   },
+   "serverNameOption": {
+      "description": "Server name option",
+      "message": "Palvelimen nimi"
+   },
+   "serverSelect": {
+      "description": "Server select",
+      "message": "Nykyinen palvelin"
+   },
+   "skipHashCheckOption": {
+      "description": "Client option",
+      "message": "Ohita tarkistelaskenta"
+   },
+   "torrentAddError": {
+      "description": "Add error.",
+      "message": "Torrentin lisäys epäonnistui. $1"
+   },
+   "torrentAddedNotification": {
+      "description": "Torrent added notification.",
+      "message": "Torrentti lisätty"
+   },
+   "torrentFetchError": {
+      "description": "Fetch error.",
+      "message": "Torrentin hakeminen epäonnistui. ($1)"
+   },
+   "torrentLabelAddError": {
+      "description": "Add error.",
+      "message": "Kategorian asetus epäonnistui."
+   },
+   "torrentLabelsOption": {
+      "description": "Label list option",
+      "message": "Tunnisteet"
+   },
+   "torrentParseError": {
+      "description": "Parse error.",
+      "message": "Torrentin lukeminen epäonnistui. ($1)"
+   },
+   "torrentUrl": {
+      "description": "Torrent url",
+      "message": "Torrentin url"
+   },
+   "usernameOption": {
+      "description": "Username option",
+      "message": "Käyttäjätunnus"
+   }
+}

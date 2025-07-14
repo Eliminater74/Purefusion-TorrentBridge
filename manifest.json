@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Purefusion TorrentBridge",
+  "version": "1.0.0",
+  "description": "Add torrent and magnet links to your Bittorrent client's web interface.",
+  "default_locale": "en",
+  "icons": {
+    "32": "icon/default-32.png",
+    "48": "icon/default-48.png",
+    "64": "icon/default-64.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "icon/default-32.png",
+      "48": "icon/default-48.png",
+      "64": "icon/default-64.png"
+    },
+    "default_title": "Purefusion TorrentBridge"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "cookies",
+    "contextMenus",
+    "notifications",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://192.168.1.4:8080/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "view/options.html",
+    "open_in_tab": true
+  }
+}
