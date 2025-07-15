@@ -1,111 +1,100 @@
-import {
-    clientList,
-    loadOptions,
-} from '../util.js';
+/* ========= Imports ========= */
+import { clientList, loadOptions } from '../util.js';
 
-var options;
+/* ========= Helpers ========= */
+const $    = (q, ctx = document) => ctx.querySelector(q);
+const $all = (q, ctx = document) => Array.from(ctx.querySelectorAll(q));
 
-const restoreOptions = () => {
-    const params = new URLSearchParams(window.location.search);
-    document.querySelector('#url').value = params.get('url');
+/* ========= Globals ========= */
+let options;
 
-    document.querySelectorAll('[data-i18n]').forEach((element) => {
-        element.textContent = chrome.i18n.getMessage(element.getAttribute('data-i18n'));
-    });
+/* ========= Init ========= */
+document.addEventListener('DOMContentLoaded', async () => {
+  await restoreOptions();
+});
 
-    loadOptions().then((loadedOptions) => {
-        options = loadedOptions;
+/* ========= Restore UI ========= */
+async function restoreOptions() {
+  const urlParams = new URLSearchParams(window.location.search);
+  $('#url').value = urlParams.get('url') || '';
 
-        document.querySelector('#addpaused').checked = options.globals.addPaused;
+  // i18n text
+  $all('[data-i18n]').forEach(el => {
+    el.textContent = chrome.i18n.getMessage(el.dataset.i18n);
+  });
 
-        options.servers.forEach((server, i) => {
-            let element = document.createElement('option');
-            element.setAttribute('value', i.toString());
-            element.textContent = server.name;
-            document.querySelector('#server').appendChild(element);
-        })
+  options = await loadOptions();
 
-        options.globals.labels.forEach((label) => {
-            let element = document.createElement('option');
-            element.setAttribute('value', label);
-            element.textContent = label;
-            document.querySelector('#labels').appendChild(element);
-        });
+  $('#addpaused').checked = options.globals.addPaused;
 
-        selectServer(options.globals.currentServer);
-    });
+  // Populate server list
+  options.servers.forEach((srv, idx) => {
+    $('#server').append(
+      new Option(srv.name, idx)
+    );
+  });
+
+  // Populate global labels
+  options.globals.labels.forEach(label => {
+    $('#labels').append(new Option(label, label));
+  });
+
+  // Pre‑select current server
+  selectServer(options.globals.currentServer);
 }
 
-const selectServer = (serverId) => {
-    document.querySelector('#server').value = serverId;
+/* ========= Capability helper ========= */
+const supports = (client, cap) =>
+  client?.clientCapabilities?.includes(cap);
 
-    const serverOptions = options.servers[serverId];
-    const client = clientList.find((client) => client.id === serverOptions.application);
+/* ========= Server switch handler ========= */
+function selectServer(serverId) {
+  const srvIdx  = Number(serverId);
+  $('#server').value = srvIdx;
 
-    const downloadLocationSelect = document.querySelector('#downloadLocation');
+  const srv    = options.servers[srvIdx];
+  const client = clientList.find(c => c.id === srv.application);
 
-    document.querySelectorAll('#downloadLocation > option').forEach((element, i) => {
-        if (i > 0)
-            element.remove();
-    });
+  /* --- Directories panel --- */
+  const dirSel = $('#downloadLocation');
+  dirSel.innerHTML = '<option value="">' + chrome.i18n.getMessage('defaultOption') + '</option>';
 
-    if (client.clientCapabilities && client.clientCapabilities.includes('path')) {
-        serverOptions.directories.forEach((directory) => {
-            let element = document.createElement('option');
-            element.setAttribute('value', directory);
-            element.textContent = directory;
-            downloadLocationSelect.appendChild(element);
-        });
+  if (supports(client, 'path')) {
+    srv.directories.forEach(dir => dirSel.append(new Option(dir, dir)));
+    dirSel.disabled = false;
+  } else {
+    dirSel.disabled = true;
+  }
 
-        downloadLocationSelect.disabled = false;
-    } else {
-        downloadLocationSelect.value = '';
-        downloadLocationSelect.disabled = true;
-    }
+  /* --- Labels panel --- */
+  const labelSel = $('#labels');
+  labelSel.disabled = !supports(client, 'label');
 
-    const labelSelect = document.querySelector('#labels');
-
-    if (client.clientCapabilities && client.clientCapabilities.includes('label')) {
-        labelSelect.disabled = false;
-    } else {
-        labelSelect.value = '';
-        labelSelect.disabled = true;
-    }
-
-    if (!client.clientCapabilities || !client.clientCapabilities.includes('paused'))
-        document.querySelector('#addpaused').disabled = true;
+  /* --- Paused checkbox --- */
+  $('#addpaused').disabled = !supports(client, 'paused');
 }
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
-document.querySelector('#server').addEventListener('change', (e) => selectServer(~~e.currentTarget.value));
-document.querySelector('#add-torrent').addEventListener('click', (e) => {
-    e.preventDefault();
+/* ========= Event bindings ========= */
+$('#server').addEventListener('change', e => selectServer(e.target.value));
 
-    const params = new URLSearchParams(window.location.search);
-    const label = document.querySelector('#labels').value;
-    const path = document.querySelector('#downloadLocation').value;
-    const addPaused = document.querySelector('#addpaused').checked;
-    const server = document.querySelector('#server').value;
+$('#add-torrent').addEventListener('click', e => {
+  e.preventDefault();
 
-    let options = {
-        paused: addPaused
-    };
+  const params = new URLSearchParams(window.location.search);
 
-    if (label.length)
-        options.label = label;
+  const opts = {
+    paused:   $('#addpaused').checked,
+    label:    $('#labels').value || undefined,
+    path:     $('#downloadLocation').value || undefined,
+    server:   $('#server').value ? Number($('#server').value) : undefined
+  };
 
-    if (path.length)
-        options.path = path;
+  chrome.runtime.sendMessage({
+    type: 'addTorrent',
+    url: params.get('url'),
+    referer: params.get('referer'),
+    options: opts
+  });
 
-    if (server)
-        options.server = ~~server;
-
-    chrome.runtime.sendMessage({
-        type: 'addTorrent',
-        url: params.get('url'),
-        referer: params.get('referer'),
-        options: options
-    });
-
-    window.close();
+  window.close();
 });

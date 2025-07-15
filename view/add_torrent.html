@@ -1,50 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="extension.css">
+    <meta charset="UTF-8">
+    <title>Purefusion TorrentBridge</title>
+    <link rel="stylesheet" href="extension.css">
 </head>
 <body>
 
 <header class="panel-section panel-section-header">
-    <div class="text-section-header" data-i18n="addTorrentTitle"></div>
+    <div class="text-section-header" data-i18n="addTorrentTitle">Add Torrent</div>
 </header>
 
 <div class="panel-section panel-section-formElements">
+
     <div class="panel-formElements-item browser-style">
-        <label for="url" data-i18n="torrentUrl"></label>
-        <input type="text" id="url" class="browser-style" disabled />
+        <label for="url" data-i18n="torrentUrl">Torrent URL</label>
+        <input type="text" id="url" class="browser-style" disabled aria-label="Torrent URL">
     </div>
 
     <div class="panel-formElements-item browser-style">
-        <label for="server" data-i18n="serverNameOption"></label>
-        <select id="server" class="browser-style">
-            <option data-i18n="defaultOption" value=""></option>
+        <label for="server" data-i18n="serverNameOption">Server</label>
+        <select id="server" class="browser-style" aria-label="Server List">
+            <option value="" data-i18n="defaultOption">Select a server</option>
         </select>
     </div>
 
     <div class="panel-formElements-item browser-style">
-        <label for="downloadLocation" data-i18n="downloadLocationSelect"></label>
-        <select id="downloadLocation" class="browser-style">
-            <option data-i18n="defaultOption" value=""></option>
+        <label for="downloadLocation" data-i18n="downloadLocationSelect">Download Location</label>
+        <select id="downloadLocation" class="browser-style" aria-label="Download Location">
+            <option value="" data-i18n="defaultOption">Select a location</option>
         </select>
     </div>
 
     <div class="panel-formElements-item browser-style">
-        <label for="labels" data-i18n="labelSelect"></label>
-        <select id="labels" class="browser-style">
-            <option data-i18n="noneOption" value=""></option>
+        <label for="labels" data-i18n="labelSelect">Label</label>
+        <select id="labels" class="browser-style" aria-label="Label Selection">
+            <option value="" data-i18n="noneOption">None</option>
         </select>
     </div>
 
     <div class="panel-formElements-item browser-style">
         <input type="checkbox" id="addpaused" class="browser-style" />
-        <label for="addpaused" data-i18n="addAsPausedOption"></label>
+        <label for="addpaused" data-i18n="addAsPausedOption">Add as Paused</label>
     </div>
+
 </div>
 
 <footer class="panel-section panel-section-footer">
-    <button id="add-torrent" class="panel-section-footer-button default" data-i18n="addTorrentAction"></button>
+    <button id="add-torrent" class="panel-section-footer-button default" data-i18n="addTorrentAction">
+        Add Torrent
+    </button>
 </footer>
 
 <script type="module" src="add_torrent.js"></script>
