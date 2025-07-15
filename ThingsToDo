@@ -1,0 +1,111 @@
+# Things To Do – Future Enhancements for Purefusion TorrentBridge
+
+These are potential improvements and feature ideas for future versions of the Purefusion TorrentBridge Chrome extension.
+
+---
+
+## 🔄 Extension Behavior
+
+* [ ] **Context-aware Activation**
+
+  * Automatically enable/disable the extension icon only on pages containing `.torrent` or magnet links.
+  * Optional: allow user control to force-enable.
+
+* [ ] **Draggable Floating Action Button (FAB)**
+
+  * Show floating gear/settings icon only on torrent/magnet pages.
+  * Allow users to drag and position it.
+  * Save position via localStorage or `chrome.storage.sync`.
+
+* [ ] **Advanced Permissions Control**
+
+  * Ask for host permission only when a specific client is selected.
+  * Minimize broad access for better privacy/security.
+
+---
+
+## ⚙️ Options UI
+
+* [ ] **Logo + Branding Header**
+
+  * Add logo and extension name at the top of `options.html`.
+
+* [ ] **Footer with Copyright/Links**
+
+  * Add a footer showing "© Eliminater74" and link to GitHub or support.
+
+* [ ] **Import/Export Settings**
+
+  * Add buttons to export current config to JSON.
+  * Allow re-import to restore settings.
+
+* [ ] **Client Configuration Validation**
+
+  * Validate entered host/port before saving.
+  * Show green/red check status next to input.
+
+---
+
+## 🧠 Smart Behavior
+
+* [ ] **Auto-detect Active Client Type**
+
+  * Use sniffing (response headers, login page, etc.) to suggest the appropriate client (qBittorrent, Deluge, etc.).
+
+* [ ] **Multi-client Mode**
+
+  * Allow saving multiple clients and selecting default.
+  * Could add tabbed interface or dropdown.
+
+* [ ] **Quick Retry Logic**
+
+  * Retry failed requests (especially for cookie/session clients).
+
+* [ ] **Link Preview Before Sending**
+
+  * Show link name, size, and torrent type (magnet/file) before sending.
+
+---
+
+## 🔔 Notifications & Feedback
+
+* [ ] **Enhanced Toast Notifications**
+
+  * Add icons, auto-fade, success/failure status.
+
+* [ ] **In-Browser Log Panel**
+
+  * Option to view send history or recent errors.
+
+---
+
+## 🧪 Debugging / Dev Tools
+
+* [ ] **Debug Mode Toggle**
+
+  * When enabled, show request/response for all uploads.
+
+* [ ] **Force Clear Settings Button**
+
+  * One-click reset to default settings.
+
+---
+
+## 🌍 Internationalization (i18n)
+
+* [ ] Add localization support using `_locales/en/messages.json`
+
+  * Plan to support Spanish, German, etc. in future
+
+---
+
+## 📦 Web Store Release Prep
+
+* [ ] Add proper `screenshots/`, `support_url`, and `homepage_url` to `manifest.json`
+* [ ] Include a privacy policy
+* [ ] Add `CHANGELOG.md` and `ThingsToDo.md` to repo for transparency
+
+---
+
+> Maintained by: Eliminater74
+> Updated: July 2025
