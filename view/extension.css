@@ -1,96 +1,44 @@
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  font-family: system-ui, sans-serif;
-  font-size: 14px;
-  color: #222;
-}
-
-body {
+/* === Header styles === */
+.extension-header {
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 24px;
-}
-
-#options-section {
-  width: 100%;
-  max-width: 600px;
-  margin-bottom: 32px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fafafa;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.panel-section-header {
-  font-size: 1.3em;
-  font-weight: 600;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 8px;
-}
-
-.panel-section-formElements {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.panel-formElements-item {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.panel-formElements-item label {
-  font-weight: 500;
-}
-
-input[type="text"],
-input[type="password"],
-textarea,
-select {
-  width: 100%;
-  max-width: 100%;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  background-color: #fff;
-  box-sizing: border-box;
-}
-
-textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-
-input[type="checkbox"],
-input[type="radio"] {
-  margin-right: 8px;
-}
-
-button {
-  padding: 10px 16px;
-  font-size: 14px;
-  background: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-footer.panel-section-footer {
-  display: flex;
   gap: 12px;
-  justify-content: center;
-  margin-top: 24px;
+  margin-bottom: 32px;
+  padding: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.extension-logo {
+  width: 48px;
+  height: 48px;
+}
+
+.extension-title {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin: 0;
+  color: #007bff;
+}
+
+/* === Footer styles === */
+.extension-footer {
+  text-align: center;
+  margin-top: 48px;
+  font-size: 13px;
+  color: #666;
+  padding: 16px 0;
+  border-top: 1px solid #ddd;
+}
+
+.extension-footer p {
+  margin: 4px 0;
+}
+
+/* Optional: spacing for entire layout */
+.extension-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }

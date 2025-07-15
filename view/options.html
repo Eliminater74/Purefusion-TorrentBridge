@@ -1,105 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Torrent Clipper Options</title>
+  <title>Purefusion TorrentBridge Settings</title>
   <link rel="stylesheet" type="text/css" href="extension.css">
 </head>
 <body>
 
-<section id="options-section">
-  <header class="panel-section-header">
-    <span data-i18n="addonConfigurationTitle">Addon configuration</span>
-  </header>
+<header class="extension-header">
+  <img src="../icon/icon_64.png" alt="Logo" class="extension-logo">
+  <h1 class="extension-title">Purefusion TorrentBridge</h1>
+</header>
 
-  <div class="panel-section-formElements">
-    <div class="panel-formElements-item">
-      <label data-i18n="contextMenuOption">Context menu</label>
-      <label><input type="radio" name="contextmenu" value="1" id="contextmenuDefault">
-        <span data-i18n="contextMenuDefaultOption">Default</span></label>
-      <label><input type="radio" name="contextmenu" value="2" id="contextmenuSimple">
-        <span data-i18n="contextMenuSimpleOption">Simple</span></label>
-      <label><input type="radio" name="contextmenu" value="0" id="contextmenuHidden">
-        <span data-i18n="contextMenuHiddenOption">Hidden</span></label>
+<main class="extension-main">
+  <section id="options-section">
+    <header class="panel-section-header">
+      <span data-i18n="addonConfigurationTitle">Addon configuration</span>
+    </header>
+
+    <div class="panel-section-formElements">
+      <div class="panel-formElements-item">
+        <label data-i18n="contextMenuOption">Context menu</label>
+        <label><input type="radio" name="contextmenu" value="1" id="contextmenuDefault">
+          <span data-i18n="contextMenuDefaultOption">Default</span></label>
+        <label><input type="radio" name="contextmenu" value="2" id="contextmenuSimple">
+          <span data-i18n="contextMenuSimpleOption">Simple</span></label>
+        <label><input type="radio" name="contextmenu" value="0" id="contextmenuHidden">
+          <span data-i18n="contextMenuHiddenOption">Hidden</span></label>
+      </div>
+
+      <div class="panel-formElements-item">
+        <label><input type="checkbox" id="catchurls" />
+          <span data-i18n="catchUrlsOption">Catch torrent URLs</span></label>
+      </div>
+
+      <div class="panel-formElements-item">
+        <label><input type="checkbox" id="addpaused" />
+          <span data-i18n="addPausedOption">Add torrents as paused</span></label>
+      </div>
+
+      <div class="panel-formElements-item">
+        <label><input type="checkbox" id="addadvanced" />
+          <span data-i18n="addAdvancedOption">Add via advanced dialog</span></label>
+      </div>
+
+      <div class="panel-formElements-item">
+        <label><input type="checkbox" id="enablenotifications" />
+          <span data-i18n="enableNotificationsOption">Show notifications</span></label>
+      </div>
+
+      <div class="panel-formElements-item">
+        <label for="labels" data-i18n="torrentLabelsOption">Labels</label>
+        <textarea id="labels" placeholder="label1&#10;label2"></textarea>
+      </div>
     </div>
+  </section>
 
-    <div class="panel-formElements-item">
-      <label><input type="checkbox" id="catchurls" />
-        <span data-i18n="catchUrlsOption">Catch torrent URLs</span></label>
+  <section id="options-section">
+    <header class="panel-section-header">
+      <span data-i18n="serverConfigurationTitle">Server configuration</span>
+    </header>
+
+    <div class="panel-section-formElements">
+      <div class="panel-formElements-item">
+        <label for="server-list" data-i18n="serverSelect">Current server</label>
+        <select id="server-list"></select>
+      </div>
+
+      <div class="panel-formElements-item">
+        <label for="name" data-i18n="serverNameOption">Server name</label>
+        <input type="text" id="name" />
+      </div>
+
+      <div class="panel-formElements-item">
+        <label for="application" data-i18n="bittorrentClientOption">Bittorrent client</label>
+        <select id="application"></select>
+      </div>
+
+      <div class="panel-formElements-item">
+        <label for="hostname" data-i18n="serverAddressOption">Server address</label>
+        <input type="text" id="hostname" />
+      </div>
+
+      <div class="panel-formElements-item">
+        <label for="username" data-i18n="usernameOption">Username</label>
+        <input type="text" id="username" />
+      </div>
+
+      <div class="panel-formElements-item">
+        <label for="password" data-i18n="passwordOption">Password</label>
+        <input type="password" id="password" />
+      </div>
+
+      <div class="panel-formElements-item" data-panel="clientOptions">
+        <!-- Dynamic client options will go here -->
+      </div>
+
+      <div class="panel-formElements-item" data-panel="directories">
+        <label for="directories" data-i18n="serverDirectoriesOption">Download directories</label>
+        <textarea id="directories" placeholder="/downloads/path1&#10;/downloads/path2"></textarea>
+      </div>
     </div>
+  </section>
 
-    <div class="panel-formElements-item">
-      <label><input type="checkbox" id="addpaused" />
-        <span data-i18n="addPausedOption">Add torrents as paused</span></label>
-    </div>
+  <footer class="panel-section-footer">
+    <button id="save-options" class="default" disabled data-i18n="saveAction">Save</button>
+    <button id="remove-server" disabled data-i18n="removeAction">Remove server</button>
+  </footer>
+</main>
 
-    <div class="panel-formElements-item">
-      <label><input type="checkbox" id="addadvanced" />
-        <span data-i18n="addAdvancedOption">Add via advanced dialog</span></label>
-    </div>
-
-    <div class="panel-formElements-item">
-      <label><input type="checkbox" id="enablenotifications" />
-        <span data-i18n="enableNotificationsOption">Show notifications</span></label>
-    </div>
-
-    <div class="panel-formElements-item">
-      <label for="labels" data-i18n="torrentLabelsOption">Labels</label>
-      <textarea id="labels" placeholder="label1&#10;label2"></textarea>
-    </div>
-  </div>
-</section>
-
-<section id="options-section">
-  <header class="panel-section-header">
-    <span data-i18n="serverConfigurationTitle">Server configuration</span>
-  </header>
-
-  <div class="panel-section-formElements">
-    <div class="panel-formElements-item">
-      <label for="server-list" data-i18n="serverSelect">Current server</label>
-      <select id="server-list"></select>
-    </div>
-
-    <div class="panel-formElements-item">
-      <label for="name" data-i18n="serverNameOption">Server name</label>
-      <input type="text" id="name" />
-    </div>
-
-    <div class="panel-formElements-item">
-      <label for="application" data-i18n="bittorrentClientOption">Bittorrent client</label>
-      <select id="application"></select>
-    </div>
-
-    <div class="panel-formElements-item">
-      <label for="hostname" data-i18n="serverAddressOption">Server address</label>
-      <input type="text" id="hostname" />
-    </div>
-
-    <div class="panel-formElements-item">
-      <label for="username" data-i18n="usernameOption">Username</label>
-      <input type="text" id="username" />
-    </div>
-
-    <div class="panel-formElements-item">
-      <label for="password" data-i18n="passwordOption">Password</label>
-      <input type="password" id="password" />
-    </div>
-
-    <div class="panel-formElements-item" data-panel="clientOptions">
-      <!-- Dynamic client options will go here -->
-    </div>
-
-    <div class="panel-formElements-item" data-panel="directories">
-      <label for="directories" data-i18n="serverDirectoriesOption">Download directories</label>
-      <textarea id="directories" placeholder="/downloads/path1&#10;/downloads/path2"></textarea>
-    </div>
-  </div>
-</section>
-
-<footer class="panel-section-footer">
-  <button id="save-options" class="default" disabled data-i18n="saveAction">Save</button>
-  <button id="remove-server" disabled data-i18n="removeAction">Remove server</button>
+<footer class="extension-footer">
+  <p>&copy; 2025 Eliminater74. All rights reserved.</p>
+  <p>Purefusion TorrentBridge v1.0.1</p>
 </footer>
 
 <script type="module" src="./options.js"></script>
