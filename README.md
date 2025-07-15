@@ -1,129 +1,155 @@
-````md
 # 🔗 Purefusion TorrentBridge
 
 ![Logo](icon/icon_128.svg)
 
-**Purefusion TorrentBridge** is a modern, streamlined Chrome extension that lets you quickly send torrent and magnet links directly to your local BitTorrent client’s web interface — all from the right-click context menu. Originally based on the "Torrent Clipper" concept, this version has been completely redesigned with futuristic UI, enhanced functionality, and a more professional finish.
+**Purefusion TorrentBridge** is a modern, high-performance Chrome extension that lets you instantly send torrent and magnet links to your favorite BitTorrent web client — straight from the right-click context menu.
+
+> Originally forked from "Torrent Clipper," and inspired by "Torrent Control," this next-gen version has been **refactored, rebranded, and re-energized** for the modern web.
 
 ---
 
-## 🚀 Features
+## 🚀 Why Purefusion?
 
-- 🎯 **Right-click integration** – Add `.torrent` and magnet links instantly from any web page.
-- ⚙️ **Support for multiple clients** – Works with many popular BitTorrent web interfaces.
-- 🌐 **Custom server support** – Easily add your own BitTorrent server IP and port.
-- 🧠 **Smart detection** – Automatically detects link types and handles accordingly.
-- 📰 **RSS feed support** – Send RSS URLs to supported clients (like qBittorrent).
-- 💾 **Persistent settings** – Options and UI position are saved across sessions.
-- 🔔 **Desktop notifications** – Know when torrents are successfully added.
+In 2025, many beloved torrent extensions broke due to Chrome's new Manifest V3 requirements. While others were abandoned, **Purefusion TorrentBridge** was rebuilt from the ground up — with speed, compatibility, and future-proofing in mind.
 
----
-
-## 🖥️ Supported Clients
-
-- ✅ qBittorrent (v4+)
-- ✅ Transmission
-- ✅ Deluge (web UI)
-- ✅ More with customization!
-
-> Add support for more clients in the `lib/` folder or modify `clientList` in `util.js`.
+* 🧠 Modular ES6+ code
+* ⚡ Ultra-fast execution
+* 🧩 Manifest V3 compliant
+* 🧼 Clean UI and responsive Options page
+* 🧪 Actively maintained
 
 ---
 
-## 📷 Screenshots
+## 💡 Features
 
-| Context Menu | Notification |
-|--------------|--------------|
-| ![Context Menu](screenshots/context-menu.png) | ![Notification](screenshots/notification.png) |
+* 🎯 **Right-click integration** – Instantly send `.torrent` or magnet links to your client
+* 🌐 **Multi-client support** – qBittorrent, Transmission, Deluge, and more
+* 💾 **Persistent settings** – Custom host, port, and label saved per session
+* 🔔 **Desktop notifications** – Confirm successful transfers
+* 📡 **RSS support** – Send feed URLs to clients like qBittorrent
+* 🧱 **Optional host permissions** – Requested only when needed
+* ✨ **Draggable popup UI** – Sleek, floating interface for quick access
 
 ---
 
-## ⚙️ Installation
+## 🧠 Supported Clients
 
-### 1. Clone the repo
+Out of the box, Purefusion supports:
+
+* ✅ qBittorrent (v4+)
+* ✅ Transmission
+* ✅ Deluge (web UI)
+* ✅ ruTorrent
+* ✅ Flood
+* ✅ Tixati (WebUI)
+* ✅ uTorrent Web
+* ✅ Vuze WebUI
+* ✅ CloudTorrent
+
+> Add new clients easily via `/lib/*.js` modules.
+
+---
+
+## 📦 Installation
+
+### 🔧 Developer Install (Manual)
+
 ```bash
 git clone https://github.com/Eliminater74/Purefusion-TorrentBridge.git
-````
-
-### 2. Load into Chrome
+```
 
 1. Open `chrome://extensions/`
 2. Enable **Developer Mode**
 3. Click **Load unpacked**
-4. Select the folder where you cloned the repo
+4. Select the project folder
 
 ---
 
-## 🧪 Options Page
+## 🖥️ Options Page
 
-Access it by:
-
-* Clicking the extension icon
-* Or visiting `chrome-extension://<your-id>/view/options.html`
-
-Customize:
-
-* Server IP and port
-* Client type
-* Paused downloads
-* Label or directory presets
-* Enable/disable context menus
-
----
-
-## 🎨 Branding
-
-Purefusion TorrentBridge includes:
-
-* Fully redesigned **SVG icon set**
-* Draggable popup UI
-* Clean and responsive options page
-* Consistent theming with modern feel
-
----
-
-## 📁 File Structure
+Accessible via the extension icon or:
 
 ```
-📁 icon/                 → All icons (.png + .svg)
-📁 lib/                  → Client connection modules
-📁 view/                 → Options page HTML/CSS/JS
-📄 background.js         → Context menu + messaging
-📄 content.js            → Injected UI logic
-📄 manifest.json         → Chrome extension config
+chrome-extension://<your-extension-id>/view/options.html
+```
+
+Options include:
+
+* Client selection (qBittorrent, Deluge, etc.)
+* IP, port, username/password
+* Labels, download paths, paused state
+* Context menu toggles
+
+---
+
+## 📷 UI Preview
+
+| 📎 Context Menu                       | 🔔 Notification                         |
+| ------------------------------------- | --------------------------------------- |
+| ![Menu](screenshots/context-menu.png) | ![Notify](screenshots/notification.png) |
+
+---
+
+## 📁 Project Structure
+
+```
+📁 icon/                 → Logos and extension icons
+📁 lib/                  → Modular API interfaces (qbittorrent.js, deluge.js, etc.)
+📁 view/                 → HTML/CSS/JS for the options page
+📄 base64.js             → FileReader helper for Base64 uploads
+📄 background.js         → Context menu & client dispatcher
+📄 content.js            → Torrent UI injection
+📄 manifest.json         → Chrome Extension metadata
 ```
 
 ---
 
-## 📢 Credits
+## 🛠️ Future Enhancements (Planned)
 
-Originally forked and modernized from:
+See `ThingsToDo.md` for the roadmap, including:
 
-* **Torrent Clipper** (inactive)
-
-Redesigned and maintained by:
-🎸 [Eliminater74](https://github.com/Eliminater74)
+* 🧊 Floating settings button (visible only on torrent-rich pages)
+* 🖼️ UI themes or dark mode
+* 🔁 Auto-retry on failed client responses
+* 🌐 Language translation support
+* 🤝 Sync profiles across Chrome sync
+* 📊 Advanced link preview or tracker validation
 
 ---
 
-## 🛠️ Contribute
+## 🧬 Legacy & Lineage
 
-Pull requests, ideas, and forks are welcome!
-Feel free to suggest:
+This project is a **spiritual successor** to:
 
-* More client integrations
-* UI improvements
-* Language translations
+* **Torrent Clipper** – Now inactive (last touched \~4 years ago)
+* **Torrent Control** – Community forked, but outdated for Chrome MV3
+
+> Purefusion TorrentBridge brings new life, cleaner code, and blazing speed to a much-loved tool.
+
+---
+
+## 👤 Author
+
+Maintained by: [Eliminater74](https://github.com/Eliminater74)
+Part of the Purefusion Tools suite
+Florida, USA 🇺🇸
+
+---
+
+## 🤝 Contribute
+
+Pull requests welcome! Looking for help with:
+
+* Adding new BitTorrent clients
+* UI refinements
+* Localization
+* Web Store translations
 
 ---
 
 ## 📜 License
 
 MIT License
-© 2025 Eliminater74
-
-```
+© 2025 [Eliminater74](https://github.com/Eliminater74)
 
 ---
-
-### ✅ What to do next:
