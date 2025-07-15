@@ -1,8 +1,14 @@
-Sure — based on everything we just went through (including renaming, API rewrites, cleanup, and full compatibility review), here’s your updated changelog:
+# Changelog
+
+## 1.0.3 – July 2025
+
+* 🖼️ **Redesigned options page** with a cleaner layout, custom logo header, and copyright footer
+* 💅 **Improved CSS styling** for settings panel – more spacing, better typography, and consistent field alignment
+* 🛠️ **Fixed Git Bash integration issues** for consistent behavior across VS Code and terminal sessions
+* 🔏 **Enabled GPG signed commits** via Git Bash with `.bashrc` profile sourced
+* 📂 Added profile-aware `terminal.integrated.profiles.windows` and fixed VS Code `settings.json` key conflict
 
 ---
-
-# Changelog
 
 ## 1.0.2 – July 2025
 
@@ -13,14 +19,18 @@ Sure — based on everything we just went through (including renaming, API rewri
 * 🚀 **Ensured base64 torrent upload support** using `base64.js`
 * 🧪 Verified cross-client support for: qBittorrent, Deluge, Flood, Transmission, Tixati, ruTorrent, uTorrent, Vuze WebUI, and CloudTorrent
 
+---
+
 ## 1.0.1 – July 2025
 
-* Extension renamed to **Purefusion TorrentBridge**
-* New icon and branding
-* Added dynamic host permission request system
-* UI cleanup and notification improvements
+* 🆕 Extension renamed to **Purefusion TorrentBridge**
+* 🎨 New icon and branding
+* 🔧 Added dynamic host permission request system
+* 🧹 UI cleanup and notification improvements
+
+---
 
 ## 1.0.0 – Original Fork
 
-* Base functionality cloned from **Torrent Clipper**
+* 🧬 Base functionality cloned from **Torrent Clipper**
 
