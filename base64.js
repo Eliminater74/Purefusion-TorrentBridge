@@ -1,8 +1,8 @@
-export const base64Encode = (data) => {
-    return new Promise((resolve, reject) => {
-        let reader = new FileReader();
-        reader.onerror = (error) => reject(error);
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.readAsDataURL(data);
-    });
-}
+export const base64Encode = (data) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () =>
+      resolve(reader.result.split(',')[1]); // Extract base64
+    reader.onerror = reject;
+    reader.readAsDataURL(data);
+  });
