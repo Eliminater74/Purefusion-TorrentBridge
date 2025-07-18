@@ -23,11 +23,9 @@
     "type": "module"
   },
   "permissions": [
-    "cookies",
     "contextMenus",
     "notifications",
     "storage",
-    "scripting"
   ],
   "host_permissions": [],
   "optional_host_permissions": [
