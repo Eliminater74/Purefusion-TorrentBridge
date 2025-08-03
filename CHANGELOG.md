@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.4 – August 2025
+
+* 🌍 **Added multi-language support** – extension now supports:
+
+  * 🇺🇸 English (US/GB/AU)
+  * 🇪🇸 Spanish (es)
+  * 🇫🇷 French (fr)
+  * 🇩🇪 German (de)
+  * 🇷🇺 Russian (ru)
+  * 🇧🇷 Portuguese (pt\_BR)
+  * 🇫🇮 Finnish (fi)
+  * 🇯🇵 Japanese (ja)
+* 🈳 **Localized interface strings** via `locales/` folder using `default_locale`
+* 🧪 Verified fallback to English if user’s language is unsupported
+
+---
+
 ## 1.0.3 – July 2025
 
 * 🖼️ **Redesigned options page** with a cleaner layout, custom logo header, and copyright footer
