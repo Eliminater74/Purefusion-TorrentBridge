@@ -1,0 +1,186 @@
+{
+  "addAdvancedOption": {
+    "description": "Ajouter des torrents via la boîte de dialogue avancée",
+    "message": "Ajouter via la boîte de dialogue avancée"
+  },
+  "addAsPausedOption": {
+    "description": "Ajouter comme en pause",
+    "message": "Ajouter comme en pause"
+  },
+  "addPausedOption": {
+    "description": "Ajouter comme en pause par défaut",
+    "message": "Ajouter les torrents en pause"
+  },
+  "addRssFeedAction": {
+    "description": "Action du menu contextuel",
+    "message": "Ajouter un flux RSS"
+  },
+  "addServerAction": {
+    "description": "Action d’ajout de serveur",
+    "message": "Ajouter un nouveau serveur"
+  },
+  "addTorrentAction": {
+    "description": "Action du menu contextuel",
+    "message": "Ajouter un torrent"
+  },
+  "addTorrentLabelAction": {
+    "description": "Action du menu contextuel",
+    "message": "Ajouter un torrent avec étiquette"
+  },
+  "addTorrentPathAction": {
+    "description": "Action du menu contextuel",
+    "message": "Ajouter un torrent avec chemin"
+  },
+  "addTorrentPausedAction": {
+    "description": "Action du menu contextuel",
+    "message": "Ajouter un torrent (en pause)"
+  },
+  "addTorrentTitle": {
+    "description": "Ajouter un torrent",
+    "message": "Ajouter un torrent"
+  },
+  "addonConfigurationTitle": {
+    "description": "Configuration du module complémentaire",
+    "message": "Configuration du module complémentaire"
+  },
+  "advancedModifier": {
+    "description": "Modificateur avancé",
+    "message": "Avancé"
+  },
+  "apiError": {
+    "description": "Réponse inconnue.",
+    "message": "Réponse inconnue. ($1)"
+  },
+  "bittorrentClientOption": {
+    "description": "Option du client Bittorrent",
+    "message": "Client Bittorrent"
+  },
+  "catchUrlsOption": {
+    "description": "Intercepter les URLs de torrent",
+    "message": "Intercepter les URLs de torrent"
+  },
+  "contextMenuDefaultOption": {
+    "description": "Menu contextuel par défaut",
+    "message": "Par défaut"
+  },
+  "contextMenuHiddenOption": {
+    "description": "Menu contextuel masqué",
+    "message": "Masqué"
+  },
+  "contextMenuOption": {
+    "description": "Menu contextuel",
+    "message": "Menu contextuel"
+  },
+  "contextMenuSimpleOption": {
+    "description": "Menu contextuel simple",
+    "message": "Simple"
+  },
+  "defaultOption": {
+    "description": "Option par défaut",
+    "message": "Par défaut"
+  },
+  "downloadLocationSelect": {
+    "description": "Sélection de l’emplacement de téléchargement",
+    "message": "Emplacement de téléchargement"
+  },
+  "enableNotificationsOption": {
+    "description": "Activer les notifications",
+    "message": "Afficher les notifications"
+  },
+  "firstLastPiecePriorityOption": {
+    "description": "Option du client",
+    "message": "Prioriser le premier et le dernier morceau"
+  },
+  "labelSelect": {
+    "description": "Sélection de l’étiquette",
+    "message": "Étiquette"
+  },
+  "loginError": {
+    "description": "Erreur de connexion.",
+    "message": "Échec de la connexion"
+  },
+  "noneOption": {
+    "description": "Option Aucun",
+    "message": "Aucun"
+  },
+  "passwordOption": {
+    "description": "Option du mot de passe",
+    "message": "Mot de passe"
+  },
+  "removeAction": {
+    "description": "Action de suppression",
+    "message": "Supprimer le serveur"
+  },
+  "rssFeedAddError": {
+    "description": "Erreur d’ajout.",
+    "message": "Échec de l’ajout du flux RSS. $1"
+  },
+  "rssFeedAddedNotification": {
+    "description": "Notification de flux RSS ajouté.",
+    "message": "Flux RSS ajouté"
+  },
+  "saveAction": {
+    "description": "Action d’enregistrement",
+    "message": "Enregistrer"
+  },
+  "sequentialDownloadOption": {
+    "description": "Option du client",
+    "message": "Téléchargement séquentiel"
+  },
+  "serverAddressOption": {
+    "description": "Option de l’adresse du serveur",
+    "message": "Adresse du serveur"
+  },
+  "serverConfigurationTitle": {
+    "description": "Titre de configuration du serveur",
+    "message": "Configuration du serveur"
+  },
+  "serverDirectoriesOption": {
+    "description": "Option des répertoires du serveur",
+    "message": "Répertoires de téléchargement"
+  },
+  "serverNameOption": {
+    "description": "Option du nom du serveur",
+    "message": "Nom du serveur"
+  },
+  "serverSelect": {
+    "description": "Sélection du serveur",
+    "message": "Serveur actuel"
+  },
+  "skipHashCheckOption": {
+    "description": "Option du client",
+    "message": "Ignorer la vérification du hash"
+  },
+  "torrentAddError": {
+    "description": "Erreur d’ajout.",
+    "message": "Échec de l’ajout du torrent. $1"
+  },
+  "torrentAddedNotification": {
+    "description": "Notification de torrent ajouté.",
+    "message": "Torrent ajouté"
+  },
+  "torrentFetchError": {
+    "description": "Erreur de récupération.",
+    "message": "Échec de la récupération du torrent. ($1)"
+  },
+  "torrentLabelAddError": {
+    "description": "Erreur d’ajout d’étiquette.",
+    "message": "Échec de l’ajout de l’étiquette au torrent."
+  },
+  "torrentLabelsOption": {
+    "description": "Option de la liste des étiquettes",
+    "message": "Étiquettes"
+  },
+  "torrentParseError": {
+    "description": "Erreur d’analyse.",
+    "message": "Échec de la lecture du torrent. ($1)"
+  },
+  "torrentUrl": {
+    "description": "URL du torrent",
+    "message": "URL du torrent"
+  },
+  "usernameOption": {
+    "description": "Option du nom d’utilisateur",
+    "message": "Nom d’utilisateur"
+  }
+}

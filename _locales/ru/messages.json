@@ -1,0 +1,186 @@
+{
+  "addAdvancedOption": {
+    "description": "Добавить торрент через расширенный диалог",
+    "message": "Добавить через расширенный диалог"
+  },
+  "addAsPausedOption": {
+    "description": "Добавить как приостановленный",
+    "message": "Добавить как приостановленный"
+  },
+  "addPausedOption": {
+    "description": "Добавить как приостановленный по умолчанию",
+    "message": "Добавлять торренты приостановленными"
+  },
+  "addRssFeedAction": {
+    "description": "Действие контекстного меню",
+    "message": "Добавить RSS-ленту"
+  },
+  "addServerAction": {
+    "description": "Добавить сервер",
+    "message": "Добавить новый сервер"
+  },
+  "addTorrentAction": {
+    "description": "Действие контекстного меню",
+    "message": "Добавить торрент"
+  },
+  "addTorrentLabelAction": {
+    "description": "Действие контекстного меню",
+    "message": "Добавить торрент с меткой"
+  },
+  "addTorrentPathAction": {
+    "description": "Действие контекстного меню",
+    "message": "Добавить торрент с путём"
+  },
+  "addTorrentPausedAction": {
+    "description": "Действие контекстного меню",
+    "message": "Добавить торрент (приостановлен)"
+  },
+  "addTorrentTitle": {
+    "description": "Добавить торрент",
+    "message": "Добавить торрент"
+  },
+  "addonConfigurationTitle": {
+    "description": "Настройки дополнения",
+    "message": "Настройки дополнения"
+  },
+  "advancedModifier": {
+    "description": "Расширенные настройки",
+    "message": "Расширенные"
+  },
+  "apiError": {
+    "description": "Неизвестный ответ.",
+    "message": "Неизвестный ответ. ($1)"
+  },
+  "bittorrentClientOption": {
+    "description": "Опция BitTorrent-клиента",
+    "message": "BitTorrent-клиент"
+  },
+  "catchUrlsOption": {
+    "description": "Перехват URL-адресов торрентов",
+    "message": "Перехватывать ссылки на торренты"
+  },
+  "contextMenuDefaultOption": {
+    "description": "Контекстное меню по умолчанию",
+    "message": "По умолчанию"
+  },
+  "contextMenuHiddenOption": {
+    "description": "Скрытое контекстное меню",
+    "message": "Скрыто"
+  },
+  "contextMenuOption": {
+    "description": "Контекстное меню",
+    "message": "Контекстное меню"
+  },
+  "contextMenuSimpleOption": {
+    "description": "Простое контекстное меню",
+    "message": "Простое"
+  },
+  "defaultOption": {
+    "description": "Опция по умолчанию",
+    "message": "По умолчанию"
+  },
+  "downloadLocationSelect": {
+    "description": "Выбор места загрузки",
+    "message": "Место загрузки"
+  },
+  "enableNotificationsOption": {
+    "description": "Включить уведомления",
+    "message": "Показывать уведомления"
+  },
+  "firstLastPiecePriorityOption": {
+    "description": "Приоритет первых и последних частей",
+    "message": "Приоритизировать первую и последнюю часть"
+  },
+  "labelSelect": {
+    "description": "Выбор метки",
+    "message": "Метка"
+  },
+  "loginError": {
+    "description": "Ошибка входа.",
+    "message": "Не удалось войти"
+  },
+  "noneOption": {
+    "description": "Опция 'Нет'",
+    "message": "Нет"
+  },
+  "passwordOption": {
+    "description": "Параметр пароля",
+    "message": "Пароль"
+  },
+  "removeAction": {
+    "description": "Удалить сервер",
+    "message": "Удалить сервер"
+  },
+  "rssFeedAddError": {
+    "description": "Ошибка добавления.",
+    "message": "Не удалось добавить RSS-ленту. $1"
+  },
+  "rssFeedAddedNotification": {
+    "description": "RSS-лента добавлена.",
+    "message": "RSS-лента добавлена"
+  },
+  "saveAction": {
+    "description": "Сохранить изменения",
+    "message": "Сохранить"
+  },
+  "sequentialDownloadOption": {
+    "description": "Последовательная загрузка",
+    "message": "Последовательная загрузка"
+  },
+  "serverAddressOption": {
+    "description": "Адрес сервера",
+    "message": "Адрес сервера"
+  },
+  "serverConfigurationTitle": {
+    "description": "Конфигурация сервера",
+    "message": "Конфигурация сервера"
+  },
+  "serverDirectoriesOption": {
+    "description": "Каталоги сервера",
+    "message": "Каталоги загрузки"
+  },
+  "serverNameOption": {
+    "description": "Имя сервера",
+    "message": "Имя сервера"
+  },
+  "serverSelect": {
+    "description": "Выбор сервера",
+    "message": "Текущий сервер"
+  },
+  "skipHashCheckOption": {
+    "description": "Пропустить проверку хэша",
+    "message": "Пропустить проверку хэша"
+  },
+  "torrentAddError": {
+    "description": "Ошибка добавления торрента.",
+    "message": "Не удалось добавить торрент. $1"
+  },
+  "torrentAddedNotification": {
+    "description": "Торрент добавлен.",
+    "message": "Торрент добавлен"
+  },
+  "torrentFetchError": {
+    "description": "Ошибка получения торрента.",
+    "message": "Не удалось получить торрент. ($1)"
+  },
+  "torrentLabelAddError": {
+    "description": "Ошибка добавления метки.",
+    "message": "Не удалось добавить метку к торренту."
+  },
+  "torrentLabelsOption": {
+    "description": "Список меток",
+    "message": "Метки"
+  },
+  "torrentParseError": {
+    "description": "Ошибка разбора.",
+    "message": "Не удалось прочитать торрент. ($1)"
+  },
+  "torrentUrl": {
+    "description": "URL торрента",
+    "message": "URL торрента"
+  },
+  "usernameOption": {
+    "description": "Имя пользователя",
+    "message": "Имя пользователя"
+  }
+}

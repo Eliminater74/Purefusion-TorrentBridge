@@ -1,140 +1,186 @@
 {
-   "addAdvancedOption": {
-      "message": "Über erweiterten Dialog hinzufügen"
-   },
-   "addAsPausedOption": {
-      "message": "Als pausiert hinzufügen"
-   },
-   "addPausedOption": {
-      "message": "Torrents als pausiert hinzufügen"
-   },
-   "addRssFeedAction": {
-      "message": "RSS-Feed hinzufügen"
-   },
-   "addServerAction": {
-      "message": "Neuen Server hinzufügen"
-   },
-   "addTorrentAction": {
-      "message": "Torrent hinzufügen"
-   },
-   "addTorrentLabelAction": {
-      "message": "Torrent mit Label hinzufügen"
-   },
-   "addTorrentPathAction": {
-      "message": "Torrent mit Pfad hinzufügen"
-   },
-   "addTorrentPausedAction": {
-      "message": "Torrent hinzufügen (pausiert)"
-   },
-   "addTorrentTitle": {
-      "message": "Torrent hinzufügen"
-   },
-   "addonConfigurationTitle": {
-      "message": "Addon-Konfiguration"
-   },
-   "advancedModifier": {
-      "message": "Erweitert"
-   },
-   "apiError": {
-      "message": "Unbekannte Antwort. ($1)"
-   },
-   "bittorrentClientOption": {
-      "message": "Bittorrent-Client"
-   },
-   "catchUrlsOption": {
-      "message": "Torrent-URLs erfassen"
-   },
-   "contextMenuDefaultOption": {
-      "message": "Standard"
-   },
-   "contextMenuHiddenOption": {
-      "message": "Versteckt"
-   },
-   "contextMenuOption": {
-      "message": "Kontextmenü"
-   },
-   "contextMenuSimpleOption": {
-      "message": "Einfach"
-   },
-   "defaultOption": {
-      "message": "Standard"
-   },
-   "downloadLocationSelect": {
-      "message": "Download-Speicherort"
-   },
-   "enableNotificationsOption": {
-      "message": "Benachrichtigungen anzeigen"
-   },
-   "firstLastPiecePriorityOption": {
-      "message": "Erstes und letztes Teil priorisieren"
-   },
-   "labelSelect": {
-      "message": "Label"
-   },
-   "loginError": {
-      "message": "Anmeldung fehlgeschlagen"
-   },
-   "noneOption": {
-      "message": "Keine"
-   },
-   "passwordOption": {
-      "message": "Passwort"
-   },
-   "removeAction": {
-      "message": "Server entfernen"
-   },
-   "rssFeedAddError": {
-      "message": "RSS-Feed konnte nicht hinzugefügt werden. $1"
-   },
-   "rssFeedAddedNotification": {
-      "message": "RSS-Feed hinzugefügt"
-   },
-   "saveAction": {
-      "message": "Speichern"
-   },
-   "sequentialDownloadOption": {
-      "message": "Sequenzieller Download"
-   },
-   "serverAddressOption": {
-      "message": "Serveradresse"
-   },
-   "serverConfigurationTitle": {
-      "message": "Serverkonfiguration"
-   },
-   "serverDirectoriesOption": {
-      "message": "Download-Verzeichnisse"
-   },
-   "serverNameOption": {
-      "message": "Servername"
-   },
-   "serverSelect": {
-      "message": "Aktueller Server"
-   },
-   "skipHashCheckOption": {
-      "message": "Hash-Prüfung überspringen"
-   },
-   "torrentAddError": {
-      "message": "Torrent konnte nicht hinzugefügt werden. $1"
-   },
-   "torrentAddedNotification": {
-      "message": "Torrent hinzugefügt"
-   },
-   "torrentFetchError": {
-      "message": "Torrent konnte nicht abgerufen werden. ($1)"
-   },
-   "torrentLabelAddError": {
-      "message": "Label für Torrent konnte nicht hinzugefügt werden."
-   },
-   "torrentLabelsOption": {
-      "message": "Labels"
-   },
-   "torrentParseError": {
-      "message": "Torrent konnte nicht gelesen werden. ($1)"
-   },
-   "torrentUrl": {
-      "message": "Torrent-URL"
-   },
-   "usernameOption": {
-      "message": "Benutzername"
-   }
+  "addAdvancedOption": {
+    "description": "Torrents über erweiterten Dialog hinzufügen",
+    "message": "Über erweiterten Dialog hinzufügen"
+  },
+  "addAsPausedOption": {
+    "description": "Als pausiert hinzufügen",
+    "message": "Als pausiert hinzufügen"
+  },
+  "addPausedOption": {
+    "description": "Standardmäßig pausiert hinzufügen",
+    "message": "Torrents pausiert hinzufügen"
+  },
+  "addRssFeedAction": {
+    "description": "Kontextmenü-Aktion",
+    "message": "RSS-Feed hinzufügen"
+  },
+  "addServerAction": {
+    "description": "Serveraktion hinzufügen",
+    "message": "Neuen Server hinzufügen"
+  },
+  "addTorrentAction": {
+    "description": "Kontextmenü-Aktion",
+    "message": "Torrent hinzufügen"
+  },
+  "addTorrentLabelAction": {
+    "description": "Kontextmenü-Aktion",
+    "message": "Torrent mit Label hinzufügen"
+  },
+  "addTorrentPathAction": {
+    "description": "Kontextmenü-Aktion",
+    "message": "Torrent mit Pfad hinzufügen"
+  },
+  "addTorrentPausedAction": {
+    "description": "Kontextmenü-Aktion",
+    "message": "Torrent hinzufügen (pausiert)"
+  },
+  "addTorrentTitle": {
+    "description": "Torrent hinzufügen",
+    "message": "Torrent hinzufügen"
+  },
+  "addonConfigurationTitle": {
+    "description": "Add-on-Konfiguration",
+    "message": "Add-on-Konfiguration"
+  },
+  "advancedModifier": {
+    "description": "Erweiterter Modus",
+    "message": "Erweitert"
+  },
+  "apiError": {
+    "description": "Unbekannte Antwort.",
+    "message": "Unbekannte Antwort. ($1)"
+  },
+  "bittorrentClientOption": {
+    "description": "BitTorrent-Client-Option",
+    "message": "BitTorrent-Client"
+  },
+  "catchUrlsOption": {
+    "description": "Torrent-URLs erfassen",
+    "message": "Torrent-URLs erfassen"
+  },
+  "contextMenuDefaultOption": {
+    "description": "Standard-Kontextmenü",
+    "message": "Standard"
+  },
+  "contextMenuHiddenOption": {
+    "description": "Verstecktes Kontextmenü",
+    "message": "Versteckt"
+  },
+  "contextMenuOption": {
+    "description": "Kontextmenü",
+    "message": "Kontextmenü"
+  },
+  "contextMenuSimpleOption": {
+    "description": "Einfaches Kontextmenü",
+    "message": "Einfach"
+  },
+  "defaultOption": {
+    "description": "Standardoption",
+    "message": "Standard"
+  },
+  "downloadLocationSelect": {
+    "description": "Download-Verzeichnis auswählen",
+    "message": "Download-Verzeichnis"
+  },
+  "enableNotificationsOption": {
+    "description": "Benachrichtigungen aktivieren",
+    "message": "Benachrichtigungen anzeigen"
+  },
+  "firstLastPiecePriorityOption": {
+    "description": "Client-Option",
+    "message": "Erstes und letztes Stück priorisieren"
+  },
+  "labelSelect": {
+    "description": "Label-Auswahl",
+    "message": "Label"
+  },
+  "loginError": {
+    "description": "Login-Fehler.",
+    "message": "Anmeldung fehlgeschlagen"
+  },
+  "noneOption": {
+    "description": "Keine Option",
+    "message": "Keine"
+  },
+  "passwordOption": {
+    "description": "Passwort-Option",
+    "message": "Passwort"
+  },
+  "removeAction": {
+    "description": "Aktion zum Entfernen",
+    "message": "Server entfernen"
+  },
+  "rssFeedAddError": {
+    "description": "Fehler beim Hinzufügen.",
+    "message": "RSS-Feed konnte nicht hinzugefügt werden. $1"
+  },
+  "rssFeedAddedNotification": {
+    "description": "RSS-Feed hinzugefügt",
+    "message": "RSS-Feed hinzugefügt"
+  },
+  "saveAction": {
+    "description": "Speicheraktion",
+    "message": "Speichern"
+  },
+  "sequentialDownloadOption": {
+    "description": "Client-Option",
+    "message": "Sequenzieller Download"
+  },
+  "serverAddressOption": {
+    "description": "Serveradresse",
+    "message": "Serveradresse"
+  },
+  "serverConfigurationTitle": {
+    "description": "Serverkonfiguration",
+    "message": "Serverkonfiguration"
+  },
+  "serverDirectoriesOption": {
+    "description": "Server-Verzeichnisse",
+    "message": "Download-Verzeichnisse"
+  },
+  "serverNameOption": {
+    "description": "Servername",
+    "message": "Servername"
+  },
+  "serverSelect": {
+    "description": "Server auswählen",
+    "message": "Aktueller Server"
+  },
+  "skipHashCheckOption": {
+    "description": "Hash-Prüfung überspringen",
+    "message": "Hash-Prüfung überspringen"
+  },
+  "torrentAddError": {
+    "description": "Fehler beim Hinzufügen.",
+    "message": "Torrent konnte nicht hinzugefügt werden. $1"
+  },
+  "torrentAddedNotification": {
+    "description": "Torrent hinzugefügt",
+    "message": "Torrent hinzugefügt"
+  },
+  "torrentFetchError": {
+    "description": "Fehler beim Abrufen.",
+    "message": "Torrent konnte nicht abgerufen werden. ($1)"
+  },
+  "torrentLabelAddError": {
+    "description": "Fehler beim Hinzufügen von Label.",
+    "message": "Label für Torrent konnte nicht hinzugefügt werden."
+  },
+  "torrentLabelsOption": {
+    "description": "Label-Liste",
+    "message": "Labels"
+  },
+  "torrentParseError": {
+    "description": "Fehler beim Lesen.",
+    "message": "Torrent konnte nicht gelesen werden. ($1)"
+  },
+  "torrentUrl": {
+    "description": "Torrent-URL",
+    "message": "Torrent-URL"
+  },
+  "usernameOption": {
+    "description": "Benutzername-Option",
+    "message": "Benutzername"
+  }
 }

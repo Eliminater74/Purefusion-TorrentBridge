@@ -1,0 +1,186 @@
+{
+  "addAdvancedOption": {
+    "description": "Adicionar torrents via diálogo avançado",
+    "message": "Adicionar via diálogo avançado"
+  },
+  "addAsPausedOption": {
+    "description": "Adicionar como pausado",
+    "message": "Adicionar como pausado"
+  },
+  "addPausedOption": {
+    "description": "Adicionar como pausado por padrão",
+    "message": "Adicionar torrents como pausados"
+  },
+  "addRssFeedAction": {
+    "description": "Ação do menu de contexto",
+    "message": "Adicionar feed RSS"
+  },
+  "addServerAction": {
+    "description": "Ação para adicionar servidor",
+    "message": "Adicionar um novo servidor"
+  },
+  "addTorrentAction": {
+    "description": "Ação do menu de contexto",
+    "message": "Adicionar torrent"
+  },
+  "addTorrentLabelAction": {
+    "description": "Ação do menu de contexto",
+    "message": "Adicionar torrent com etiqueta"
+  },
+  "addTorrentPathAction": {
+    "description": "Ação do menu de contexto",
+    "message": "Adicionar torrent com caminho"
+  },
+  "addTorrentPausedAction": {
+    "description": "Ação do menu de contexto",
+    "message": "Adicionar torrent (Pausado)"
+  },
+  "addTorrentTitle": {
+    "description": "Adicionar torrent",
+    "message": "Adicionar torrent"
+  },
+  "addonConfigurationTitle": {
+    "description": "Configuração do complemento",
+    "message": "Configuração do complemento"
+  },
+  "advancedModifier": {
+    "description": "Modificador avançado",
+    "message": "Avançado"
+  },
+  "apiError": {
+    "description": "Resposta desconhecida.",
+    "message": "Resposta desconhecida. ($1)"
+  },
+  "bittorrentClientOption": {
+    "description": "Opção do cliente BitTorrent",
+    "message": "Cliente BitTorrent"
+  },
+  "catchUrlsOption": {
+    "description": "Capturar URLs de torrent",
+    "message": "Capturar URLs de torrent"
+  },
+  "contextMenuDefaultOption": {
+    "description": "Menu de contexto padrão",
+    "message": "Padrão"
+  },
+  "contextMenuHiddenOption": {
+    "description": "Menu de contexto oculto",
+    "message": "Oculto"
+  },
+  "contextMenuOption": {
+    "description": "Menu de contexto",
+    "message": "Menu de contexto"
+  },
+  "contextMenuSimpleOption": {
+    "description": "Menu de contexto simples",
+    "message": "Simples"
+  },
+  "defaultOption": {
+    "description": "Opção padrão",
+    "message": "Padrão"
+  },
+  "downloadLocationSelect": {
+    "description": "Selecionar local de download",
+    "message": "Local de download"
+  },
+  "enableNotificationsOption": {
+    "description": "Ativar notificações",
+    "message": "Mostrar notificações"
+  },
+  "firstLastPiecePriorityOption": {
+    "description": "Opção do cliente",
+    "message": "Priorizar primeiro e último pedaço"
+  },
+  "labelSelect": {
+    "description": "Selecionar etiqueta",
+    "message": "Etiqueta"
+  },
+  "loginError": {
+    "description": "Erro de login.",
+    "message": "Falha ao fazer login"
+  },
+  "noneOption": {
+    "description": "Nenhuma opção",
+    "message": "Nenhum"
+  },
+  "passwordOption": {
+    "description": "Opção de senha",
+    "message": "Senha"
+  },
+  "removeAction": {
+    "description": "Ação para remover",
+    "message": "Remover servidor"
+  },
+  "rssFeedAddError": {
+    "description": "Erro ao adicionar.",
+    "message": "Falha ao adicionar feed RSS. $1"
+  },
+  "rssFeedAddedNotification": {
+    "description": "Notificação de feed RSS adicionado.",
+    "message": "Feed RSS adicionado"
+  },
+  "saveAction": {
+    "description": "Ação para salvar",
+    "message": "Salvar"
+  },
+  "sequentialDownloadOption": {
+    "description": "Opção do cliente",
+    "message": "Download sequencial"
+  },
+  "serverAddressOption": {
+    "description": "Opção de endereço do servidor",
+    "message": "Endereço do servidor"
+  },
+  "serverConfigurationTitle": {
+    "description": "Título da configuração do servidor",
+    "message": "Configuração do servidor"
+  },
+  "serverDirectoriesOption": {
+    "description": "Diretórios de download do servidor",
+    "message": "Diretórios de download"
+  },
+  "serverNameOption": {
+    "description": "Nome do servidor",
+    "message": "Nome do servidor"
+  },
+  "serverSelect": {
+    "description": "Selecionar servidor",
+    "message": "Servidor atual"
+  },
+  "skipHashCheckOption": {
+    "description": "Opção do cliente",
+    "message": "Ignorar verificação de hash"
+  },
+  "torrentAddError": {
+    "description": "Erro ao adicionar.",
+    "message": "Falha ao adicionar torrent. $1"
+  },
+  "torrentAddedNotification": {
+    "description": "Notificação de torrent adicionado.",
+    "message": "Torrent adicionado"
+  },
+  "torrentFetchError": {
+    "description": "Erro ao buscar.",
+    "message": "Falha ao buscar torrent. ($1)"
+  },
+  "torrentLabelAddError": {
+    "description": "Erro ao adicionar etiqueta.",
+    "message": "Falha ao adicionar etiqueta para o torrent."
+  },
+  "torrentLabelsOption": {
+    "description": "Opção de lista de etiquetas",
+    "message": "Etiquetas"
+  },
+  "torrentParseError": {
+    "description": "Erro ao analisar.",
+    "message": "Falha ao ler torrent. ($1)"
+  },
+  "torrentUrl": {
+    "description": "URL do torrent",
+    "message": "URL do torrent"
+  },
+  "usernameOption": {
+    "description": "Opção de nome de usuário",
+    "message": "Nome de usuário"
+  }
+}
