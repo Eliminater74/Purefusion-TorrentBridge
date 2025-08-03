@@ -2,33 +2,35 @@
 
 ![Logo](icon/icon_128.svg)
 
-**Purefusion TorrentBridge** is a modern, high-performance Chrome extension that lets you instantly send torrent and magnet links to your favorite BitTorrent web client — straight from the right-click context menu.
+**Purefusion TorrentBridge** is a blazing-fast, modular Chrome extension that lets you instantly send `.torrent` and magnet links to your favorite BitTorrent clients — directly from the right-click context menu or custom UI panel.
 
-> Originally forked from "Torrent Clipper," and inspired by "Torrent Control," this next-gen version has been **refactored, rebranded, and re-energized** for the modern web.
-
----
-
-## 🚀 Why Purefusion?
-
-In 2025, many beloved torrent extensions broke due to Chrome's new Manifest V3 requirements. While others were abandoned, **Purefusion TorrentBridge** was rebuilt from the ground up — with speed, compatibility, and future-proofing in mind.
-
-* 🧠 Modular ES6+ code
-* ⚡ Ultra-fast execution
-* 🧩 Manifest V3 compliant
-* 🧼 Clean UI and responsive Options page
-* 🧪 Actively maintained
+> Originally forked from **Torrent Clipper** and inspired by **Torrent Control**, this next-generation extension is fully refactored, rebranded, and re-energized for today’s web — and tomorrow’s.
 
 ---
 
-## 💡 Features
+## 🚀 Why Choose Purefusion?
 
-* 🎯 **Right-click integration** – Instantly send `.torrent` or magnet links to your client
-* 🌐 **Multi-client support** – qBittorrent, Transmission, Deluge, and more
-* 💾 **Persistent settings** – Custom host, port, and label saved per session
-* 🔔 **Desktop notifications** – Confirm successful transfers
-* 📡 **RSS support** – Send feed URLs to clients like qBittorrent
-* 🧱 **Optional host permissions** – Requested only when needed
-* ✨ **Draggable popup UI** – Sleek, floating interface for quick access
+As of 2025, many beloved torrent extensions stopped working due to Chrome’s Manifest V3 changes. While others were abandoned, **Purefusion TorrentBridge** was rebuilt from scratch to be fast, modern, and future-proof:
+
+* ✅ **Manifest V3** compliant
+* ⚙️ **Modular ES6+** architecture
+* 🎨 Clean, responsive UI
+* 🧩 Minimal permissions — only requested when needed
+* 🌐 **Multi-language support** (NEW!)
+* 🔄 Actively maintained
+
+---
+
+## 💡 Key Features
+
+* 🎯 **Right-click context menu** to send torrents or magnets with a single click
+* 🧠 **Client auto-detection** and modular architecture
+* 🌍 **International language support** (with auto-detection)
+* 💾 **Persistent settings** for server IP, credentials, labels, and more
+* 🖼️ **Floating popup UI** with draggable interface (optional)
+* 📡 **RSS feed support** for clients like qBittorrent
+* 🔔 **Native notifications** for success/failure confirmation
+* 🧱 **Optional host permissions** — no blanket access needed
 
 ---
 
@@ -41,25 +43,44 @@ Out of the box, Purefusion supports:
 * ✅ Deluge (web UI)
 * ✅ ruTorrent
 * ✅ Flood
-* ✅ Tixati (WebUI)
+* ✅ Tixati (Web UI)
 * ✅ uTorrent Web
 * ✅ Vuze WebUI
 * ✅ CloudTorrent
 
-> Add new clients easily via `/lib/*.js` modules.
+> Want to add another client? Just drop a new module into `/lib/`.
+
+---
+
+## 🌍 Language Support
+
+Purefusion TorrentBridge now includes full localization via Chrome's `i18n` system:
+
+Supported languages:
+
+* 🇺🇸 English (en, en\_US, en\_GB, en\_AU)
+* 🇪🇸 Spanish (es)
+* 🇫🇷 French (fr)
+* 🇩🇪 German (de)
+* 🇷🇺 Russian (ru)
+* 🇧🇷 Portuguese – Brazil (pt\_BR)
+* 🇫🇮 Finnish (fi)
+* 🇯🇵 Japanese (ja)
+
+> Fallback is English if your browser language isn’t supported. More languages coming soon!
 
 ---
 
 ## 📦 Installation
 
-### 🔧 Developer Install (Manual)
+### 🔧 Developer Mode (Manual)
 
 ```bash
 git clone https://github.com/Eliminater74/Purefusion-TorrentBridge.git
 ```
 
-1. Open `chrome://extensions/`
-2. Enable **Developer Mode**
+1. Visit `chrome://extensions`
+2. Enable **Developer mode**
 3. Click **Load unpacked**
 4. Select the project folder
 
@@ -67,83 +88,105 @@ git clone https://github.com/Eliminater74/Purefusion-TorrentBridge.git
 
 ## 🖥️ Options Page
 
-Accessible via the extension icon or:
+Access via the extension popup or directly:
 
 ```
 chrome-extension://<your-extension-id>/view/options.html
 ```
 
-Options include:
+Configure:
 
-* Client selection (qBittorrent, Deluge, etc.)
-* IP, port, username/password
-* Labels, download paths, paused state
-* Context menu toggles
+* BitTorrent client (e.g., qBittorrent, Deluge, etc.)
+* Server address, port, and credentials
+* Labels, default paths, paused state
+* Context menu behavior
+* Floating gear visibility
+* Language (auto-detected)
 
 ---
 
-## 📷 UI Preview
+## 📸 UI Preview
 
-| 📎 Context Menu                       | 🔔 Notification                         |
+| 📎 Context Menu                       | 🔔 Notifications                        |
 | ------------------------------------- | --------------------------------------- |
 | ![Menu](screenshots/context-menu.png) | ![Notify](screenshots/notification.png) |
 
 ---
 
-## 📁 Project Structure
+## 🧩 Project Structure
 
 ```
-📁 icon/                 → Logos and extension icons
-📁 lib/                  → Modular API interfaces (qbittorrent.js, deluge.js, etc.)
-📁 view/                 → HTML/CSS/JS for the options page
-📄 base64.js             → FileReader helper for Base64 uploads
-📄 background.js         → Context menu & client dispatcher
-📄 content.js            → Torrent UI injection
-📄 manifest.json         → Chrome Extension metadata
+📁 icon/             → Logos and browser icons
+📁 lib/              → Modular API interfaces (qbittorrent.js, etc.)
+📁 _locales/         → Translations and multi-language support
+📁 view/             → HTML/CSS/JS for options page UI
+📄 manifest.json     → Chrome metadata and permissions
+📄 background.js     → Context menu dispatcher
+📄 content.js        → Link detection + UI injection
+📄 base64.js         → FileReader helper for uploads
 ```
 
 ---
 
-## 🛠️ Future Enhancements (Planned)
+## 🆕 Changelog
 
-See `ThingsToDo.md` for the roadmap, including:
+### 1.0.4 – August 2025
 
-* 🧊 Floating settings button (visible only on torrent-rich pages)
-* 🖼️ UI themes or dark mode
-* 🔁 Auto-retry on failed client responses
-* 🌐 Language translation support
-* 🤝 Sync profiles across Chrome sync
-* 📊 Advanced link preview or tracker validation
+* 🌍 **Added full localization support** with 8+ languages
+* 🈳 Locales auto-detect based on browser language
+* 🔠 Default fallback: English
 
----
+### 1.0.3 – July 2025
 
-## 🧬 Legacy & Lineage
+* 🖼️ Redesigned options page with branding + layout polish
+* 🔏 GPG commit support + Git Bash fixes
+* ⚙️ Improved `settings.json` config recognition
 
-This project is a **spiritual successor** to:
-
-* **Torrent Clipper** – Now inactive (last touched \~4 years ago)
-* **Torrent Control** – Community forked, but outdated for Chrome MV3
-
-> Purefusion TorrentBridge brings new life, cleaner code, and blazing speed to a much-loved tool.
+[Full changelog »](./CHANGELOG.md)
 
 ---
 
-## 👤 Author
+## 🛠️ Planned Features
 
-Maintained by: [Eliminater74](https://github.com/Eliminater74)
-Part of the Purefusion Tools suite
+Track progress in `ThingsToDo.md`:
+
+* 🧊 Draggable settings gear (visible on torrent-rich pages only)
+* 🎨 Dark mode and theme options
+* 🔁 Retry logic for failed transfers
+* 🔍 Tracker analysis or link preview
+* 🤝 Chrome Sync for profile backup
+
+---
+
+## 🧬 Lineage & Background
+
+Purefusion TorrentBridge carries on the legacy of:
+
+* **Torrent Clipper** – Now abandoned
+* **Torrent Control** – Once popular, now outdated for MV3
+
+> This project revitalizes the torrent link experience with clean code and future-ready design.
+
+---
+
+## 👤 Maintainer
+
+**Michael Harrell** (aka [Eliminater74](https://github.com/Eliminater74))
 Florida, USA 🇺🇸
+Part of the Purefusion Tools family
 
 ---
 
-## 🤝 Contribute
+## 🤝 Contributions
 
-Pull requests welcome! Looking for help with:
+Pull requests welcome!
 
-* Adding new BitTorrent clients
-* UI refinements
-* Localization
-* Web Store translations
+Help needed with:
+
+* 🌐 New client support (e.g., BiglyBT, rTorrent)
+* 🖼️ UI themes / accessibility features
+* 🈳 Language translation additions
+* 📄 Help docs and Web Store page
 
 ---
 
