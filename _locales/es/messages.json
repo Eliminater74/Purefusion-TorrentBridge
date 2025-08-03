@@ -1,0 +1,186 @@
+{
+   "addAdvancedOption": {
+      "description": "Add torrents via advanced dialog",
+      "message": "Agregar mediante diálogo avanzado"
+   },
+   "addAsPausedOption": {
+      "description": "Add as paused",
+      "message": "Agregar como pausado"
+   },
+   "addPausedOption": {
+      "description": "Add as paused by default",
+      "message": "Agregar torrents como pausados"
+   },
+   "addRssFeedAction": {
+      "description": "Context menu action",
+      "message": "Agregar fuente RSS"
+   },
+   "addServerAction": {
+      "description": "Add server action",
+      "message": "Agregar un nuevo servidor"
+   },
+   "addTorrentAction": {
+      "description": "Context menu action",
+      "message": "Agregar torrent"
+   },
+   "addTorrentLabelAction": {
+      "description": "Context menu action",
+      "message": "Agregar torrent con etiqueta"
+   },
+   "addTorrentPathAction": {
+      "description": "Context menu action",
+      "message": "Agregar torrent con ruta"
+   },
+   "addTorrentPausedAction": {
+      "description": "Context menu action",
+      "message": "Agregar torrent (Pausado)"
+   },
+   "addTorrentTitle": {
+      "description": "Add torrent",
+      "message": "Agregar torrent"
+   },
+   "addonConfigurationTitle": {
+      "description": "Addon configuration",
+      "message": "Configuración del complemento"
+   },
+   "advancedModifier": {
+      "description": "Advanced modifier",
+      "message": "Avanzado"
+   },
+   "apiError": {
+      "description": "Unknown response.",
+      "message": "Respuesta desconocida. ($1)"
+   },
+   "bittorrentClientOption": {
+      "description": "Bittorrent client option",
+      "message": "Cliente Bittorrent"
+   },
+   "catchUrlsOption": {
+      "description": "Catch torrent URLs",
+      "message": "Capturar URLs de torrents"
+   },
+   "contextMenuDefaultOption": {
+      "description": "Context menu default",
+      "message": "Predeterminado"
+   },
+   "contextMenuHiddenOption": {
+      "description": "Context menu hidden",
+      "message": "Oculto"
+   },
+   "contextMenuOption": {
+      "description": "Context menu",
+      "message": "Menú contextual"
+   },
+   "contextMenuSimpleOption": {
+      "description": "Context menu simple",
+      "message": "Simple"
+   },
+   "defaultOption": {
+      "description": "Default option",
+      "message": "Predeterminado"
+   },
+   "downloadLocationSelect": {
+      "description": "Download location select",
+      "message": "Ubicación de descarga"
+   },
+   "enableNotificationsOption": {
+      "description": "Enable notifications option",
+      "message": "Mostrar notificaciones"
+   },
+   "firstLastPiecePriorityOption": {
+      "description": "Client option",
+      "message": "Priorizar la primera y última pieza"
+   },
+   "labelSelect": {
+      "description": "Label select",
+      "message": "Etiqueta"
+   },
+   "loginError": {
+      "description": "Login error.",
+      "message": "Error al iniciar sesión"
+   },
+   "noneOption": {
+      "description": "None option",
+      "message": "Ninguno"
+   },
+   "passwordOption": {
+      "description": "Password option",
+      "message": "Contraseña"
+   },
+   "removeAction": {
+      "description": "Remove action",
+      "message": "Eliminar servidor"
+   },
+   "rssFeedAddError": {
+      "description": "Add error.",
+      "message": "Error al agregar fuente RSS. $1"
+   },
+   "rssFeedAddedNotification": {
+      "description": "RSS feed added notification.",
+      "message": "Fuente RSS agregada"
+   },
+   "saveAction": {
+      "description": "Save action",
+      "message": "Guardar"
+   },
+   "sequentialDownloadOption": {
+      "description": "Client option",
+      "message": "Descarga secuencial"
+   },
+   "serverAddressOption": {
+      "description": "Server address option",
+      "message": "Dirección del servidor"
+   },
+   "serverConfigurationTitle": {
+      "description": "Server configuration title",
+      "message": "Configuración del servidor"
+   },
+   "serverDirectoriesOption": {
+      "description": "Server directories option",
+      "message": "Directorios de descarga"
+   },
+   "serverNameOption": {
+      "description": "Server name option",
+      "message": "Nombre del servidor"
+   },
+   "serverSelect": {
+      "description": "Server select",
+      "message": "Servidor actual"
+   },
+   "skipHashCheckOption": {
+      "description": "Client option",
+      "message": "Omitir verificación de hash"
+   },
+   "torrentAddError": {
+      "description": "Add error.",
+      "message": "Error al agregar torrent. $1"
+   },
+   "torrentAddedNotification": {
+      "description": "Torrent added notification.",
+      "message": "Torrent agregado"
+   },
+   "torrentFetchError": {
+      "description": "Fetch error.",
+      "message": "Error al obtener el torrent. ($1)"
+   },
+   "torrentLabelAddError": {
+      "description": "Add error.",
+      "message": "Error al agregar etiqueta al torrent."
+   },
+   "torrentLabelsOption": {
+      "description": "Label list option",
+      "message": "Etiquetas"
+   },
+   "torrentParseError": {
+      "description": "Parse error.",
+      "message": "Error al leer el torrent. ($1)"
+   },
+   "torrentUrl": {
+      "description": "Torrent url",
+      "message": "URL del torrent"
+   },
+   "usernameOption": {
+      "description": "Username option",
+      "message": "Nombre de usuario"
+   }
+}
