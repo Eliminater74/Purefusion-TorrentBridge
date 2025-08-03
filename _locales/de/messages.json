@@ -1,0 +1,140 @@
+{
+   "addAdvancedOption": {
+      "message": "Über erweiterten Dialog hinzufügen"
+   },
+   "addAsPausedOption": {
+      "message": "Als pausiert hinzufügen"
+   },
+   "addPausedOption": {
+      "message": "Torrents als pausiert hinzufügen"
+   },
+   "addRssFeedAction": {
+      "message": "RSS-Feed hinzufügen"
+   },
+   "addServerAction": {
+      "message": "Neuen Server hinzufügen"
+   },
+   "addTorrentAction": {
+      "message": "Torrent hinzufügen"
+   },
+   "addTorrentLabelAction": {
+      "message": "Torrent mit Label hinzufügen"
+   },
+   "addTorrentPathAction": {
+      "message": "Torrent mit Pfad hinzufügen"
+   },
+   "addTorrentPausedAction": {
+      "message": "Torrent hinzufügen (pausiert)"
+   },
+   "addTorrentTitle": {
+      "message": "Torrent hinzufügen"
+   },
+   "addonConfigurationTitle": {
+      "message": "Addon-Konfiguration"
+   },
+   "advancedModifier": {
+      "message": "Erweitert"
+   },
+   "apiError": {
+      "message": "Unbekannte Antwort. ($1)"
+   },
+   "bittorrentClientOption": {
+      "message": "Bittorrent-Client"
+   },
+   "catchUrlsOption": {
+      "message": "Torrent-URLs erfassen"
+   },
+   "contextMenuDefaultOption": {
+      "message": "Standard"
+   },
+   "contextMenuHiddenOption": {
+      "message": "Versteckt"
+   },
+   "contextMenuOption": {
+      "message": "Kontextmenü"
+   },
+   "contextMenuSimpleOption": {
+      "message": "Einfach"
+   },
+   "defaultOption": {
+      "message": "Standard"
+   },
+   "downloadLocationSelect": {
+      "message": "Download-Speicherort"
+   },
+   "enableNotificationsOption": {
+      "message": "Benachrichtigungen anzeigen"
+   },
+   "firstLastPiecePriorityOption": {
+      "message": "Erstes und letztes Teil priorisieren"
+   },
+   "labelSelect": {
+      "message": "Label"
+   },
+   "loginError": {
+      "message": "Anmeldung fehlgeschlagen"
+   },
+   "noneOption": {
+      "message": "Keine"
+   },
+   "passwordOption": {
+      "message": "Passwort"
+   },
+   "removeAction": {
+      "message": "Server entfernen"
+   },
+   "rssFeedAddError": {
+      "message": "RSS-Feed konnte nicht hinzugefügt werden. $1"
+   },
+   "rssFeedAddedNotification": {
+      "message": "RSS-Feed hinzugefügt"
+   },
+   "saveAction": {
+      "message": "Speichern"
+   },
+   "sequentialDownloadOption": {
+      "message": "Sequenzieller Download"
+   },
+   "serverAddressOption": {
+      "message": "Serveradresse"
+   },
+   "serverConfigurationTitle": {
+      "message": "Serverkonfiguration"
+   },
+   "serverDirectoriesOption": {
+      "message": "Download-Verzeichnisse"
+   },
+   "serverNameOption": {
+      "message": "Servername"
+   },
+   "serverSelect": {
+      "message": "Aktueller Server"
+   },
+   "skipHashCheckOption": {
+      "message": "Hash-Prüfung überspringen"
+   },
+   "torrentAddError": {
+      "message": "Torrent konnte nicht hinzugefügt werden. $1"
+   },
+   "torrentAddedNotification": {
+      "message": "Torrent hinzugefügt"
+   },
+   "torrentFetchError": {
+      "message": "Torrent konnte nicht abgerufen werden. ($1)"
+   },
+   "torrentLabelAddError": {
+      "message": "Label für Torrent konnte nicht hinzugefügt werden."
+   },
+   "torrentLabelsOption": {
+      "message": "Labels"
+   },
+   "torrentParseError": {
+      "message": "Torrent konnte nicht gelesen werden. ($1)"
+   },
+   "torrentUrl": {
+      "message": "Torrent-URL"
+   },
+   "usernameOption": {
+      "message": "Benutzername"
+   }
+}
