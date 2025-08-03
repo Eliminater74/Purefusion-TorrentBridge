@@ -170,5 +170,13 @@
    "usernameOption": {
       "description": "Username option",
       "message": "Käyttäjätunnus"
+   },
+   "extensionTitle": {
+      "description": "Laajennuksen otsikko",
+      "message": "Purefusion TorrentBridge"
+   },
+   "extensionDescription": {
+      "description": "Laajennuksen kuvaus",
+      "message": "Lisää torrent- ja magnet-linkit BitTorrent-asiakkaasi verkkokäyttöliittymään."
    }
 }

@@ -182,5 +182,13 @@
   "usernameOption": {
     "description": "Opción de nombre de usuario",
     "message": "Nombre de usuario"
+  },
+  "extensionTitle": {
+    "description": "Extension title",
+    "message": "Purefusion TorrentBridge"
+  },
+  "extensionDescription": {
+    "description": "Descripción de la extensión",
+    "message": "Agrega enlaces de torrent y magnet al panel web de tu cliente BitTorrent."
   }
 }

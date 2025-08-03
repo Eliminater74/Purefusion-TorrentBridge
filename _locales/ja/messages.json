@@ -126,5 +126,13 @@
    "usernameOption": {
       "description": "Username option",
       "message": "Username"
+   },
+   "extensionTitle": {
+     "description": "拡張機能のタイトル",
+      "message": "Purefusion TorrentBridge"
+   },
+   "extensionDescription": {
+      "description": "拡張機能の説明",
+      "message": "トレントおよびマグネットリンクを BitTorrent クライアントの Web インターフェースに追加します。"
    }
 }

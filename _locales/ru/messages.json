@@ -182,5 +182,13 @@
   "usernameOption": {
     "description": "Имя пользователя",
     "message": "Имя пользователя"
+  },
+  "extensionTitle": {
+    "description": "Название расширения",
+    "message": "Purefusion TorrentBridge"
+  },
+  "extensionDescription": {
+    "description": "Описание расширения",
+    "message": "Добавляйте торрент- и magnet-ссылки в веб-интерфейс вашего BitTorrent-клиента."
   }
 }
