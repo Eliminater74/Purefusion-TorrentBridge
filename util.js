@@ -11,7 +11,6 @@ import VuzeWebUIApi     from './lib/vuze_webui.js';
 
 /* ========= Client Registry ========= */
 export const clientList = [
-  /* Each entry: { id, name, addressPlaceholder, clientCapabilities[], clientOptions? } */
   { id: 'biglybt', name: 'BiglyBT', addressPlaceholder: 'http://127.0.0.1:9091/', clientCapabilities: ['paused','path','httpAuth'] },
   { id: 'cloudtorrent', name: 'Cloud Torrent', addressPlaceholder: 'http://127.0.0.1:3000/', clientCapabilities: ['httpAuth'] },
   { id: 'deluge', name: 'Deluge Web UI', addressPlaceholder: 'http://127.0.0.1:8112/', clientCapabilities: ['paused','label','path'] },
@@ -27,7 +26,7 @@ export const clientList = [
   },
   { id: 'tixati', name: 'Tixati', addressPlaceholder: 'http://127.0.0.1:8888/', clientCapabilities: ['paused','httpAuth'] },
   { id: 'transmission', name: 'Transmission', addressPlaceholder: 'http://127.0.0.1:9091/', clientCapabilities: ['paused','path','httpAuth'] },
-  { id: 'utorrent', name: 'µTorrent', addressPlaceholder: 'http://127.0.0.1:8112/gui/' },
+  { id: 'utorrent', name: 'uTorrent', addressPlaceholder: 'http://127.0.0.1:8112/gui/' },
   { id: 'vuze_remoteui', name: 'Vuze Web Remote', addressPlaceholder: 'http://127.0.0.1:9091/', clientCapabilities: ['paused','path','httpAuth'] },
   { id: 'vuze_webui', name: 'Vuze HTML Web UI', addressPlaceholder: 'http://127.0.0.1:6886/', clientCapabilities: ['httpAuth'] },
   { id: 'vuze_webui_100', name: 'Vuze HTML Web UI (<1.0.0)', addressPlaceholder: 'http://127.0.0.1:6886/' },
@@ -45,34 +44,35 @@ export const clientList = [
 ];
 
 /* ========= Factory ========= */
-export function getClient (srv) {
-  const api = {
-    biglybt           : TransmissionApi,
-    cloudtorrent      : CloudTorrentApi,
-    deluge            : DelugeApi,
-    flood             : FloodApi,
-    rutorrent         : RuTorrentApi,
-    tixati            : TixatiApi,
-    transmission      : TransmissionApi,
-    utorrent          : UTorrentApi,
-    vuze_remoteui     : TransmissionApi,
-    vuze_webui        : VuzeWebUIApi,
-    vuze_webui_100    : VuzeWebUIApi,
-    qbittorrent       : QBittorrentApi,
-    qbittorrent_404   : QBittorrentApi
-  }[srv.application];
+export function getClient(srv) {
+  const apiMap = {
+    biglybt         : TransmissionApi,
+    cloudtorrent    : CloudTorrentApi,
+    deluge          : DelugeApi,
+    flood           : FloodApi,
+    rutorrent       : RuTorrentApi,
+    tixati          : TixatiApi,
+    transmission    : TransmissionApi,
+    utorrent        : UTorrentApi,
+    vuze_remoteui   : TransmissionApi,
+    vuze_webui      : VuzeWebUIApi,
+    vuze_webui_100  : VuzeWebUIApi,
+    qbittorrent     : QBittorrentApi,
+    qbittorrent_404 : QBittorrentApi
+  };
 
+  const api = apiMap[srv.application];
   if (!api) throw new Error('No client found');
 
-  // Special API version overrides
-  if (srv.application === 'vuze_webui_100') return new api({ apiVersion: 1, ...srv });
-  if (srv.application === 'qbittorrent_404') return new api({ apiVersion: 1, ...srv });
+  const config = (srv.application === 'vuze_webui_100' || srv.application === 'qbittorrent_404')
+    ? { apiVersion: 1, ...srv }
+    : srv;
 
-  return new api(srv);
+  return new api(config);
 }
 
 /* ========= Options Storage ========= */
-export function loadOptions () {
+export function loadOptions() {
   const defaults = {
     globals: {
       currentServer      : 0,
@@ -81,25 +81,36 @@ export function loadOptions () {
       contextMenu        : 1,
       catchUrls          : true,
       enableNotifications: true,
+      retryOnFail        : false,
       labels             : []
     },
     servers: [
       {
-        name        : 'Default',
-        application : clientList[0].id,
-        hostname    : '',
-        username    : '',
-        password    : '',
-        directories : [],
+        name         : 'Default',
+        application  : clientList[0].id,
+        hostname     : '',
+        username     : '',
+        password     : '',
+        directories  : [],
         clientOptions: {}
       }
     ]
   };
 
   return new Promise(res => {
-    chrome.storage.sync.get(['globals','servers'], stored => {
-      deepMerge(defaults, stored);
-      res(defaults);
+    chrome.storage.sync.get(['globals', 'servers'], stored => {
+      const merged = structuredClone(defaults);
+      deepMerge(merged, stored);
+
+      // Ensure at least one server exists
+      if (!Array.isArray(merged.servers) || merged.servers.length === 0) {
+        merged.servers.push(structuredClone(defaults.servers[0]));
+      }
+
+      // Sanitize known fields (optional)
+      merged.globals.retryOnFail = !!merged.globals.retryOnFail;
+
+      res(merged);
     });
   });
 }
@@ -107,7 +118,7 @@ export function loadOptions () {
 export const saveOptions = opts => chrome.storage.sync.set(opts);
 
 /* ========= URL Helpers ========= */
-export const isMagnetUrl  = url => /^magnet:/i.test(url);
+export const isMagnetUrl = url => /^magnet:/i.test(url);
 export const isTorrentUrl = url => whitelist.some(rx => rx.test(url));
 
 export const getMagnetUrlName = url => {
@@ -118,15 +129,15 @@ export const getMagnetUrlName = url => {
 export const getTorrentName = blob => new Promise(resolve => {
   const reader = new FileReader();
   reader.onerror = () => resolve(false);
-  reader.onload  = () => {
+  reader.onload = () => {
     const match = reader.result.match(/name(\d+):/);
     if (!match) return resolve(false);
 
-    const [ , length ] = match;
+    const [, length] = match;
     let text = '', idx = match.index + match[0].length, bytes = 0;
     while (bytes < +length) {
       const ch = reader.result.charAt(idx + text.length);
-      text  += ch;
+      text += ch;
       bytes += unescape(encodeURI(ch)).length;
     }
     resolve(text);
@@ -134,18 +145,28 @@ export const getTorrentName = blob => new Promise(resolve => {
   reader.readAsText(blob);
 });
 
-/* ========= Misc Helpers ========= */
-function deepMerge (target, src) {
-  Object.keys(src).forEach(k =>
-    (k in target && typeof target[k] === 'object')
-      ? deepMerge(target[k], src[k])
-      : (target[k] = src[k])
-  );
+/* ========= Deep Merge (Safe) ========= */
+function deepMerge(target, src) {
+  Object.keys(src).forEach(k => {
+    if (
+      typeof target[k] === 'object' &&
+      typeof src[k] === 'object' &&
+      target[k] !== null &&
+      src[k] !== null &&
+      !Array.isArray(target[k]) &&
+      !Array.isArray(src[k])
+    ) {
+      deepMerge(target[k], src[k]);
+    } else {
+      target[k] = src[k];
+    }
+  });
 }
 
-export function getURL ({ hostname, username, password, application }) {
-  const client  = clientList.find(c => c.id === application);
-  const url     = new URL(hostname);
+/* ========= URL Construction ========= */
+export function getURL({ hostname, username, password, application }) {
+  const client = clientList.find(c => c.id === application);
+  const url = new URL(hostname);
   if (client?.clientCapabilities?.includes('httpAuth')) {
     url.username = username || '';
     url.password = password || '';
@@ -156,10 +177,10 @@ export function getURL ({ hostname, username, password, application }) {
 /* ========= Torrent URL Whitelist ========= */
 const whitelist = [
   /\.torrent($|\?)/i,
-  /\/torrents\.php\?action=download&id=\d+/i,                     // Gazelle
-  /\/dl\/.+?\/\?jackett_apikey=[a-f0-9]{32}&path=/i,              // Jackett
-  /\/download\.php\?id=[a-f0-9]{40}&f=.+?&key=/i,                 // Xbtit
-  /\/torrents\/download\/\d+/i,                                   // UNIT3D
+  /\/torrents\.php\?action=download&id=\d+/i,
+  /\/dl\/.+?\/\?jackett_apikey=[a-f0-9]{32}&path=/i,
+  /\/download\.php\?id=[a-f0-9]{40}&f=.+?&key=/i,
+  /\/torrents\/download\/\d+/i,
   /^https:\/\/anidex\.info\/dl\/\d+$/i,
   /^https:\/\/animebytes\.tv\/torrent\/\d+\/download\/$/i
 ];

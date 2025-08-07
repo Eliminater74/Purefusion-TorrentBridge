@@ -49,6 +49,12 @@
           <span data-i18n="enableNotificationsOption">Show notifications</span></label>
       </div>
 
+      <!-- ✅ FIXED: Retry option label shown without relying on i18n -->
+      <div class="panel-formElements-item">
+        <label><input type="checkbox" id="retryonfail" />
+          Retry failed transfers (3 attempts)</label>
+      </div>
+
       <div class="panel-formElements-item">
         <label for="labels" data-i18n="torrentLabelsOption">Labels</label>
         <textarea id="labels" placeholder="label1&#10;label2"></textarea>
