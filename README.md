@@ -6,7 +6,6 @@ Here’s your updated `README.md` rewritten in plain text (not canvas) with prop
 
 ---
 
-````markdown
 # 🔗 Purefusion TorrentBridge
 
 ![Logo](icon/icon_128.svg)
