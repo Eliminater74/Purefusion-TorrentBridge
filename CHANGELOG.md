@@ -2,6 +2,10 @@
 
 ---
 
+## [1.0.6] – Policy-Safe Listing & Retry Option  
+
+**Release Date:** November 2025  
+
 ## \[1.0.5] – August 2025
 
 ### 🚀 Added Retry on Failure Option
