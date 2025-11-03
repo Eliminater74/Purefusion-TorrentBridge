@@ -29,7 +29,6 @@
     "storage"
   ],
 
-  // Safe defaults for local testing
   "host_permissions": [
     "http://localhost/*",
     "https://localhost/*",
@@ -37,7 +36,6 @@
     "https://127.0.0.1/*"
   ],
 
-  // Keep empty to avoid review flags; we request exact hosts at runtime
   "optional_host_permissions": [],
 
   "content_scripts": [
