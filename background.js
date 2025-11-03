@@ -18,7 +18,7 @@ const ICON_48  = 'icon/icon_48.png';
 /* ========= Globals ========= */
 let options = {};
 
-/* ========= Service‑worker lifecycle logs ========= */
+/* ========= Service-worker lifecycle logs ========= */
 chrome.runtime.onInstalled.addListener(() =>
   console.log(`[${APP_NAME}] service worker installed`)
 );
@@ -39,7 +39,29 @@ loadOptions()
 const isConfigured = () =>
   options.servers?.[options.globals.currentServer]?.hostname;
 
-/* ========= Context‑menu builders ========= */
+/** Normalize a user-entered hostname to an origin pattern for permissions */
+function normalizeOrigin(hostname) {
+  try {
+    const hasScheme = /^https?:\/\//i.test(hostname);
+    const url = new URL(hasScheme ? hostname : `http://${hostname}`);
+    return `${url.origin}/*`; // e.g., https://seedbox.example.com/*
+  } catch {
+    return null;
+  }
+}
+
+/** Ensure we have host permission for this origin; request if missing */
+function ensureHostPermission(origin) {
+  return new Promise((resolve) => {
+    if (!origin) return resolve(false);
+    chrome.permissions.contains({ origins: [origin] }, (has) => {
+      if (has) return resolve(true);
+      chrome.permissions.request({ origins: [origin] }, (granted) => resolve(!!granted));
+    });
+  });
+}
+
+/* ========= Context-menu builders ========= */
 const buildMenus = () => {
   chrome.contextMenus.removeAll(() => {
     createDefaultMenu();
@@ -125,6 +147,7 @@ const registerListeners = () => {
 
   chrome.runtime.onMessage.addListener((req, sender) => {
     if (req.type === 'addTorrent') {
+      // fire and forget
       addTorrent(req.url, sender?.url || null);
     }
   });
@@ -150,10 +173,19 @@ const handleMenuClick = (info) => {
 };
 
 /* ========= Core torrent / RSS handlers ========= */
-const addTorrent = (url, referer = null, opts = {}) => {
+async function addTorrent(url, referer = null, opts = {}) {
   opts = { paused: false, path: null, label: null, ...opts };
+
   const svrIdx = opts.server ?? options.globals.currentServer;
   const svr = options.servers[svrIdx];
+
+  // Ensure permission for this server's origin
+  const origin = normalizeOrigin(svr?.hostname || '');
+  const granted = await ensureHostPermission(origin);
+  if (!granted) {
+    return notify(chrome.i18n.getMessage('permissionsDenied') || 'Permission denied for server origin');
+  }
+
   const conn = getClient(svr);
 
   const done = (name) =>
@@ -197,9 +229,9 @@ const addTorrent = (url, referer = null, opts = {}) => {
         fail(e);
       });
   }
-};
+}
 
-const fetchTorrent = async (url, referer) => {
+async function fetchTorrent(url, referer) {
   const headers = new Headers({ Accept: 'application/x-bittorrent,*/*;q=0.9' });
   if (referer) headers.append('Referer', referer);
 
@@ -222,10 +254,18 @@ const fetchTorrent = async (url, referer) => {
 
   const blob = await res.blob();
   return { torrent: blob, torrentName: await getTorrentName(blob) };
-};
+}
 
-const addRssFeed = (url) => {
+async function addRssFeed(url) {
   const svr = options.servers[options.globals.currentServer];
+
+  // Ensure permission for this server's origin
+  const origin = normalizeOrigin(svr?.hostname || '');
+  const granted = await ensureHostPermission(origin);
+  if (!granted) {
+    return notify(chrome.i18n.getMessage('permissionsDenied') || 'Permission denied for server origin');
+  }
+
   const conn = getClient(svr);
   conn
     .logIn()
@@ -233,7 +273,7 @@ const addRssFeed = (url) => {
     .then(() => notify(chrome.i18n.getMessage('rssFeedAddedNotification')))
     .catch((e) => notify(e.message))
     .finally(() => conn.logOut());
-};
+}
 
 /* ========= UI helpers ========= */
 const notify = (msg) => {
