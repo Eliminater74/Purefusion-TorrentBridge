@@ -1,0 +1,149 @@
+{
+   "addAdvancedOption": {
+      "message": "Toevoegen via geavanceerd dialoogvenster"
+   },
+   "addAsPausedOption": {
+      "message": "Toevoegen als gepauzeerd"
+   },
+   "addPausedOption": {
+      "message": "Torrents standaard gepauzeerd toevoegen"
+   },
+   "addRssFeedAction": {
+      "message": "RSS-feed toevoegen"
+   },
+   "addServerAction": {
+      "message": "Een nieuwe server toevoegen"
+   },
+   "addTorrentAction": {
+      "message": "Torrent toevoegen"
+   },
+   "addTorrentLabelAction": {
+      "message": "Torrent toevoegen met label"
+   },
+   "addTorrentPathAction": {
+      "message": "Torrent toevoegen met pad"
+   },
+   "addTorrentPausedAction": {
+      "message": "Torrent toevoegen (Gepauzeerd)"
+   },
+   "addTorrentTitle": {
+      "message": "Torrent toevoegen"
+   },
+   "addonConfigurationTitle": {
+      "message": "Add-on configuratie"
+   },
+   "advancedModifier": {
+      "message": "Geavanceerd"
+   },
+   "apiError": {
+      "message": "Onbekend antwoord. ($1)"
+   },
+   "bittorrentClientOption": {
+      "message": "BitTorrent-client"
+   },
+   "catchUrlsOption": {
+      "message": "Torrent-URL's opvangen"
+   },
+   "contextMenuDefaultOption": {
+      "message": "Standaard"
+   },
+   "contextMenuHiddenOption": {
+      "message": "Verborgen"
+   },
+   "contextMenuOption": {
+      "message": "Contextmenu"
+   },
+   "contextMenuSimpleOption": {
+      "message": "Oenvoudig"
+   },
+   "defaultOption": {
+      "message": "Standaard"
+   },
+   "downloadLocationSelect": {
+      "message": "Downloadlocatie"
+   },
+   "enableNotificationsOption": {
+      "message": "Meldingen weergeven"
+   },
+   "firstLastPiecePriorityOption": {
+      "message": "Prioriteit geven aan eerste en laatste stuk"
+   },
+   "labelSelect": {
+      "message": "Label"
+   },
+   "loginError": {
+      "message": "Inloggen mislukt"
+   },
+   "noneOption": {
+      "message": "Geen"
+   },
+   "passwordOption": {
+      "message": "Wachtwoord"
+   },
+   "removeAction": {
+      "message": "Server verwijderen"
+   },
+   "rssFeedAddError": {
+      "message": "RSS-feed toevoegen mislukt. $1"
+   },
+   "rssFeedAddedNotification": {
+      "message": "RSS-feed toegevoegd"
+   },
+   "saveAction": {
+      "message": "Opslaan"
+   },
+   "sequentialDownloadOption": {
+      "message": "Sequentiële download"
+   },
+   "serverAddressOption": {
+      "message": "Serveradres"
+   },
+   "serverConfigurationTitle": {
+      "message": "Serverconfiguratie"
+   },
+   "serverDirectoriesOption": {
+      "message": "Downloadmappen"
+   },
+   "serverNameOption": {
+      "message": "Servernaam"
+   },
+   "serverSelect": {
+      "message": "Huidige server"
+   },
+   "skipHashCheckOption": {
+      "message": "Hash-controle overslaan"
+   },
+   "torrentAddError": {
+      "message": "Torrent toevoegen mislukt. $1"
+   },
+   "torrentAddedNotification": {
+      "message": "Torrent toegevoegd"
+   },
+   "torrentFetchError": {
+      "message": "Torrent ophalen mislukt. ($1)"
+   },
+   "torrentLabelAddError": {
+      "message": "Label toevoegen voor torrent mislukt."
+   },
+   "torrentLabelsOption": {
+      "message": "Labels"
+   },
+   "torrentParseError": {
+      "message": "Torrent lezen mislukt. ($1)"
+   },
+   "torrentUrl": {
+      "message": "Torrent-URL"
+   },
+   "usernameOption": {
+      "message": "Gebruikersnaam"
+   },
+   "extensionTitle": {
+      "message": "Purefusion TorrentBridge"
+   },
+   "extensionDescription": {
+      "message": "Voeg torrent- en magneetlinks toe aan de webinterface van uw BitTorrent-client."
+   },
+   "checkConnectionAction": {
+      "message": "Verbinding controleren"
+   }
+}

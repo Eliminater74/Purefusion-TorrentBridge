@@ -1,0 +1,149 @@
+{
+   "addAdvancedOption": {
+      "message": "Gelişmiş iletişim kutusu ile ekle"
+   },
+   "addAsPausedOption": {
+      "message": "Duraklatılmış olarak ekle"
+   },
+   "addPausedOption": {
+      "message": "Torrentleri varsayılan olarak duraklatılmış ekle"
+   },
+   "addRssFeedAction": {
+      "message": "RSS beslemesi ekle"
+   },
+   "addServerAction": {
+      "message": "Yeni bir sunucu ekle"
+   },
+   "addTorrentAction": {
+      "message": "Torrent ekle"
+   },
+   "addTorrentLabelAction": {
+      "message": "Etiketli torrent ekle"
+   },
+   "addTorrentPathAction": {
+      "message": "Yollu torrent ekle"
+   },
+   "addTorrentPausedAction": {
+      "message": "Torrent ekle (Duraklatıldı)"
+   },
+   "addTorrentTitle": {
+      "message": "Torrent ekle"
+   },
+   "addonConfigurationTitle": {
+      "message": "Eklenti yapılandırması"
+   },
+   "advancedModifier": {
+      "message": "Gelişmiş"
+   },
+   "apiError": {
+      "message": "Bilinmeyen yanıt. ($1)"
+   },
+   "bittorrentClientOption": {
+      "message": "BitTorrent istemcisi"
+   },
+   "catchUrlsOption": {
+      "message": "Torrent URL'lerini yakala"
+   },
+   "contextMenuDefaultOption": {
+      "message": "Varsayılan"
+   },
+   "contextMenuHiddenOption": {
+      "message": "Gizli"
+   },
+   "contextMenuOption": {
+      "message": "Bağlam menüsü"
+   },
+   "contextMenuSimpleOption": {
+      "message": "Basit"
+   },
+   "defaultOption": {
+      "message": "Varsayılan"
+   },
+   "downloadLocationSelect": {
+      "message": "İndirme konumu"
+   },
+   "enableNotificationsOption": {
+      "message": "Bildirimleri göster"
+   },
+   "firstLastPiecePriorityOption": {
+      "message": "İlk ve son parçaya öncelik ver"
+   },
+   "labelSelect": {
+      "message": "Etiket"
+   },
+   "loginError": {
+      "message": "Giriş başarısız"
+   },
+   "noneOption": {
+      "message": "Yok"
+   },
+   "passwordOption": {
+      "message": "Şifre"
+   },
+   "removeAction": {
+      "message": "Sunucuyu kaldır"
+   },
+   "rssFeedAddError": {
+      "message": "RSS beslemesi eklenemedi. $1"
+   },
+   "rssFeedAddedNotification": {
+      "message": "RSS beslemesi eklendi"
+   },
+   "saveAction": {
+      "message": "Kaydet"
+   },
+   "sequentialDownloadOption": {
+      "message": "Sıralı indirme"
+   },
+   "serverAddressOption": {
+      "message": "Sunucu adresi"
+   },
+   "serverConfigurationTitle": {
+      "message": "Sunucu yapılandırması"
+   },
+   "serverDirectoriesOption": {
+      "message": "İndirme dizinleri"
+   },
+   "serverNameOption": {
+      "message": "Sunucu adı"
+   },
+   "serverSelect": {
+      "message": "Mevcut sunucu"
+   },
+   "skipHashCheckOption": {
+      "message": "Hash kontrolünü atla"
+   },
+   "torrentAddError": {
+      "message": "Torrent eklenemedi. $1"
+   },
+   "torrentAddedNotification": {
+      "message": "Torrent eklendi"
+   },
+   "torrentFetchError": {
+      "message": "Torrent alınamadı. ($1)"
+   },
+   "torrentLabelAddError": {
+      "message": "Torrent için etiket eklenemedi."
+   },
+   "torrentLabelsOption": {
+      "message": "Etiketler"
+   },
+   "torrentParseError": {
+      "message": "Torrent okunamadı. ($1)"
+   },
+   "torrentUrl": {
+      "message": "Torrent URL'si"
+   },
+   "usernameOption": {
+      "message": "Kullanıcı adı"
+   },
+   "extensionTitle": {
+      "message": "Purefusion TorrentBridge"
+   },
+   "extensionDescription": {
+      "message": "BitTorrent istemcinizin web arayüzüne torrent ve magnet bağlantıları ekleyin."
+   },
+   "checkConnectionAction": {
+      "message": "Bağlantıyı kontrol et"
+   }
+}

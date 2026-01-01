@@ -1,0 +1,149 @@
+{
+   "addAdvancedOption": {
+      "message": "通过高级对话框添加"
+   },
+   "addAsPausedOption": {
+      "message": "添加为暂停状态"
+   },
+   "addPausedOption": {
+      "message": "默认暂停添加种子"
+   },
+   "addRssFeedAction": {
+      "message": "添加 RSS 订阅"
+   },
+   "addServerAction": {
+      "message": "添加新服务器"
+   },
+   "addTorrentAction": {
+      "message": "添加种子"
+   },
+   "addTorrentLabelAction": {
+      "message": "添加带有标签的种子"
+   },
+   "addTorrentPathAction": {
+      "message": "添加带有路径的种子"
+   },
+   "addTorrentPausedAction": {
+      "message": "添加种子（暂停）"
+   },
+   "addTorrentTitle": {
+      "message": "添加种子"
+   },
+   "addonConfigurationTitle": {
+      "message": "扩展配置"
+   },
+   "advancedModifier": {
+      "message": "高级"
+   },
+   "apiError": {
+      "message": "未知响应。 ($1)"
+   },
+   "bittorrentClientOption": {
+      "message": "BitTorrent 客户端"
+   },
+   "catchUrlsOption": {
+      "message": "捕获种子链接"
+   },
+   "contextMenuDefaultOption": {
+      "message": "默认"
+   },
+   "contextMenuHiddenOption": {
+      "message": "隐藏"
+   },
+   "contextMenuOption": {
+      "message": "右键菜单"
+   },
+   "contextMenuSimpleOption": {
+      "message": "简单"
+   },
+   "defaultOption": {
+      "message": "默认"
+   },
+   "downloadLocationSelect": {
+      "message": "下载位置"
+   },
+   "enableNotificationsOption": {
+      "message": "显示通知"
+   },
+   "firstLastPiecePriorityOption": {
+      "message": "优先下载首尾部分"
+   },
+   "labelSelect": {
+      "message": "标签"
+   },
+   "loginError": {
+      "message": "登录失败"
+   },
+   "noneOption": {
+      "message": "无"
+   },
+   "passwordOption": {
+      "message": "密码"
+   },
+   "removeAction": {
+      "message": "移除服务器"
+   },
+   "rssFeedAddError": {
+      "message": "添加 RSS 订阅失败。 $1"
+   },
+   "rssFeedAddedNotification": {
+      "message": "RSS 订阅已添加"
+   },
+   "saveAction": {
+      "message": "保存"
+   },
+   "sequentialDownloadOption": {
+      "message": "顺序下载"
+   },
+   "serverAddressOption": {
+      "message": "服务器地址"
+   },
+   "serverConfigurationTitle": {
+      "message": "服务器配置"
+   },
+   "serverDirectoriesOption": {
+      "message": "下载目录"
+   },
+   "serverNameOption": {
+      "message": "服务器名称"
+   },
+   "serverSelect": {
+      "message": "当前服务器"
+   },
+   "skipHashCheckOption": {
+      "message": "跳过哈希校验"
+   },
+   "torrentAddError": {
+      "message": "添加种子失败。 $1"
+   },
+   "torrentAddedNotification": {
+      "message": "种子已添加"
+   },
+   "torrentFetchError": {
+      "message": "获取种子失败。 ($1)"
+   },
+   "torrentLabelAddError": {
+      "message": "添加种子标签失败。"
+   },
+   "torrentLabelsOption": {
+      "message": "标签"
+   },
+   "torrentParseError": {
+      "message": "读取种子失败。 ($1)"
+   },
+   "torrentUrl": {
+      "message": "种子链接"
+   },
+   "usernameOption": {
+      "message": "用户名"
+   },
+   "extensionTitle": {
+      "message": "Purefusion TorrentBridge"
+   },
+   "extensionDescription": {
+      "message": "将种子和磁力链接添加到您的 BitTorrent 客户端 Web 界面。"
+   },
+   "checkConnectionAction": {
+      "message": "检查连接"
+   }
+}

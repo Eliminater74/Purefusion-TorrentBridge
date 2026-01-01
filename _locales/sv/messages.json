@@ -1,0 +1,149 @@
+{
+   "addAdvancedOption": {
+      "message": "Lägg till via avancerad dialogruta"
+   },
+   "addAsPausedOption": {
+      "message": "Lägg till som pausad"
+   },
+   "addPausedOption": {
+      "message": "Lägg till torrenter som pausade som standard"
+   },
+   "addRssFeedAction": {
+      "message": "Lägg till RSS-flöde"
+   },
+   "addServerAction": {
+      "message": "Lägg till en ny server"
+   },
+   "addTorrentAction": {
+      "message": "Lägg till torrent"
+   },
+   "addTorrentLabelAction": {
+      "message": "Lägg till torrent med etikett"
+   },
+   "addTorrentPathAction": {
+      "message": "Lägg till torrent med sökväg"
+   },
+   "addTorrentPausedAction": {
+      "message": "Lägg till torrent (Pausad)"
+   },
+   "addTorrentTitle": {
+      "message": "Lägg till torrent"
+   },
+   "addonConfigurationTitle": {
+      "message": "Tilläggskonfiguration"
+   },
+   "advancedModifier": {
+      "message": "Avancerat"
+   },
+   "apiError": {
+      "message": "Okänt svar. ($1)"
+   },
+   "bittorrentClientOption": {
+      "message": "BitTorrent-klient"
+   },
+   "catchUrlsOption": {
+      "message": "Fånga torrent-URL:er"
+   },
+   "contextMenuDefaultOption": {
+      "message": "Standard"
+   },
+   "contextMenuHiddenOption": {
+      "message": "Dold"
+   },
+   "contextMenuOption": {
+      "message": "Snabbmeny"
+   },
+   "contextMenuSimpleOption": {
+      "message": "Enkel"
+   },
+   "defaultOption": {
+      "message": "Standard"
+   },
+   "downloadLocationSelect": {
+      "message": "Nerladdningsplats"
+   },
+   "enableNotificationsOption": {
+      "message": "Visa aviseringar"
+   },
+   "firstLastPiecePriorityOption": {
+      "message": "Prioritera första och sista delen"
+   },
+   "labelSelect": {
+      "message": "Etikett"
+   },
+   "loginError": {
+      "message": "Inloggning misslyckades"
+   },
+   "noneOption": {
+      "message": "Ingen"
+   },
+   "passwordOption": {
+      "message": "Lösenord"
+   },
+   "removeAction": {
+      "message": "Ta bort server"
+   },
+   "rssFeedAddError": {
+      "message": "Kunde inte lägga till RSS-flöde. $1"
+   },
+   "rssFeedAddedNotification": {
+      "message": "RSS-flöde tillagt"
+   },
+   "saveAction": {
+      "message": "Spara"
+   },
+   "sequentialDownloadOption": {
+      "message": "Sekventiell nedladdning"
+   },
+   "serverAddressOption": {
+      "message": "Serveradress"
+   },
+   "serverConfigurationTitle": {
+      "message": "Serverkonfiguration"
+   },
+   "serverDirectoriesOption": {
+      "message": "Nerladdningskataloger"
+   },
+   "serverNameOption": {
+      "message": "Servernamn"
+   },
+   "serverSelect": {
+      "message": "Nuvarande server"
+   },
+   "skipHashCheckOption": {
+      "message": "Hoppa över hash-kontroll"
+   },
+   "torrentAddError": {
+      "message": "Kunde inte lägga till torrent. $1"
+   },
+   "torrentAddedNotification": {
+      "message": "Torrent tillagd"
+   },
+   "torrentFetchError": {
+      "message": "Kunde inte hämta torrent. ($1)"
+   },
+   "torrentLabelAddError": {
+      "message": "Kunde inte lägga till etikett för torrent."
+   },
+   "torrentLabelsOption": {
+      "message": "Etiketter"
+   },
+   "torrentParseError": {
+      "message": "Kunde inte läsa torrent. ($1)"
+   },
+   "torrentUrl": {
+      "message": "Torrent-URL"
+   },
+   "usernameOption": {
+      "message": "Användarnamn"
+   },
+   "extensionTitle": {
+      "message": "Purefusion TorrentBridge"
+   },
+   "extensionDescription": {
+      "message": "Lägg till torrent- och magnetlänkar i din BitTorrent-klients webbgränssnitt."
+   },
+   "checkConnectionAction": {
+      "message": "Kontrollera anslutning"
+   }
+}

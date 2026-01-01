@@ -1,0 +1,149 @@
+{
+   "addAdvancedOption": {
+      "message": "Aggiungi tramite dialogo avanzato"
+   },
+   "addAsPausedOption": {
+      "message": "Aggiungi in pausa"
+   },
+   "addPausedOption": {
+      "message": "Aggiungi torrent in pausa"
+   },
+   "addRssFeedAction": {
+      "message": "Aggiungi feed RSS"
+   },
+   "addServerAction": {
+      "message": "Aggiungi un nuovo server"
+   },
+   "addTorrentAction": {
+      "message": "Aggiungi torrent"
+   },
+   "addTorrentLabelAction": {
+      "message": "Aggiungi torrent con etichetta"
+   },
+   "addTorrentPathAction": {
+      "message": "Aggiungi torrent con percorso"
+   },
+   "addTorrentPausedAction": {
+      "message": "Aggiungi torrent (in pausa)"
+   },
+   "addTorrentTitle": {
+      "message": "Aggiungi torrent"
+   },
+   "addonConfigurationTitle": {
+      "message": "Configurazione estensione"
+   },
+   "advancedModifier": {
+      "message": "Avanzate"
+   },
+   "apiError": {
+      "message": "Risposta sconosciuta. ($1)"
+   },
+   "bittorrentClientOption": {
+      "message": "Client BitTorrent"
+   },
+   "catchUrlsOption": {
+      "message": "Cattura URL torrent"
+   },
+   "contextMenuDefaultOption": {
+      "message": "Predefinito"
+   },
+   "contextMenuHiddenOption": {
+      "message": "Nascosto"
+   },
+   "contextMenuOption": {
+      "message": "Menu contestuale"
+   },
+   "contextMenuSimpleOption": {
+      "message": "Semplice"
+   },
+   "defaultOption": {
+      "message": "Predefinito"
+   },
+   "downloadLocationSelect": {
+      "message": "Posizione download"
+   },
+   "enableNotificationsOption": {
+      "message": "Mostra notifiche"
+   },
+   "firstLastPiecePriorityOption": {
+      "message": "Priorità prima e ultima parte"
+   },
+   "labelSelect": {
+      "message": "Etichetta"
+   },
+   "loginError": {
+      "message": "Accesso fallito"
+   },
+   "noneOption": {
+      "message": "Nessuno"
+   },
+   "passwordOption": {
+      "message": "Password"
+   },
+   "removeAction": {
+      "message": "Rimuovi server"
+   },
+   "rssFeedAddError": {
+      "message": "Impossibile aggiungere feed RSS. $1"
+   },
+   "rssFeedAddedNotification": {
+      "message": "Feed RSS aggiunto"
+   },
+   "saveAction": {
+      "message": "Salva"
+   },
+   "sequentialDownloadOption": {
+      "message": "Download sequenziale"
+   },
+   "serverAddressOption": {
+      "message": "Indirizzo server"
+   },
+   "serverConfigurationTitle": {
+      "message": "Configurazione server"
+   },
+   "serverDirectoriesOption": {
+      "message": "Directory di download"
+   },
+   "serverNameOption": {
+      "message": "Nome server"
+   },
+   "serverSelect": {
+      "message": "Server attuale"
+   },
+   "skipHashCheckOption": {
+      "message": "Salta controllo hash"
+   },
+   "torrentAddError": {
+      "message": "Impossibile aggiungere torrent. $1"
+   },
+   "torrentAddedNotification": {
+      "message": "Torrent aggiunto"
+   },
+   "torrentFetchError": {
+      "message": "Impossibile recuperare torrent. ($1)"
+   },
+   "torrentLabelAddError": {
+      "message": "Impossibile aggiungere etichetta per il torrent."
+   },
+   "torrentLabelsOption": {
+      "message": "Etichette"
+   },
+   "torrentParseError": {
+      "message": "Impossibile leggere torrent. ($1)"
+   },
+   "torrentUrl": {
+      "message": "URL Torrent"
+   },
+   "usernameOption": {
+      "message": "Nome utente"
+   },
+   "extensionTitle": {
+      "message": "Purefusion TorrentBridge"
+   },
+   "extensionDescription": {
+      "message": "Aggiungi collegamenti torrent e magnet all'interfaccia web del tuo client BitTorrent."
+   },
+   "checkConnectionAction": {
+      "message": "Verifica connessione"
+   }
+}
