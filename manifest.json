@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Purefusion TorrentBridge",
-  "version": "1.0.6",
-  "version_name": "1.0.6 – Policy-safe listing",
+  "version": "1.1.0",
+  "version_name": "1.1.0 – Optimized & Enhanced",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "icons": {

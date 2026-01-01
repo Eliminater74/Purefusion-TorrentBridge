@@ -10,7 +10,7 @@ Here’s your updated `README.md` rewritten in plain text (not canvas) with prop
 
 ![Logo](icon/icon_128.svg)
 
-[![Version](https://img.shields.io/badge/version-1.0.5-blue.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/your-extension-id.svg?label=Chrome%20Web%20Store)](https://chrome.google.com/webstore/detail/purefusion-torrentbridge/your-extension-id)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Eliminater74/Purefusion-TorrentBridge.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge/stargazers)
