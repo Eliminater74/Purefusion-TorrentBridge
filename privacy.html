@@ -5,25 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Privacy Policy - Purefusion TorrentBridge</title>
 </head>
-<body style="font-family: sans-serif; padding: 2rem;">
-  <h1>Privacy Policy</h1>
-  <p><strong>Effective Date:</strong> July 14, 2025</p>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; line-height: 1.6; color: #333;">
+  <div style="border-bottom: 2px solid #007bff; padding-bottom: 1rem; margin-bottom: 2rem;">
+    <h1 style="color: #007bff; margin: 0;">Privacy Policy</h1>
+    <p style="color: #666; font-size: 0.9em;">Last Updated: July 2025</p>
+  </div>
 
-  <p><strong>Purefusion TorrentBridge</strong> does not collect, store, or transmit any personal information or user data. All functionality is handled locally within the user's browser. No external servers or third-party services are contacted.</p>
+  <p><strong>Purefusion TorrentBridge</strong> is designed with privacy as a core principle. We believe that your browsing activity and download habits are your own.</p>
 
-  <h2>Data Collection</h2>
-  <p>This extension does not collect or track:</p>
+  <div style="background: #f8f9fa; border-left: 4px solid #28a745; padding: 1rem; margin: 1.5rem 0;">
+    <strong>Commitment:</strong> This extension does not collect, store, share, or transmit any personal information, browsing history, or user data to the developer or any third parties.
+  </div>
+
+  <h2>How It Works</h2>
+  <p>All functionality is executed locally within your browser context:</p>
   <ul>
-    <li>Personal identifiable information</li>
-    <li>Browsing history</li>
-    <li>Web activity or usage data</li>
-    <li>Cookies or session data</li>
+    <li><strong>Configuration:</strong> Your server details (IP, login) are stored in your local browser storage (Chrome Sync) and are never sent to us.</li>
+    <li><strong>Communication:</strong> When you click a link, the extension communicates <em>directly</em> from your browser to your configured BitTorrent client. This traffic does not pass through any intermediate servers.</li>
   </ul>
 
   <h2>Permissions</h2>
-  <p>Permissions are used solely for providing features, such as context menus or interacting with the BitTorrent web client. These permissions are not used to access or transmit data.</p>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+    <tr style="background: #eee; text-align: left;">
+      <th style="padding: 10px; border: 1px solid #ddd;">Permission</th>
+      <th style="padding: 10px; border: 1px solid #ddd;">Purpose</th>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #ddd;"><strong>Hosts (http/https)</strong></td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Required to send API requests to your own BitTorrent client.</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #ddd;"><strong>All URLs</strong></td>
+      <td style="padding: 10px; border: 1px solid #ddd;">Used only to scan for <code>.torrent</code>/<code>magnet:</code> interactions on pages you visit.</td>
+    </tr>
+  </table>
 
   <h2>Contact</h2>
-  <p>If you have any questions, you can reach out via the GitHub repository: <a href="https://github.com/Eliminater74/PurefusionTorrentBridge">PurefusionTorrentBridge</a></p>
+  <p>For transparency, the source code is available on GitHub. If you have concerns, please file an issue at:</p>
+  <p><a href="https://github.com/Eliminater74/Purefusion-TorrentBridge" style="color: #007bff; text-decoration: none;">github.com/Eliminater74/Purefusion-TorrentBridge</a></p>
 </body>
 </html>

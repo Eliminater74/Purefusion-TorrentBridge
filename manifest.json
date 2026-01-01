@@ -5,6 +5,8 @@
   "version_name": "1.1.0 – Optimized & Enhanced",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
+  "offline_enabled": true,
+  "incognito": "spanning",
   "icons": {
     "32": "icon/icon_32.png",
     "48": "icon/icon_48.png",
