@@ -267,6 +267,60 @@ $('#check-connection').addEventListener('click', async (e) => {
   }
 });
 
+/* ========= Import / Export ========= */
+$('#export-settings').addEventListener('click', (e) => {
+  e.preventDefault();
+  loadOptions().then((opts) => {
+    const data = JSON.stringify(opts, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `purefusion-settings-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+  });
+});
+
+$('#import-settings').addEventListener('click', (e) => {
+  e.preventDefault();
+  $('#import-file').click();
+});
+
+$('#import-file').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      if (!imported.globals || !imported.servers) {
+        throw new Error('Invalid settings format');
+      }
+      
+      // Basic validation: ensure proper structure
+      if (!Array.isArray(imported.servers)) throw new Error('Invalid servers list');
+      
+      saveOptions(imported).then(() => {
+        alert('✅ Settings imported successfully! Reloading...');
+        restoreOptions();
+      });
+    } catch (err) {
+      alert(`❌ Import failed: ${err.message}`);
+    } finally {
+      e.target.value = ''; // Reset input
+    }
+  };
+  reader.readAsText(file);
+});
+
 $('#save-options').addEventListener('click', async (e) => {
   e.preventDefault();
   const host = $('#hostname').value.trim().replace(/\/?$/, '/');
@@ -276,4 +330,4 @@ $('#save-options').addEventListener('click', async (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
-console.log('✅ options.js loaded (retryonfail & test-connection supported)');
+console.log('✅ options.js loaded (retryonfail, test-connection & import/export supported)');
