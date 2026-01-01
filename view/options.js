@@ -130,8 +130,12 @@ function restoreServerList() {
 function restoreServer(id) {
   const s = options.servers[~~id];
   serverSelect.value = id;
-  options.globals.currentServer = ~~id;
-  saveOptions(options);
+  
+  // Only save if the selection actually changed to avoid unnecessary writes
+  if (options.globals.currentServer !== ~~id) {
+    options.globals.currentServer = ~~id;
+    saveOptions(options);
+  }
 
   $('#name').value        = s.name;
   $('#application').value = s.application;

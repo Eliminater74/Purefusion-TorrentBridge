@@ -66,7 +66,14 @@ const buildMenus = () => {
   chrome.contextMenus.removeAll(() => {
     createDefaultMenu();
     if (options.servers.length > 1) createServerSelectionMenu();
-    if (options.globals.contextMenu && isConfigured()) createMainLinkMenus();
+    
+    if (options.globals.contextMenu) {
+      if (isConfigured()) {
+        createMainLinkMenus();
+      } else {
+        createConfigureMenu();
+      }
+    }
   });
 };
 
@@ -77,6 +84,8 @@ const createDefaultMenu = () => {
     checked: options.globals.catchUrls,
     title: chrome.i18n.getMessage('catchUrlsOption') || 'Catch URLs',
     contexts: ['action']
+  }, () => {
+    if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
   });
 
   chrome.contextMenus.create({
@@ -85,6 +94,8 @@ const createDefaultMenu = () => {
     checked: options.globals.addPaused,
     title: chrome.i18n.getMessage('addPausedOption') || 'Add Paused',
     contexts: ['action']
+  }, () => {
+    if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
   });
 };
 
@@ -99,9 +110,21 @@ const createServerSelectionMenu = () => {
       checked: idx === options.globals.currentServer,
       title: srv.name,
       contexts: ctx
+    }, () => {
+      if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
     })
   );
   chrome.contextMenus.create({ type: 'separator', contexts: ['action'] });
+};
+
+const createConfigureMenu = () => {
+  chrome.contextMenus.create({
+    id: 'open-options',
+    title: 'Configure TorrentBridge...',
+    contexts: ['link', 'page', 'selection'] // Show on all useful contexts so it's visible
+  }, () => {
+    if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
+  });
 };
 
 const createMainLinkMenus = () => {
@@ -112,6 +135,8 @@ const createMainLinkMenus = () => {
     id: 'add-torrent',
     title: chrome.i18n.getMessage('addTorrentAction') || 'Add Torrent',
     contexts: ['link']
+  }, () => {
+    if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
   });
 
   if (client?.clientCapabilities?.includes('paused')) {
@@ -120,6 +145,8 @@ const createMainLinkMenus = () => {
       title:
         chrome.i18n.getMessage('addTorrentPausedAction') || 'Add Torrent (Paused)',
       contexts: ['link']
+    }, () => {
+      if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
     });
   }
   if (client?.clientCapabilities?.includes('rss')) {
@@ -127,6 +154,8 @@ const createMainLinkMenus = () => {
       id: 'add-rss-feed',
       title: chrome.i18n.getMessage('addRssFeedAction') || 'Add RSS Feed',
       contexts: ['selection', 'link']
+    }, () => {
+      if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
     });
   }
 };
@@ -155,6 +184,8 @@ const registerListeners = () => {
 
 const handleMenuClick = (info) => {
   switch (info.menuItemId) {
+    case 'open-options':
+      return chrome.runtime.openOptionsPage();
     case 'catch-urls':
       return toggleCatchUrls();
     case 'add-paused':
