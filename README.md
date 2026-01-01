@@ -1,11 +1,3 @@
-Here’s your updated `README.md` rewritten in plain text (not canvas) with proper additions for:
-
-* Shields.io badges
-* Visit count badge
-* Proper structure (based on your original layout)
-
----
-
 # 🔗 Purefusion TorrentBridge
 
 ![Logo](icon/icon_128.svg)
@@ -14,8 +6,6 @@ Here’s your updated `README.md` rewritten in plain text (not canvas) with prop
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/your-extension-id.svg?label=Chrome%20Web%20Store)](https://chrome.google.com/webstore/detail/purefusion-torrentbridge/your-extension-id)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Eliminater74/Purefusion-TorrentBridge.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/Eliminater74/Purefusion-TorrentBridge.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge/network)
-[![GitHub issues](https://img.shields.io/github/issues/Eliminater74/Purefusion-TorrentBridge.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge/issues)
 [![Visitors](https://visitor-badge.laobi.icu/badge?page_id=Eliminater74.Purefusion-TorrentBridge)](https://github.com/Eliminater74/Purefusion-TorrentBridge)
 
 **Purefusion TorrentBridge** is a blazing-fast, modular Chrome extension that lets you instantly send `.torrent` and magnet links to your favorite BitTorrent clients — directly from the right-click context menu or custom UI panel.
@@ -28,25 +18,25 @@ Here’s your updated `README.md` rewritten in plain text (not canvas) with prop
 
 As of 2025, many beloved torrent extensions stopped working due to Chrome’s Manifest V3 changes. While others were abandoned, **Purefusion TorrentBridge** was rebuilt from scratch to be fast, modern, and future-proof:
 
-* ✅ Manifest V3 compliant
-* ⚙️ Modular ES6+ architecture
-* 🎨 Clean, responsive UI
-* 🧩 Minimal permissions — only requested when needed
-* 🌐 Multi-language support (NEW!)
-* 🔄 Actively maintained
+*   ✅ **Manifest V3 Compliant** & Store Safe
+*   ⚙️ **Modular ES6+ Architecture**
+*   🎨 **Clean, Responsive UI**
+*   🧩 **Minimal Permissions** — only requested when needed
+*   🌐 **Global Language Support** (15+ Languages)
+*   🔄 **Actively Maintained**
 
 ---
 
 ## 💡 Key Features
 
-* 🎯 Right-click context menu to send torrents or magnets with a single click
-* 🧠 Client auto-detection and modular architecture
-* 🌍 International language support (with auto-detection)
-* 💾 Persistent settings for server IP, credentials, labels, and more
-* 🖼️ Floating popup UI with draggable interface (optional)
-* 📡 RSS feed support for clients like qBittorrent
-* 🔔 Native notifications for success/failure confirmation
-* 🧱 Optional host permissions — no blanket access needed
+*   🎯 **Instant Link Detection**: Automatically finds torrents and magnets on any site.
+*   🖱️ **Context Menu Actions**: Right-click to "Send to Client", "Add Paused", or "Add with Label".
+*   🧪 **Connection Testing**: Verify your server settings instantly from the Options page.
+*   💾 **Backup & Restore**: Export your configuration to JSON and restore it instantly on a new install.
+*   🔧 **Smart Configuration**: Fallback menus guide you if your settings are missing.
+*   🌍 **International**: Full i18n support with auto-detection.
+*   📡 **RSS Feed Support**: For clients like qBittorrent.
+*   🔔 **Native Notifications**: Get instant feedback on success or failure.
 
 ---
 
@@ -54,15 +44,16 @@ As of 2025, many beloved torrent extensions stopped working due to Chrome’s Ma
 
 Purefusion supports:
 
-* ✅ qBittorrent (v4+)
-* ✅ Transmission
-* ✅ Deluge (Web UI)
-* ✅ ruTorrent
-* ✅ Flood
-* ✅ Tixati (Web UI)
-* ✅ uTorrent Web
-* ✅ Vuze WebUI
-* ✅ CloudTorrent
+*   ✅ qBittorrent (v4+)
+*   ✅ Transmission
+*   ✅ Deluge (Web UI)
+*   ✅ ruTorrent
+*   ✅ Flood
+*   ✅ Tixati (Web UI)
+*   ✅ uTorrent Web
+*   ✅ Vuze WebUI
+*   ✅ CloudTorrent
+*   ✅ BiglyBT
 
 > Want to add another client? Just drop a new module into `/lib/`.
 
@@ -70,18 +61,23 @@ Purefusion supports:
 
 ## 🌍 Language Support
 
-Purefusion TorrentBridge includes full Chrome i18n localization:
+Purefusion TorrentBridge speaks your language:
 
-* 🇺🇸 English (en, en_US, en_GB, en_AU)
-* 🇪🇸 Spanish (es)
-* 🇫🇷 French (fr)
-* 🇩🇪 German (de)
-* 🇷🇺 Russian (ru)
-* 🇧🇷 Portuguese – Brazil (pt_BR)
-* 🇫🇮 Finnish (fi)
-* 🇯🇵 Japanese (ja)
-
-> English is used as a fallback if your browser language is unsupported.
+*   🇺🇸 English (US/UK/AU)
+*   🇪🇸 Spanish
+*   🇫🇷 French
+*   🇩🇪 German
+*   🇷🇺 Russian
+*   🇧🇷 Portuguese (Brazil)
+*   🇮🇹 Italian **(NEW)**
+*   🇨🇳 Simplified Chinese **(NEW)**
+*   🇰🇷 Korean **(NEW)**
+*   🇳🇱 Dutch **(NEW)**
+*   🇹🇷 Turkish **(NEW)**
+*   🇵🇱 Polish **(NEW)**
+*   🇸🇪 Swedish **(NEW)**
+*   🇫🇮 Finnish
+*   🇯🇵 Japanese
 
 ---
 
@@ -91,46 +87,41 @@ Purefusion TorrentBridge includes full Chrome i18n localization:
 
 ```bash
 git clone https://github.com/Eliminater74/Purefusion-TorrentBridge.git
-````
+```
 
-1. Open `chrome://extensions`
-2. Enable **Developer mode**
-3. Click **Load unpacked**
-4. Select the project folder
+1.  Open `chrome://extensions`
+2.  Enable **Developer mode**
+3.  Click **Load unpacked**
+4.  Select the project folder
 
 ---
 
 ## 🖥️ Options Page
 
 Access from the popup or directly via:
-
-```
-chrome-extension://<your-extension-id>/view/options.html
-```
+`chrome-extension://<your-extension-id>/view/options.html`
 
 You can configure:
-
-* BitTorrent client (e.g., qBittorrent, Deluge, etc.)
-* Server IP, port, and credentials
-* Labels and default download directory
-* Context menu preferences
-* Floating gear visibility
-* Retry on failure (NEW)
-* Language (auto-detected)
+*   **BitTorrent Client & Credentials**
+*   **Connection Testing** (Verify before you save)
+*   **Import / Export Settings**
+*   **Context Menu Preferences**
+*   **Retry Logic** (Auto-retry failed transfers)
+*   **Directories & Labels**
 
 ---
 
 ## 📸 UI Preview
 
-| 📎 Context Menu                       | 🔔 Notifications                        |
-| ------------------------------------- | --------------------------------------- |
+| 📎 **Context Menu** | 🔔 **Notifications** |
+| :---: | :---: |
 | ![Menu](screenshots/context-menu.png) | ![Notify](screenshots/notification.png) |
 
 ---
 
 ## 🧩 Project Structure
 
-```
+```text
 📁 icon/         → Logos and browser icons
 📁 lib/          → API modules for each supported client
 📁 _locales/     → Translations (i18n)
@@ -139,26 +130,18 @@ You can configure:
 📄 background.js → Context menu and dispatcher logic
 📄 content.js    → Magnet and torrent link detection
 📄 base64.js     → Base64 upload helper
+📄 bump-version.ps1 → Automation script
 ```
+
+---
 
 ## 🛠️ Planned Features
 
 See [`ThingsToDo.md`](./ThingsToDo.md):
-
-* 🧊 Draggable settings gear (visible on torrent-heavy pages only)
-* 🎨 Dark mode / theme support
-* 🔁 Automatic retry logic for failed links
-* 🔍 Link preview and tracker validation
-* 🤝 Chrome profile sync
-
----
-
-## 🧬 Lineage & Background
-
-Purefusion TorrentBridge is a spiritual continuation of:
-
-* **Torrent Clipper** – deprecated
-* **Torrent Control** – no longer maintained
+*   🧊 Draggable settings gear
+*   🎨 Dark mode / theme support
+*   🔍 Link preview and tracker validation
+*   🤝 Chrome profile sync
 
 ---
 
@@ -170,21 +153,7 @@ Part of the Purefusion Tools family
 
 ---
 
-## 🤝 Contributions
-
-Pull requests are welcome!
-
-We especially need help with:
-
-* 🌐 Adding support for more clients (e.g., BiglyBT, WebTorrent)
-* 🖼️ UI enhancements and accessibility themes
-* 🈳 Community translations
-* 🛍️ Web Store publishing & screenshots
-
----
-
 ## 📜 License
 
 MIT License
 © 2025 [Eliminater74](https://github.com/Eliminater74)
-
