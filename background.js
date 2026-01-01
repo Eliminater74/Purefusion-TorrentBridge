@@ -201,33 +201,22 @@ async function addTorrent(url, referer = null, opts = {}) {
       )
     );
 
-  if (isMagnetUrl(url)) {
-    conn
-      .logIn()
-      .then(() => conn.addTorrentUrl(url, opts))
-      .then(() => {
-        done(getMagnetUrlName(url));
-        conn.logOut();
-      })
-      .catch((e) => {
-        conn.removeEventListeners();
-        fail(e);
-      });
-  } else {
-    fetchTorrent(url, referer)
-      .then(({ torrent, torrentName }) =>
-        conn
-          .logIn()
-          .then(() => conn.addTorrent(torrent, opts))
-          .then(() => {
-            done(torrentName);
-            conn.logOut();
-          })
-      )
-      .catch((e) => {
-        conn.removeEventListeners();
-        fail(e);
-      });
+  try {
+    if (isMagnetUrl(url)) {
+      await conn.logIn();
+      await conn.addTorrentUrl(url, opts);
+      done(getMagnetUrlName(url));
+      await conn.logOut();
+    } else {
+      const { torrent, torrentName } = await fetchTorrent(url, referer);
+      await conn.logIn();
+      await conn.addTorrent(torrent, opts);
+      done(torrentName);
+      await conn.logOut();
+    }
+  } catch (e) {
+    if (conn.removeEventListeners) conn.removeEventListeners();
+    fail(e);
   }
 }
 
@@ -267,12 +256,15 @@ async function addRssFeed(url) {
   }
 
   const conn = getClient(svr);
-  conn
-    .logIn()
-    .then(() => conn.addRssFeed(url))
-    .then(() => notify(chrome.i18n.getMessage('rssFeedAddedNotification')))
-    .catch((e) => notify(e.message))
-    .finally(() => conn.logOut());
+  try {
+    await conn.logIn();
+    await conn.addRssFeed(url);
+    notify(chrome.i18n.getMessage('rssFeedAddedNotification'));
+  } catch (e) {
+    notify(e.message);
+  } finally {
+    await conn.logOut();
+  }
 }
 
 /* ========= UI helpers ========= */

@@ -3,6 +3,7 @@ import {
   clientList,
   loadOptions,
   saveOptions,
+  getClient
 } from '../util.js';
 
 /* ========= Globals ========= */
@@ -42,15 +43,7 @@ async function persistOptions() {
     .split(/\n/g).map((l) => l.trim()).filter(Boolean);
 
   const idx    = ~~serverSelect.value;
-  const srvElm = {
-    name         : $('#name').value,
-    application  : $('#application').value,
-    hostname     : $('#hostname').value.trim().replace(/\/?$/, '/'),
-    username     : $('#username').value,
-    password     : $('#password').value,
-    directories  : $('#directories').value.split(/\n/g).map((d) => d.trim()).filter(Boolean),
-    clientOptions: {},
-  };
+  const srvElm = getFormServerConfig();
 
   $all('[id^="clientOptions"]').forEach((el) => {
     const key = el.id.match(/\[(.+?)]$/)[1];
@@ -66,6 +59,18 @@ async function persistOptions() {
   options.servers[idx] = srvElm;
   saveOptions(options);
   saveButton.setAttribute('disabled', 'true');
+}
+
+function getFormServerConfig() {
+  return {
+    name         : $('#name').value,
+    application  : $('#application').value,
+    hostname     : $('#hostname').value.trim().replace(/\/?$/, '/'),
+    username     : $('#username').value,
+    password     : $('#password').value,
+    directories  : $('#directories').value.split(/\n/g).map((d) => d.trim()).filter(Boolean),
+    clientOptions: {},
+  };
 }
 
 /* ========= Restore ========= */
@@ -233,6 +238,31 @@ $('#remove-server').addEventListener('click', (e) => {
   removeServer(serverSelect.value);
 });
 
+$('#check-connection').addEventListener('click', async (e) => {
+  e.preventDefault();
+  const btn = e.target;
+  const originalText = btn.textContent;
+  btn.textContent = 'Checking...';
+  btn.disabled = true;
+
+  try {
+    const srv = getFormServerConfig();
+    const allowed = await requestOriginPermission(srv.hostname);
+    if (!allowed) throw new Error('Host permission denied');
+
+    const client = getClient(srv);
+    await client.logIn();
+    await client.logOut();
+
+    alert('✅ Connection successful!');
+  } catch (err) {
+    alert(`❌ Connection failed: ${err.message}`);
+  } finally {
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+});
+
 $('#save-options').addEventListener('click', async (e) => {
   e.preventDefault();
   const host = $('#hostname').value.trim().replace(/\/?$/, '/');
@@ -242,4 +272,4 @@ $('#save-options').addEventListener('click', async (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
-console.log('✅ options.js loaded (retryonfail supported)');
+console.log('✅ options.js loaded (retryonfail & test-connection supported)');
