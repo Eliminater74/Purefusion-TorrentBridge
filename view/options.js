@@ -329,5 +329,10 @@ $('#save-options').addEventListener('click', async (e) => {
   restoreServerList();
 });
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
+document.addEventListener('DOMContentLoaded', () => {
+  restoreOptions();
+  const manifest = chrome.runtime.getManifest();
+  const verEl = document.getElementById('version-display');
+  if (verEl) verEl.textContent = `Purefusion TorrentBridge v${manifest.version}`;
+});
 console.log('✅ options.js loaded (retryonfail, test-connection & import/export supported)');
