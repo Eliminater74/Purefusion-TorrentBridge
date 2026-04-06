@@ -1,4 +1,9 @@
-/* ========= Imports ========= */
+/* ================================================================
+   Purefusion TorrentBridge — Options Page Logic
+   Handles: settings persistence, connection test, import/export,
+            toast notifications, dark mode, password toggle, reset
+   ================================================================ */
+
 import {
   clientList,
   loadOptions,
@@ -8,8 +13,8 @@ import {
 
 /* ========= Globals ========= */
 let options;
-const saveButton   = document.querySelector('#save-options');
-const serverSelect = document.querySelector('#server-list');
+const saveButton    = document.querySelector('#save-options');
+const serverSelect  = document.querySelector('#server-list');
 
 /* ========= Helpers ========= */
 const $ = (q, ctx = document) => ctx.querySelector(q);
@@ -28,6 +33,33 @@ async function requestOriginPermission(hostname) {
   return new Promise((res) => {
     chrome.permissions.request({ origins: [`${origin}*`] }, (granted) => res(granted));
   });
+}
+
+/* ========= Toast Notifications ========= */
+function showToast(msg, type = 'success') {
+  const container = $('#toast-container');
+  if (!container) return;
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast--${type}`;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3200);
+}
+
+/* ========= Theme ========= */
+function applyTheme(mode) {
+  let theme;
+  if (mode === 'light') {
+    theme = 'light';
+  } else if (mode === 'dark') {
+    theme = 'dark';
+  } else {
+    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.body.dataset.theme = theme;
+  const btn = $('#theme-toggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 
 /* ========= Persist ========= */
@@ -52,13 +84,14 @@ async function persistOptions() {
 
   const granted = await requestOriginPermission(srvElm.hostname);
   if (!granted) {
-    alert('Permission denied. Server not saved.');
+    showToast('Permission denied — server not saved', 'error');
     return;
   }
 
   options.servers[idx] = srvElm;
   saveOptions(options);
   saveButton.setAttribute('disabled', 'true');
+  showToast('Settings saved successfully!', 'success');
 }
 
 function getFormServerConfig() {
@@ -75,17 +108,26 @@ function getFormServerConfig() {
 
 /* ========= Restore ========= */
 function restoreOptions() {
+  // Enable save on any form change
   $all('textarea, input, select:not(#server-list)').forEach((el) =>
     el.addEventListener('input', () => saveButton.removeAttribute('disabled'), { passive: true })
+  );
+
+  // Also listen to toggle switches
+  $all('.toggle-switch input').forEach((el) =>
+    el.addEventListener('change', () => saveButton.removeAttribute('disabled'), { passive: true })
   );
 
   $('#labels').placeholder      = 'Label\nAnother label';
   $('#directories').placeholder = '/home/user/downloads\n/data/incomplete';
 
-  $all('[data-i18n]').forEach((el) =>
-    (el.textContent = chrome.i18n.getMessage(el.dataset.i18n))
-  );
+  // i18n
+  $all('[data-i18n]').forEach((el) => {
+    const msg = chrome.i18n.getMessage(el.dataset.i18n);
+    if (msg) el.textContent = msg;
+  });
 
+  // Populate client dropdown
   clientList.forEach((c) => {
     const opt = document.createElement('option');
     opt.value = c.id;
@@ -95,13 +137,17 @@ function restoreOptions() {
 
   loadOptions().then((o) => {
     options = o;
+
+    // Apply theme
+    applyTheme(options.globals.darkMode);
+
     $(`[name="contextmenu"][value="${options.globals.contextMenu}"]`).checked = true;
     $('#catchurls').checked           = options.globals.catchUrls;
     $('#addpaused').checked           = options.globals.addPaused;
     $('#addadvanced').checked         = options.globals.addAdvanced;
     $('#enablenotifications').checked = options.globals.enableNotifications;
     $('#retryonfail').checked         = options.globals.retryOnFail;
-    $('#labels').value                = options.globals.labels.join('\n');
+    $('#labels').value                = (options.globals.labels || []).join('\n');
 
     restoreServerList();
     restoreServer(serverSelect.value);
@@ -122,7 +168,7 @@ function restoreServerList() {
 
   const add = document.createElement('option');
   add.value = 'add';
-  add.textContent = chrome.i18n.getMessage('addServerAction');
+  add.textContent = chrome.i18n.getMessage('addServerAction') || '+ Add Server';
   serverSelect.appendChild(add);
   serverSelect.value = sel;
 }
@@ -130,8 +176,7 @@ function restoreServerList() {
 function restoreServer(id) {
   const s = options.servers[~~id];
   serverSelect.value = id;
-  
-  // Only save if the selection actually changed to avoid unnecessary writes
+
   if (options.globals.currentServer !== ~~id) {
     options.globals.currentServer = ~~id;
     saveOptions(options);
@@ -146,6 +191,9 @@ function restoreServer(id) {
 
   $('#application').dispatchEvent(new Event('change'));
   $('#remove-server').toggleAttribute('disabled', options.servers.length <= 1);
+
+  // Reset connection status
+  setConnectionStatus('idle', 'Ready');
 }
 
 /* ========= Server edits ========= */
@@ -170,6 +218,7 @@ function removeServer(id) {
   restoreServerList();
   restoreServer(0);
   saveButton.removeAttribute('disabled');
+  showToast('Server removed', 'info');
 }
 
 const validURL = (str) => {
@@ -180,6 +229,15 @@ const validURL = (str) => {
     return false;
   }
 };
+
+/* ========= Connection Status ========= */
+function setConnectionStatus(state, text) {
+  const el = $('#connection-status');
+  if (!el) return;
+  el.className = `connection-status connection-status--${state}`;
+  // Keep the dot, update text
+  el.innerHTML = `<span class="connection-status__dot"></span> ${text}`;
+}
 
 /* ========= Dynamic UI ========= */
 $('#application').addEventListener('change', (e) => {
@@ -209,7 +267,14 @@ $('#application').addEventListener('change', (e) => {
 
   c.clientOptions?.forEach((opt) => {
     const wrap = document.createElement('div');
-    wrap.className = 'panel-formElements-item browser-style';
+    wrap.className = 'toggle-item';
+
+    const label = document.createElement('div');
+    label.className = 'toggle-item__label';
+    label.textContent = opt.description;
+
+    const toggleLabel = document.createElement('label');
+    toggleLabel.className = 'toggle-switch';
 
     const chk = document.createElement('input');
     chk.type = 'checkbox';
@@ -217,11 +282,11 @@ $('#application').addEventListener('change', (e) => {
     chk.checked = !!options.servers[options.globals.currentServer].clientOptions[opt.name];
     chk.addEventListener('input', () => saveButton.removeAttribute('disabled'), { passive: true });
 
-    const lbl = document.createElement('label');
-    lbl.htmlFor = chk.id;
-    lbl.textContent = opt.description;
+    const slider = document.createElement('span');
+    slider.className = 'toggle-switch__slider';
 
-    wrap.append(chk, lbl);
+    toggleLabel.append(chk, slider);
+    wrap.append(label, toggleLabel);
     panel.appendChild(wrap);
   });
 });
@@ -229,7 +294,33 @@ $('#application').addEventListener('change', (e) => {
 /* ========= Hostname Validation ========= */
 $('#hostname').addEventListener('input', (e) => {
   const txt = e.target.value.trim().replace(/\/?$/, '/');
-  e.target.style.borderColor = validURL(txt) ? '' : 'red';
+  const isValid = validURL(txt);
+  e.target.style.borderColor = isValid ? '' : 'var(--danger)';
+  e.target.style.boxShadow = isValid ? '' : '0 0 0 3px var(--danger-bg)';
+});
+
+/* ========= Password Toggle ========= */
+$('#password-toggle').addEventListener('click', () => {
+  const input = $('#password');
+  const btn = $('#password-toggle');
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁️';
+  }
+});
+
+/* ========= Theme Toggle ========= */
+$('#theme-toggle').addEventListener('click', () => {
+  const isDark = document.body.dataset.theme === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  applyTheme(newTheme);
+  if (options) {
+    options.globals.darkMode = newTheme;
+    chrome.storage.sync.set({ globals: options.globals });
+  }
 });
 
 /* ========= Events ========= */
@@ -244,10 +335,9 @@ $('#remove-server').addEventListener('click', (e) => {
 
 $('#check-connection').addEventListener('click', async (e) => {
   e.preventDefault();
-  const btn = e.target;
-  const originalText = btn.textContent;
-  btn.textContent = 'Checking...';
+  const btn = e.target.closest('button');
   btn.disabled = true;
+  setConnectionStatus('checking', 'Testing…');
 
   try {
     const srv = getFormServerConfig();
@@ -258,11 +348,12 @@ $('#check-connection').addEventListener('click', async (e) => {
     await client.logIn();
     await client.logOut();
 
-    alert('✅ Connection successful!');
+    setConnectionStatus('success', 'Connected');
+    showToast('Connection successful!', 'success');
   } catch (err) {
-    alert(`❌ Connection failed: ${err.message}`);
+    setConnectionStatus('fail', 'Failed');
+    showToast(`Connection failed: ${err.message}`, 'error');
   } finally {
-    btn.textContent = originalText;
     btn.disabled = false;
   }
 });
@@ -274,17 +365,19 @@ $('#export-settings').addEventListener('click', (e) => {
     const data = JSON.stringify(opts, null, 2);
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    
+
     const a = document.createElement('a');
     a.href = url;
     a.download = `purefusion-settings-${new Date().toISOString().slice(0, 10)}.json`;
     document.body.appendChild(a);
     a.click();
-    
+
     setTimeout(() => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }, 100);
+
+    showToast('Settings exported!', 'success');
   });
 });
 
@@ -304,35 +397,52 @@ $('#import-file').addEventListener('change', (e) => {
       if (!imported.globals || !imported.servers) {
         throw new Error('Invalid settings format');
       }
-      
-      // Basic validation: ensure proper structure
       if (!Array.isArray(imported.servers)) throw new Error('Invalid servers list');
-      
+
       saveOptions(imported).then(() => {
-        alert('✅ Settings imported successfully! Reloading...');
-        restoreOptions();
+        showToast('Settings imported! Reloading…', 'success');
+        setTimeout(() => restoreOptions(), 500);
       });
     } catch (err) {
-      alert(`❌ Import failed: ${err.message}`);
+      showToast(`Import failed: ${err.message}`, 'error');
     } finally {
-      e.target.value = ''; // Reset input
+      e.target.value = '';
     }
   };
   reader.readAsText(file);
 });
 
+/* ========= Reset to Defaults ========= */
+$('#reset-defaults').addEventListener('click', (e) => {
+  e.preventDefault();
+  if (!confirm('Reset all settings to factory defaults? This cannot be undone.')) return;
+
+  chrome.storage.sync.clear(() => {
+    chrome.storage.local.clear(() => {
+      showToast('All settings reset. Reloading…', 'info');
+      setTimeout(() => restoreOptions(), 500);
+    });
+  });
+});
+
+/* ========= Save ========= */
 $('#save-options').addEventListener('click', async (e) => {
   e.preventDefault();
   const host = $('#hostname').value.trim().replace(/\/?$/, '/');
-  if (!validURL(host)) return alert('Server address is invalid');
+  if (!validURL(host)) {
+    showToast('Server address is invalid', 'error');
+    return;
+  }
   await persistOptions();
   restoreServerList();
 });
 
+/* ========= Init ========= */
 document.addEventListener('DOMContentLoaded', () => {
   restoreOptions();
   const manifest = chrome.runtime.getManifest();
   const verEl = document.getElementById('version-display');
   if (verEl) verEl.textContent = `Purefusion TorrentBridge v${manifest.version}`;
 });
-console.log('✅ options.js loaded (retryonfail, test-connection & import/export supported)');
+
+console.log('✅ options.js loaded (v2.0 – toasts, dark mode, password toggle, reset)');

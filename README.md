@@ -2,7 +2,7 @@
 
 ![Logo](icon/icon_128.svg)
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/your-extension-id.svg?label=Chrome%20Web%20Store)](https://chrome.google.com/webstore/detail/purefusion-torrentbridge/your-extension-id)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Eliminater74/Purefusion-TorrentBridge.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge/stargazers)
@@ -18,25 +18,26 @@
 
 As of 2025, many beloved torrent extensions stopped working due to Chrome’s Manifest V3 changes. While others were abandoned, **Purefusion TorrentBridge** was rebuilt from scratch to be fast, modern, and future-proof:
 
-*   ✅ **Manifest V3 Compliant** & Store Safe
-*   ⚙️ **Modular ES6+ Architecture**
-*   🎨 **Clean, Responsive UI**
-*   🧩 **Minimal Permissions** — only requested when needed
-*   🌐 **Global Language Support** (15+ Languages)
-*   🔄 **Actively Maintained**
+* ✅ **Manifest V3 Compliant** & Store Safe
+* 🚀 **New Interactive Popup Dashboard**
+* 🎨 **Premium Glassmorphism Redesign** with Dark Mode support
+* 📊 **Full Transfer History** and smart error logs
+* 🧩 **Minimal Permissions** — only requested when needed
+* 🌐 **Global Language Support** (15+ Languages)
+* 🔄 **Actively Maintained**
 
 ---
 
 ## 💡 Key Features
 
-*   🎯 **Instant Link Detection**: Automatically finds torrents and magnets on any site.
-*   🖱️ **Context Menu Actions**: Right-click to "Send to Client", "Add Paused", or "Add with Label".
-*   🧪 **Connection Testing**: Verify your server settings instantly from the Options page.
-*   💾 **Backup & Restore**: Export your configuration to JSON and restore it instantly on a new install.
-*   🔧 **Smart Configuration**: Fallback menus guide you if your settings are missing.
-*   🌍 **International**: Full i18n support with auto-detection.
-*   📡 **RSS Feed Support**: For clients like qBittorrent.
-*   🔔 **Native Notifications**: Get instant feedback on success or failure.
+* 🎯 **Smart Link Hooks**: Styled inline buttons for any torrent or magnet link. Automatically detects private trackers.
+* ⚡ **Batch Send Bar**: Floating action bar to send all torrents on a page at once.
+* 📊 **Transfer Dashboard**: Full-page history with sortable tables, CSV export, and live connection status.
+* 📋 **Keyboard Shortcuts**: `Ctrl+Shift+U` to auto-parse and send magnet links straight from your clipboard.
+* 🌙 **Dark & Light Themes**: Auto-detects your OS preference or override it manually.
+* 🖱️ **Context Menu Actions**: Right-click to "Send to Client", "Add Paused", or "Add with Label".
+* 🍞 **Interactive Toasts**: Replaces generic alerts with modern, styled notifications.
+* 💾 **Backup & Restore**: Export your configuration to JSON and restore it instantly on a new install.
 
 ---
 
@@ -44,16 +45,16 @@ As of 2025, many beloved torrent extensions stopped working due to Chrome’s Ma
 
 Purefusion supports:
 
-*   ✅ qBittorrent (v4+)
-*   ✅ Transmission
-*   ✅ Deluge (Web UI)
-*   ✅ ruTorrent
-*   ✅ Flood
-*   ✅ Tixati (Web UI)
-*   ✅ uTorrent Web
-*   ✅ Vuze WebUI
-*   ✅ CloudTorrent
-*   ✅ BiglyBT
+* ✅ qBittorrent (v4+)
+* ✅ Transmission
+* ✅ Deluge (Web UI)
+* ✅ ruTorrent
+* ✅ Flood
+* ✅ Tixati (Web UI)
+* ✅ uTorrent Web
+* ✅ Vuze WebUI
+* ✅ CloudTorrent
+* ✅ BiglyBT
 
 > Want to add another client? Just drop a new module into `/lib/`.
 
@@ -63,21 +64,21 @@ Purefusion supports:
 
 Purefusion TorrentBridge speaks your language:
 
-*   🇺🇸 English (US/UK/AU)
-*   🇪🇸 Spanish
-*   🇫🇷 French
-*   🇩🇪 German
-*   🇷🇺 Russian
-*   🇧🇷 Portuguese (Brazil)
-*   🇮🇹 Italian **(NEW)**
-*   🇨🇳 Simplified Chinese **(NEW)**
-*   🇰🇷 Korean **(NEW)**
-*   🇳🇱 Dutch **(NEW)**
-*   🇹🇷 Turkish **(NEW)**
-*   🇵🇱 Polish **(NEW)**
-*   🇸🇪 Swedish **(NEW)**
-*   🇫🇮 Finnish
-*   🇯🇵 Japanese
+* 🇺🇸 English (US/UK/AU)
+* 🇪🇸 Spanish
+* 🇫🇷 French
+* 🇩🇪 German
+* 🇷🇺 Russian
+* 🇧🇷 Portuguese (Brazil)
+* 🇮🇹 Italian **(NEW)**
+* 🇨🇳 Simplified Chinese **(NEW)**
+* 🇰🇷 Korean **(NEW)**
+* 🇳🇱 Dutch **(NEW)**
+* 🇹🇷 Turkish **(NEW)**
+* 🇵🇱 Polish **(NEW)**
+* 🇸🇪 Swedish **(NEW)**
+* 🇫🇮 Finnish
+* 🇯🇵 Japanese
 
 ---
 
@@ -102,18 +103,18 @@ Access from the popup or directly via:
 `chrome-extension://<your-extension-id>/view/options.html`
 
 You can configure:
-*   **BitTorrent Client & Credentials**
-*   **Connection Testing** (Verify before you save)
-*   **Import / Export Settings**
-*   **Context Menu Preferences**
-*   **Retry Logic** (Auto-retry failed transfers)
-*   **Directories & Labels**
+* **BitTorrent Client & Credentials**
+* **Connection Testing** (Verify before you save)
+* **Import / Export Settings**
+* **Context Menu Preferences**
+* **Retry Logic** (Auto-retry failed transfers)
+* **Directories & Labels**
 
 ---
 
 ## 📸 UI Preview
 
-| 📎 **Context Menu** | 🔔 **Notifications** |
+| 🎛️ **Popup Dashboard** | ⚙️ **Dark Mode Options** |
 | :---: | :---: |
 | ![Menu](screenshots/context-menu.png) | ![Notify](screenshots/notification.png) |
 
@@ -138,10 +139,10 @@ You can configure:
 ## 🛠️ Planned Features
 
 See [`ThingsToDo.md`](./ThingsToDo.md):
-*   🧊 Draggable settings gear
-*   🎨 Dark mode / theme support
-*   🔍 Link preview and tracker validation
-*   🤝 Chrome profile sync
+* 🤝 Chrome profile sync
+* キュー Queue Management
+* 🔍 Tracker Health Check
+* 🦊 Firefox / Edge Support
 
 ---
 

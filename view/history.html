@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfer History — Purefusion TorrentBridge</title>
+  <link rel="stylesheet" type="text/css" href="extension.css">
+  <style>
+    /* ====== History-specific styles ====== */
+    .history-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 8px 32px 8px 12px;
+      font-size: 0.8rem;
+    }
+
+    .history-table-wrap {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.85rem;
+    }
+
+    .history-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .history-table th:hover {
+      color: var(--accent);
+    }
+
+    .history-table th .sort-arrow {
+      margin-left: 4px;
+      opacity: 0.4;
+    }
+
+    .history-table th.sorted .sort-arrow {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    .history-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    .history-table tr {
+      transition: background 0.15s ease;
+    }
+
+    .history-table tbody tr:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .status-pill--success {
+      background: rgba(0, 206, 201, 0.12);
+      color: var(--success);
+    }
+
+    .status-pill--fail {
+      background: rgba(255, 107, 107, 0.12);
+      color: var(--danger);
+    }
+
+    .name-cell {
+      max-width: 320px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .empty-history {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-history__icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    .empty-history__text {
+      font-size: 0.95rem;
+    }
+
+    .history-stats {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      flex: 1;
+      min-width: 120px;
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+
+    .stat-card__value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.2;
+    }
+
+    .stat-card__label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    .stat-card--success .stat-card__value { color: var(--success); }
+    .stat-card--fail .stat-card__value { color: var(--danger); }
+  </style>
+</head>
+<body data-theme="dark">
+
+<!-- ====== Header ====== -->
+<header class="extension-header">
+  <img src="../icon/icon_64.png" alt="Logo" class="extension-logo">
+  <h1 class="extension-title">Transfer History</h1>
+  <div class="extension-header__actions">
+    <button id="theme-toggle" class="theme-toggle" title="Toggle theme">🌙</button>
+  </div>
+</header>
+
+<main class="extension-main">
+
+  <!-- ====== Stats Cards ====== -->
+  <div class="history-stats" id="stats-row">
+    <div class="stat-card">
+      <div class="stat-card__value" id="stat-total">0</div>
+      <div class="stat-card__label">Total</div>
+    </div>
+    <div class="stat-card stat-card--success">
+      <div class="stat-card__value" id="stat-success">0</div>
+      <div class="stat-card__label">Success</div>
+    </div>
+    <div class="stat-card stat-card--fail">
+      <div class="stat-card__value" id="stat-fail">0</div>
+      <div class="stat-card__label">Failed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card__value" id="stat-today">0</div>
+      <div class="stat-card__label">Today</div>
+    </div>
+  </div>
+
+  <!-- ====== Toolbar ====== -->
+  <section class="options-card">
+    <div class="panel-section-footer">
+      <div class="history-toolbar">
+        <select id="filter-status" class="filter-select">
+          <option value="all">All Status</option>
+          <option value="success">Success</option>
+          <option value="fail">Failed</option>
+        </select>
+        <select id="filter-server" class="filter-select">
+          <option value="all">All Servers</option>
+        </select>
+      </div>
+      <div style="flex-grow: 1;"></div>
+      <button id="btn-export-csv" class="btn-secondary">📄 Export CSV</button>
+      <button id="btn-clear" class="btn-danger">🗑️ Clear All</button>
+    </div>
+  </section>
+
+  <!-- ====== History Table ====== -->
+  <section class="options-card">
+    <div class="history-table-wrap">
+      <table class="history-table" id="history-table">
+        <thead>
+          <tr>
+            <th data-sort="timestamp" class="sorted">Time <span class="sort-arrow">▼</span></th>
+            <th data-sort="name">Name <span class="sort-arrow">▼</span></th>
+            <th data-sort="server">Server <span class="sort-arrow">▼</span></th>
+            <th data-sort="status">Status <span class="sort-arrow">▼</span></th>
+          </tr>
+        </thead>
+        <tbody id="history-body"></tbody>
+      </table>
+    </div>
+
+    <div class="empty-history" id="empty-state" style="display: none;">
+      <div class="empty-history__icon">📭</div>
+      <div class="empty-history__text">No transfers recorded yet.</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====== Footer ====== -->
+<footer class="extension-footer">
+  <p id="version-display">Purefusion TorrentBridge</p>
+  <p>Made with 💜 by <a href="https://github.com/Eliminater74" target="_blank" rel="noopener">Eliminater74</a></p>
+</footer>
+
+<div id="toast-container"></div>
+
+<script type="module" src="history.js"></script>
+</body>
+</html>

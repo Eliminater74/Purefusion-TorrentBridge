@@ -2,72 +2,129 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Purefusion TorrentBridge Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purefusion TorrentBridge — Settings</title>
   <link rel="stylesheet" type="text/css" href="extension.css">
 </head>
-<body>
+<body data-theme="dark">
 
+<!-- ====== Sticky Header ====== -->
 <header class="extension-header">
   <img src="../icon/icon_64.png" alt="Logo" class="extension-logo">
-  <h1 class="extension-title">Purefusion TorrentBridge</h1>
+  <h1 class="extension-title">TorrentBridge</h1>
+  <div class="extension-header__actions">
+    <button id="theme-toggle" class="theme-toggle" title="Toggle dark/light mode">🌙</button>
+  </div>
 </header>
 
 <main class="extension-main">
-  <section id="options-section">
+
+  <!-- ====== Addon Configuration Card ====== -->
+  <section class="options-card" id="addon-config-section">
     <header class="panel-section-header">
-      <span data-i18n="addonConfigurationTitle">Addon configuration</span>
+      <span class="header-icon">⚙️</span>
+      <span data-i18n="addonConfigurationTitle">Addon Configuration</span>
     </header>
 
     <div class="panel-section-formElements">
+
+      <!-- Context Menu -->
       <div class="panel-formElements-item">
         <label data-i18n="contextMenuOption">Context menu</label>
-        <label><input type="radio" name="contextmenu" value="1" id="contextmenuDefault">
-          <span data-i18n="contextMenuDefaultOption">Default</span></label>
-        <label><input type="radio" name="contextmenu" value="2" id="contextmenuSimple">
-          <span data-i18n="contextMenuSimpleOption">Simple</span></label>
-        <label><input type="radio" name="contextmenu" value="0" id="contextmenuHidden">
-          <span data-i18n="contextMenuHiddenOption">Hidden</span></label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="contextmenu" value="1" id="contextmenuDefault">
+            <span data-i18n="contextMenuDefaultOption">Default</span>
+          </label>
+          <label>
+            <input type="radio" name="contextmenu" value="2" id="contextmenuSimple">
+            <span data-i18n="contextMenuSimpleOption">Simple</span>
+          </label>
+          <label>
+            <input type="radio" name="contextmenu" value="0" id="contextmenuHidden">
+            <span data-i18n="contextMenuHiddenOption">Hidden</span>
+          </label>
+        </div>
       </div>
 
-      <div class="panel-formElements-item">
-        <label><input type="checkbox" id="catchurls" />
-          <span data-i18n="catchUrlsOption">Catch torrent URLs</span></label>
+      <!-- Toggle: Catch URLs -->
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-item__label" data-i18n="catchUrlsOption">Catch torrent URLs</div>
+          <div class="toggle-item__desc">Automatically detect and intercept torrent links</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="catchurls">
+          <span class="toggle-switch__slider"></span>
+        </label>
       </div>
 
-      <div class="panel-formElements-item">
-        <label><input type="checkbox" id="addpaused" />
-          <span data-i18n="addPausedOption">Add torrents as paused</span></label>
+      <!-- Toggle: Add Paused -->
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-item__label" data-i18n="addPausedOption">Add torrents as paused</div>
+          <div class="toggle-item__desc">Start downloads in paused state</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="addpaused">
+          <span class="toggle-switch__slider"></span>
+        </label>
       </div>
 
-      <div class="panel-formElements-item">
-        <label><input type="checkbox" id="addadvanced" />
-          <span data-i18n="addAdvancedOption">Add via advanced dialog</span></label>
+      <!-- Toggle: Advanced Dialog -->
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-item__label" data-i18n="addAdvancedOption">Add via advanced dialog</div>
+          <div class="toggle-item__desc">Show options before adding torrent</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="addadvanced">
+          <span class="toggle-switch__slider"></span>
+        </label>
       </div>
 
-      <div class="panel-formElements-item">
-        <label><input type="checkbox" id="enablenotifications" />
-          <span data-i18n="enableNotificationsOption">Show notifications</span></label>
+      <!-- Toggle: Notifications -->
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-item__label" data-i18n="enableNotificationsOption">Show notifications</div>
+          <div class="toggle-item__desc">System notifications for success/failure</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="enablenotifications">
+          <span class="toggle-switch__slider"></span>
+        </label>
       </div>
 
-      <!-- ✅ FIXED: Retry option label shown without relying on i18n -->
-      <div class="panel-formElements-item">
-        <label><input type="checkbox" id="retryonfail" />
-          Retry failed transfers (3 attempts)</label>
+      <!-- Toggle: Retry -->
+      <div class="toggle-item">
+        <div>
+          <div class="toggle-item__label">Retry failed transfers</div>
+          <div class="toggle-item__desc">Automatically retry up to 3 times</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="retryonfail">
+          <span class="toggle-switch__slider"></span>
+        </label>
       </div>
 
+      <!-- Labels -->
       <div class="panel-formElements-item">
         <label for="labels" data-i18n="torrentLabelsOption">Labels</label>
-        <textarea id="labels" placeholder="label1&#10;label2"></textarea>
+        <textarea id="labels" placeholder="label1&#10;label2" rows="3"></textarea>
       </div>
+
     </div>
   </section>
 
-  <section id="options-section">
+  <!-- ====== Server Configuration Card ====== -->
+  <section class="options-card" id="server-config-section">
     <header class="panel-section-header">
-      <span data-i18n="serverConfigurationTitle">Server configuration</span>
+      <span class="header-icon">🖥️</span>
+      <span data-i18n="serverConfigurationTitle">Server Configuration</span>
     </header>
 
     <div class="panel-section-formElements">
+
       <div class="panel-formElements-item">
         <label for="server-list" data-i18n="serverSelect">Current server</label>
         <select id="server-list"></select>
@@ -75,57 +132,90 @@
 
       <div class="panel-formElements-item">
         <label for="name" data-i18n="serverNameOption">Server name</label>
-        <input type="text" id="name" />
+        <input type="text" id="name">
       </div>
 
       <div class="panel-formElements-item">
-        <label for="application" data-i18n="bittorrentClientOption">Bittorrent client</label>
+        <label for="application" data-i18n="bittorrentClientOption">BitTorrent client</label>
         <select id="application"></select>
       </div>
 
       <div class="panel-formElements-item">
         <label for="hostname" data-i18n="serverAddressOption">Server address</label>
-        <input type="text" id="hostname" />
+        <input type="text" id="hostname">
       </div>
 
       <div class="panel-formElements-item">
         <label for="username" data-i18n="usernameOption">Username</label>
-        <input type="text" id="username" />
+        <input type="text" id="username">
       </div>
 
       <div class="panel-formElements-item">
         <label for="password" data-i18n="passwordOption">Password</label>
-        <input type="password" id="password" />
+        <div class="password-wrap">
+          <input type="password" id="password">
+          <button type="button" id="password-toggle" class="password-toggle" title="Toggle password visibility">👁️</button>
+        </div>
       </div>
 
-      <div class="panel-formElements-item">
-        <label></label>
-        <button id="check-connection" type="button" data-i18n="checkConnectionAction">Check connection</button>
+      <!-- Connection Test -->
+      <div class="panel-formElements-item row" style="justify-content: space-between;">
+        <button id="check-connection" type="button" class="btn-secondary">
+          🔌 <span data-i18n="checkConnectionAction">Check connection</span>
+        </button>
+        <span id="connection-status" class="connection-status connection-status--idle">
+          <span class="connection-status__dot"></span>
+          Ready
+        </span>
       </div>
 
+      <!-- Client-specific options -->
       <div class="panel-formElements-item" data-panel="clientOptions">
-        <!-- Dynamic client options will go here -->
+        <!-- Dynamic client options go here -->
       </div>
 
+      <!-- Download directories -->
       <div class="panel-formElements-item" data-panel="directories">
         <label for="directories" data-i18n="serverDirectoriesOption">Download directories</label>
-        <textarea id="directories" placeholder="/downloads/path1&#10;/downloads/path2"></textarea>
+        <textarea id="directories" placeholder="/downloads/path1&#10;/downloads/path2" rows="3"></textarea>
       </div>
+
     </div>
   </section>
 
-  <footer class="panel-section-footer">
-    <button id="save-options" class="default" disabled data-i18n="saveAction">Save</button>
-    <button id="remove-server" disabled data-i18n="removeAction">Remove server</button>
-    <div style="flex-grow: 1;"></div>
-    <button id="export-settings" title="Export current settings to JSON">Export</button>
-    <button id="import-settings" title="Import settings from JSON">Import</button>
-    <input type="file" id="import-file" accept=".json" style="display: none;" />
-  </footer>
+  <!-- ====== Action Footer Card ====== -->
+  <section class="options-card" id="actions-section">
+    <div class="panel-section-footer">
+      <button id="save-options" class="btn-primary" disabled>
+        💾 <span data-i18n="saveAction">Save</span>
+      </button>
+      <button id="remove-server" class="btn-danger" disabled>
+        🗑️ <span data-i18n="removeAction">Remove server</span>
+      </button>
+      <div style="flex-grow: 1;"></div>
+      <button id="export-settings" class="btn-secondary" title="Export current settings to JSON">
+        📤 Export
+      </button>
+      <button id="import-settings" class="btn-secondary" title="Import settings from JSON">
+        📥 Import
+      </button>
+      <button id="reset-defaults" class="btn-secondary" title="Reset all settings to factory defaults">
+        🔄 Reset
+      </button>
+      <input type="file" id="import-file" accept=".json" style="display: none;">
+    </div>
+  </section>
+
 </main>
 
+<!-- ====== Footer ====== -->
 <footer class="extension-footer">
   <p id="version-display">Purefusion TorrentBridge</p>
+  <p>Made with 💜 by <a href="https://github.com/Eliminater74" target="_blank" rel="noopener">Eliminater74</a> · <a href="https://github.com/Eliminater74/Purefusion-TorrentBridge" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<!-- ====== Toast Container ====== -->
+<div id="toast-container"></div>
 
 <script type="module" src="./options.js"></script>
 </body>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Purefusion TorrentBridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body data-theme="dark">
+
+  <!-- ====== Header ====== -->
+  <header class="popup-header">
+    <div class="popup-header__brand">
+      <img src="../icon/icon_48.png" alt="Logo" class="popup-header__logo">
+      <span class="popup-header__title">TorrentBridge</span>
+    </div>
+    <div class="popup-header__actions">
+      <button id="btn-theme" class="icon-btn" title="Toggle theme">🌙</button>
+      <button id="btn-options" class="icon-btn" title="Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- ====== Connection Status ====== -->
+  <div class="status-bar">
+    <span id="status-dot" class="status-dot status-dot--checking"></span>
+    <div class="status-bar__info">
+      <select id="server-switch" class="server-switch" title="Switch server"></select>
+      <div id="status-client" class="status-bar__client">—</div>
+    </div>
+    <span id="status-badge" class="status-bar__badge" title="Transfers today">0</span>
+  </div>
+
+  <!-- ====== Quick Actions ====== -->
+  <div class="quick-actions">
+    <button id="btn-webui" class="quick-action-btn" title="Open your client's Web UI">
+      <span class="quick-action-btn__icon">🌐</span>
+      Open Web UI
+    </button>
+    <button id="btn-paste" class="quick-action-btn" title="Add magnet link from clipboard">
+      <span class="quick-action-btn__icon">📋</span>
+      Paste Magnet
+    </button>
+    <button id="btn-history" class="quick-action-btn" title="View full transfer history">
+      <span class="quick-action-btn__icon">📊</span>
+      History
+    </button>
+  </div>
+
+  <!-- ====== Magnet URL Input ====== -->
+  <div class="magnet-section">
+    <div class="magnet-input-wrap">
+      <input type="text" id="magnet-input" class="magnet-input"
+             placeholder="Paste magnet:?xt=urn:btih:… link here">
+      <button id="btn-send-magnet" class="magnet-send-btn" disabled>Send</button>
+    </div>
+    <div id="magnet-preview" class="magnet-preview" style="display:none;"></div>
+  </div>
+
+  <!-- ====== Drag & Drop Zone ====== -->
+  <div id="drop-zone" class="drop-zone">
+    <span class="drop-zone__icon">📂</span>
+    <span class="drop-zone__text">Drop .torrent file here</span>
+  </div>
+
+  <!-- ====== Recent Transfers ====== -->
+  <div class="section-label">
+    <span>Recent Transfers</span>
+    <button id="btn-clear-history" class="section-label__action">Clear</button>
+  </div>
+
+  <div id="history-list" class="history-list">
+    <!-- Populated by popup.js -->
+  </div>
+
+  <div id="empty-state" class="empty-state" style="display: none;">
+    <div class="empty-state__icon">📭</div>
+    <div class="empty-state__text">No transfers yet.<br>Right-click a torrent link or paste a magnet above.</div>
+  </div>
+
+  <!-- ====== Toast Container ====== -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ====== Footer ====== -->
+  <footer class="popup-footer">
+    <span id="footer-version">Purefusion TorrentBridge</span>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

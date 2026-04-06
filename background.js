@@ -14,6 +14,7 @@ import {
 /* ========= Constants ========= */
 const APP_NAME = 'Purefusion TorrentBridge';
 const ICON_48  = 'icon/icon_48.png';
+const MAX_HISTORY = 50;
 
 /* ========= Globals ========= */
 let options = {};
@@ -32,6 +33,7 @@ loadOptions()
     options = loaded;
     buildMenus();
     registerListeners();
+    updateBadge();
   })
   .catch((e) => console.error(`[${APP_NAME}] failed to load options`, e));
 
@@ -61,12 +63,61 @@ function ensureHostPermission(origin) {
   });
 }
 
+/* ========= Transfer History ========= */
+async function loadHistory() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['transferHistory'], (data) => {
+      resolve(data.transferHistory || []);
+    });
+  });
+}
+
+async function addHistoryEntry(entry) {
+  const history = await loadHistory();
+  history.push({
+    url: entry.url || '',
+    name: entry.name || 'Unknown',
+    status: entry.status || 'success',   // 'success' | 'fail'
+    error: entry.error || null,
+    server: entry.server || '',
+    timestamp: new Date().toISOString()
+  });
+  // Keep only last MAX_HISTORY entries
+  while (history.length > MAX_HISTORY) history.shift();
+  await chrome.storage.local.set({ transferHistory: history });
+  updateBadge();
+}
+
+/* ========= Badge ========= */
+async function updateBadge() {
+  try {
+    const history = await loadHistory();
+    const today = new Date().toDateString();
+    const todayCount = history.filter(
+      (t) => t.status === 'success' && new Date(t.timestamp).toDateString() === today
+    ).length;
+    const failCount = history.filter(
+      (t) => t.status === 'fail' && new Date(t.timestamp).toDateString() === today
+    ).length;
+
+    const text = todayCount > 0 ? String(todayCount) : '';
+    chrome.action.setBadgeText({ text });
+
+    // Badge color coding (#8): green if last was success, red if last was fail
+    const lastEntry = history[history.length - 1];
+    const badgeColor = (lastEntry?.status === 'fail' && failCount > 0) ? '#ff6b6b' : '#6c5ce7';
+    chrome.action.setBadgeBackgroundColor({ color: badgeColor });
+  } catch (e) {
+    console.warn(`[${APP_NAME}] badge update failed:`, e);
+  }
+}
+
 /* ========= Context-menu builders ========= */
 const buildMenus = () => {
   chrome.contextMenus.removeAll(() => {
     createDefaultMenu();
     if (options.servers.length > 1) createServerSelectionMenu();
-    
+
     if (options.globals.contextMenu) {
       if (isConfigured()) {
         createMainLinkMenus();
@@ -121,7 +172,7 @@ const createConfigureMenu = () => {
   chrome.contextMenus.create({
     id: 'open-options',
     title: 'Configure TorrentBridge...',
-    contexts: ['link', 'page', 'selection'] // Show on all useful contexts so it's visible
+    contexts: ['link', 'page', 'selection']
   }, () => {
     if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
   });
@@ -158,26 +209,126 @@ const createMainLinkMenus = () => {
       if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
     });
   }
+
+  // Label submenu (#4)
+  if (client?.clientCapabilities?.includes('label') && options.globals.labels?.length > 0) {
+    chrome.contextMenus.create({
+      id: 'add-with-label',
+      title: 'Add with Label',
+      contexts: ['link']
+    }, () => {
+      if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
+    });
+
+    options.globals.labels.forEach((label, idx) => {
+      chrome.contextMenus.create({
+        id: `add-label-${idx}`,
+        parentId: 'add-with-label',
+        title: label,
+        contexts: ['link']
+      }, () => {
+        if (chrome.runtime.lastError) console.error('Menu error:', chrome.runtime.lastError);
+      });
+    });
+  }
 };
 
 /* ========= Click / message listeners ========= */
 const registerListeners = () => {
   chrome.contextMenus.onClicked.addListener(handleMenuClick);
 
-  chrome.action.onClicked.addListener(() => {
-    if (isConfigured()) {
-      chrome.tabs.create({
-        url: getURL(options.servers[options.globals.currentServer])
-      });
-    } else {
-      chrome.runtime.openOptionsPage();
+  /* Popup replaces action.onClicked, so no listener needed */
+
+  /* ---- Message API ---- */
+  chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
+    switch (req.type) {
+      case 'addTorrent':
+        addTorrent(req.url, req.referer || sender?.url || null, req.options || {})
+          .then(() => sendResponse({ ok: true }))
+          .catch((e) => sendResponse({ ok: false, error: e.message }));
+        return true; // async response
+
+      case 'getStatus': {
+        const srv = options.servers[options.globals.currentServer];
+        sendResponse({
+          server: srv?.name || 'Not configured',
+          client: srv?.application || null,
+          hostname: srv?.hostname || null
+        });
+        return false;
+      }
+
+      case 'addTorrentFile': {
+        // Handle drag-and-drop .torrent file from popup (#3)
+        const fileData = new Uint8Array(req.data);
+        const blob = new Blob([fileData], { type: 'application/x-bittorrent' });
+        const svrIdx = options.globals.currentServer;
+        const svr = options.servers[svrIdx];
+        const svrName = svr?.name || 'Unknown';
+
+        (async () => {
+          try {
+            const origin = normalizeOrigin(svr?.hostname || '');
+            await ensureHostPermission(origin);
+            const conn = getClient(svr);
+            const torrentName = (await getTorrentName(blob)) || req.fileName || 'Torrent file';
+            await conn.logIn();
+            await conn.addTorrent(blob, {});
+            await conn.logOut();
+            notify('Torrent added: ' + torrentName);
+            await addHistoryEntry({ url: req.fileName, name: torrentName, status: 'success', server: svrName });
+            sendResponse({ ok: true });
+          } catch (e) {
+            const errMsg = categorizeError(e);
+            notify('Upload failed: ' + errMsg);
+            await addHistoryEntry({ url: req.fileName, name: req.fileName, status: 'fail', error: errMsg, server: svrName });
+            sendResponse({ ok: false, error: errMsg });
+          }
+        })();
+        return true;
+      }
+
+      case 'getHistory':
+        loadHistory().then((h) => sendResponse(h));
+        return true;
+
+      case 'clearHistory':
+        chrome.storage.local.set({ transferHistory: [] }, () => {
+          updateBadge();
+          sendResponse({ ok: true });
+        });
+        return true;
+
+      default:
+        return false;
     }
   });
 
-  chrome.runtime.onMessage.addListener((req, sender) => {
-    if (req.type === 'addTorrent') {
-      // fire and forget
-      addTorrent(req.url, sender?.url || null);
+  /* ---- Keyboard shortcut ---- */
+  chrome.commands.onCommand.addListener(async (command) => {
+    if (command !== 'add-from-clipboard') return;
+
+    try {
+      // Read clipboard via offscreen or fallback
+      // In MV3 service workers, we can't directly access clipboard.
+      // We'll send a message to the active tab's content script to read it.
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (!tab?.id) return;
+
+      chrome.tabs.sendMessage(tab.id, { type: 'readClipboard' }, (response) => {
+        if (chrome.runtime.lastError || !response?.text) {
+          notify('Could not read clipboard');
+          return;
+        }
+        const text = response.text.trim();
+        if (isMagnetUrl(text) || isTorrentUrl(text)) {
+          addTorrent(text, null);
+        } else {
+          notify('Clipboard does not contain a torrent/magnet URL');
+        }
+      });
+    } catch (e) {
+      console.error(`[${APP_NAME}] clipboard shortcut error:`, e);
     }
   });
 };
@@ -197,8 +348,16 @@ const handleMenuClick = (info) => {
     case 'add-rss-feed':
       return addRssFeed(info.linkUrl || info.selectionText?.trim());
     default: {
+      // Server selection
       const serverSel = info.menuItemId.match(/^current-server-(\d+)$/);
-      if (serverSel) setCurrentServer(Number(serverSel[1]));
+      if (serverSel) return setCurrentServer(Number(serverSel[1]));
+
+      // Label selection (#4)
+      const labelSel = info.menuItemId.match(/^add-label-(\d+)$/);
+      if (labelSel) {
+        const label = options.globals.labels[Number(labelSel[1])];
+        return addTorrent(info.linkUrl, info.pageUrl, { label });
+      }
     }
   }
 };
@@ -209,45 +368,52 @@ async function addTorrent(url, referer = null, opts = {}) {
 
   const svrIdx = opts.server ?? options.globals.currentServer;
   const svr = options.servers[svrIdx];
+  const svrName = svr?.name || 'Unknown';
 
   // Ensure permission for this server's origin
   const origin = normalizeOrigin(svr?.hostname || '');
   const granted = await ensureHostPermission(origin);
   if (!granted) {
-    return notify(chrome.i18n.getMessage('permissionsDenied') || 'Permission denied for server origin');
+    const errMsg = chrome.i18n.getMessage('permissionsDenied') || 'Permission denied for server origin';
+    notify(errMsg);
+    await addHistoryEntry({ url, name: getMagnetUrlName(url) || url, status: 'fail', error: errMsg, server: svrName });
+    throw new Error(errMsg);
   }
 
   const conn = getClient(svr);
 
-  const done = (name) =>
-    notify(
-      chrome.i18n.getMessage('torrentAddedNotification') + (name ? ' ' + name : '')
-    );
-
-  const fail = (e) =>
-    notify(
-      chrome.i18n.getMessage(
-        'torrentAddError',
-        e?.message?.includes('NetworkError') ? 'Network error' : e.message
-      )
-    );
-
   try {
+    let torrentName;
+
     if (isMagnetUrl(url)) {
+      torrentName = getMagnetUrlName(url) || 'Magnet link';
       await conn.logIn();
       await conn.addTorrentUrl(url, opts);
-      done(getMagnetUrlName(url));
       await conn.logOut();
     } else {
-      const { torrent, torrentName } = await fetchTorrent(url, referer);
+      const { torrent, torrentName: tName } = await fetchTorrent(url, referer);
+      torrentName = tName || 'Torrent file';
       await conn.logIn();
       await conn.addTorrent(torrent, opts);
-      done(torrentName);
       await conn.logOut();
     }
+
+    const successMsg = (chrome.i18n.getMessage('torrentAddedNotification') || 'Torrent added') + (torrentName ? ' ' + torrentName : '');
+    notify(successMsg);
+    await addHistoryEntry({ url, name: torrentName, status: 'success', server: svrName });
+
   } catch (e) {
     if (conn.removeEventListeners) conn.removeEventListeners();
-    fail(e);
+    const errorMsg = categorizeError(e);
+    notify(chrome.i18n.getMessage('torrentAddError', errorMsg) || `Error: ${errorMsg}`);
+    await addHistoryEntry({
+      url,
+      name: isMagnetUrl(url) ? getMagnetUrlName(url) : url,
+      status: 'fail',
+      error: errorMsg,
+      server: svrName
+    });
+    throw e;
   }
 }
 
@@ -298,6 +464,24 @@ async function addRssFeed(url) {
   }
 }
 
+/* ========= Error Categorization ========= */
+function categorizeError(e) {
+  const msg = e?.message || String(e);
+  if (/NetworkError|Failed to fetch|net::ERR/i.test(msg)) {
+    return 'Network unreachable — check server address';
+  }
+  if (/401|403|login|auth|denied/i.test(msg)) {
+    return 'Authentication failed — check credentials';
+  }
+  if (/timeout|timed out|ETIMEDOUT/i.test(msg)) {
+    return 'Connection timed out';
+  }
+  if (/400|Bad Request/i.test(msg)) {
+    return 'Bad request — the client rejected the torrent';
+  }
+  return msg;
+}
+
 /* ========= UI helpers ========= */
 const notify = (msg) => {
   if (!options?.globals?.enableNotifications) return;
@@ -308,14 +492,22 @@ const notify = (msg) => {
       title: APP_NAME,
       message: msg
     },
-    (id) => setTimeout(() => chrome.notifications.clear(id), 3000)
+    (id) => {
+      setTimeout(() => chrome.notifications.clear(id), 5000);
+    }
   );
 };
+
+// Notification click → open history page (#6)
+chrome.notifications.onClicked.addListener(() => {
+  chrome.tabs.create({ url: chrome.runtime.getURL('view/history.html') });
+});
 
 /* ========= Option toggles ========= */
 const setCurrentServer = (id) => {
   options.globals.currentServer = id;
   saveOptions(options);
+  buildMenus();
 };
 const toggleCatchUrls = () => {
   options.globals.catchUrls = !options.globals.catchUrls;

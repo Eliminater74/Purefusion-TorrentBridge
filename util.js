@@ -82,6 +82,7 @@ export function loadOptions() {
       catchUrls          : true,
       enableNotifications: true,
       retryOnFail        : false,
+      darkMode           : null,  // null = auto-detect from OS
       labels             : []
     },
     servers: [
@@ -184,3 +185,19 @@ const whitelist = [
   /^https:\/\/anidex\.info\/dl\/\d+$/i,
   /^https:\/\/animebytes\.tv\/torrent\/\d+\/download\/$/i
 ];
+
+/* ========= Transfer History Helpers ========= */
+const MAX_HISTORY = 50;
+
+export function loadHistory() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['transferHistory'], (data) => {
+      resolve(data.transferHistory || []);
+    });
+  });
+}
+
+export async function saveHistory(history) {
+  while (history.length > MAX_HISTORY) history.shift();
+  await chrome.storage.local.set({ transferHistory: history });
+}

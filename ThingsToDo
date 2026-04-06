@@ -6,18 +6,18 @@ These are potential improvements and feature ideas for future versions of the Pu
 
 ## 🔄 Extension Behavior
 
-* [ ] **Context-aware Activation**
+* [x] **Context-aware Activation** ✅ v2.0
 
   * Automatically enable/disable the extension icon only on pages containing `.torrent` or magnet links.
   * Optional: allow user control to force-enable.
 
-* [ ] **Draggable Floating Action Button (FAB)**
+* [x] **Draggable Floating Action Button (FAB)** ✅ v2.0 (batch-send bar)
 
   * Show floating gear/settings icon only on torrent/magnet pages.
   * Allow users to drag and position it.
   * Save position via localStorage or `chrome.storage.sync`.
 
-* [ ] **Advanced Permissions Control**
+* [x] **Advanced Permissions Control** ✅ v1.1
 
   * Ask for host permission only when a specific client is selected.
   * Minimize broad access for better privacy/security.
@@ -26,23 +26,35 @@ These are potential improvements and feature ideas for future versions of the Pu
 
 ## ⚙️ Options UI
 
-* [ ] **Logo + Branding Header**
+* [x] **Logo + Branding Header** ✅ v1.0.3
 
   * Add logo and extension name at the top of `options.html`.
 
-* [ ] **Footer with Copyright/Links**
+* [x] **Footer with Copyright/Links** ✅ v2.0
 
   * Add a footer showing "© Eliminater74" and link to GitHub or support.
 
-* [ ] **Import/Export Settings**
+* [x] **Import/Export Settings** ✅ v1.1
 
   * Add buttons to export current config to JSON.
   * Allow re-import to restore settings.
 
-* [ ] **Client Configuration Validation**
+* [x] **Client Configuration Validation** ✅ v2.0
 
   * Validate entered host/port before saving.
   * Show green/red check status next to input.
+
+* [x] **Dark Mode / Theme Support** ✅ v2.0
+
+  * Auto-detects from OS, user-toggleable on every page
+
+* [x] **Toast Notifications** ✅ v2.0
+
+  * Replaced all alert() with animated toasts
+
+* [x] **Password Visibility Toggle** ✅ v2.0
+
+* [x] **Reset to Defaults** ✅ v2.0
 
 ---
 
@@ -57,11 +69,11 @@ These are potential improvements and feature ideas for future versions of the Pu
   * Allow saving multiple clients and selecting default.
   * Could add tabbed interface or dropdown.
 
-* [ ] **Quick Retry Logic**
+* [x] **Quick Retry Logic** ✅ v1.0.5
 
   * Retry failed requests (especially for cookie/session clients).
 
-* [ ] **Link Preview Before Sending**
+* [x] **Link Preview Before Sending** ✅ v2.0 (styled buttons + batch bar)
 
   * Show link name, size, and torrent type (magnet/file) before sending.
 
@@ -69,11 +81,11 @@ These are potential improvements and feature ideas for future versions of the Pu
 
 ## 🔔 Notifications & Feedback
 
-* [ ] **Enhanced Toast Notifications**
+* [x] **Enhanced Toast Notifications** ✅ v2.0
 
   * Add icons, auto-fade, success/failure status.
 
-* [ ] **In-Browser Log Panel**
+* [x] **In-Browser Log Panel** ✅ v2.0 (Transfer History page)
 
   * Option to view send history or recent errors.
 
@@ -85,7 +97,7 @@ These are potential improvements and feature ideas for future versions of the Pu
 
   * When enabled, show request/response for all uploads.
 
-* [ ] **Force Clear Settings Button**
+* [x] **Force Clear Settings Button** ✅ v2.0
 
   * One-click reset to default settings.
 
@@ -93,19 +105,30 @@ These are potential improvements and feature ideas for future versions of the Pu
 
 ## 🌍 Internationalization (i18n)
 
-* [ ] Add localization support using `_locales/en/messages.json`
+* [x] Add localization support using `_locales/en/messages.json` ✅ v1.0.4
 
-  * Plan to support Spanish, German, etc. in future
+  * Supports 15+ languages
 
 ---
 
 ## 📦 Web Store Release Prep
 
-* [ ] Add proper `screenshots/`, `support_url`, and `homepage_url` to `manifest.json`
-* [ ] Include a privacy policy
-* [ ] Add `CHANGELOG.md` and `ThingsToDo.md` to repo for transparency
+* [x] Add proper `screenshots/`, `support_url`, and `homepage_url` to `manifest.json` ✅ v1.0.6
+* [x] Include a privacy policy ✅ v1.0.6
+* [x] Add `CHANGELOG.md` and `ThingsToDo.md` to repo for transparency ✅ v1.0.3
+
+---
+
+## 🆕 Future Ideas (Post v2.0)
+
+* [ ] **Chrome Profile Sync** — Sync settings across Chrome profiles
+* [ ] **Torrent File Drag & Drop** — Drop .torrent files onto popup to send
+* [ ] **Queue Management** — View/pause/resume transfers from popup
+* [ ] **Tracker Health Check** — Validate tracker URLs before sending
+* [ ] **Custom Notification Sounds** — Optional audio feedback
+* [ ] **Firefox / Edge Support** — Port to other Chromium browsers + Firefox
 
 ---
 
 > Maintained by: Eliminater74
-> Updated: July 2025
+> Updated: April 2026
