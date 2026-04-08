@@ -38,17 +38,7 @@ With our smart-detection engine, right-clicking a link, hovering over a magnet, 
 ---
 
 ### 🧰 Supported Clients
-Purefusion supports almost every major client out of the box:
-* qBittorrent (v4+)
-* Transmission
-* Deluge (Web UI)
-* ruTorrent
-* Flood
-* Tixati (Web UI)
-* uTorrent Web
-* Vuze WebUI
-* CloudTorrent
-* BiglyBT
+Purefusion supports almost every major BitTorrent client and Web UI natively out of the box! Connect directly to your existing home server or remote seedbox with ease.
 
 ---
 

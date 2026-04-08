@@ -43,18 +43,7 @@ As of 2025, many beloved torrent extensions stopped working due to Chrome’s Ma
 
 ## 🧠 Supported Clients
 
-Purefusion supports:
-
-* ✅ qBittorrent (v4+)
-* ✅ Transmission
-* ✅ Deluge (Web UI)
-* ✅ ruTorrent
-* ✅ Flood
-* ✅ Tixati (Web UI)
-* ✅ uTorrent Web
-* ✅ Vuze WebUI
-* ✅ CloudTorrent
-* ✅ BiglyBT
+Purefusion supports almost every major BitTorrent client and Web UI natively out of the box! Connect directly to your existing home server or remote seedbox with ease.
 
 > Want to add another client? Just drop a new module into `/lib/`.
 
