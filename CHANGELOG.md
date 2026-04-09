@@ -20,7 +20,7 @@
 * 🔕 **Option Respect** — The content script now fully respects the "Catch torrent URLs" options toggle.
 * 🔔 **Interactive Notifications** — Clicking on a success/fail notification toast now directly opens your full transfer history log.
 * 🚪 **Auto-close Dash** — The popup dashboard auto-closes dynamically after successfully processing a magnet link or `.torrent` drag-and-drop.
-* 🌐 **Expanded Site Whitelist** — The active link detection script now has full built-in support for YTS, 1337x, Nyaa, TorrentGalaxy, EZTV, and default Piratebay proxies.
+* 🌐 **Expanded Site Whitelist** — The active link detection script now has full built-in support for popular trackers and several major torrent indexers.
 
 ---
 

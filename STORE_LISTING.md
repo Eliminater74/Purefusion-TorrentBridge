@@ -1,6 +1,7 @@
 ---
 
 ### 🔗 Purefusion TorrentBridge
+
 **Instantly send torrent or magnet links from any website straight to your desktop or seedbox client — in one click.**
 
 > A lightweight, privacy-focused Chrome extension that automates your torrent workflow. Rebuilt from the ground up for speed, simplicity, and modern browsers in version 2.1.0!
@@ -8,6 +9,7 @@
 ---
 
 ### ⚡ What It Does
+
 Purefusion TorrentBridge connects your web browser directly to your preferred BitTorrent Web UI. Whether you’re using a local home client or a remote seedbox, it eliminates the need to manually download `.torrent` files or copy-paste magnets. 
 
 With our smart-detection engine, right-clicking a link, hovering over a magnet, or simply grabbing from your clipboard sends your torrent to your configured server instantly.
@@ -15,6 +17,7 @@ With our smart-detection engine, right-clicking a link, hovering over a magnet, 
 ---
 
 ### 🔥 New in v2.0+ (Power User Edition)
+
 * 🎛️ **Premium Popup Dashboard** — A sleek glassmorphism dashboard allows you to view live connection statuses, track daily statistics, and quickly swap between configured servers.
 * 📦 **Drag & Drop Uploading** — Got a `.torrent` file on your desktop? Just drag and drop it directly onto the extension popup to upload it instantly.
 * 📋 **Smart Clipboard & Keyboard Shortcuts** — Press `Ctrl+Shift+U` to auto-parse any magnet link perfectly from your clipboard, or use the newly injected "Copy Magnet" buttons on major torrent sites.
@@ -25,7 +28,8 @@ With our smart-detection engine, right-clicking a link, hovering over a magnet, 
 ---
 
 ### 🧠 Core Features
-* 🎯 **Smart link detection** for torrent and magnet URLs on nearly any site (including natively styling buttons for YTS, 1337x, Nyaa, TorrentGalaxy, EZTV, and TPB proxies!).
+
+* 🎯 **Smart link detection** for torrent and magnet URLs on nearly any site (including natively styling buttons for popular trackers and major torrent indexers!).
 * 🖱️ **Context-menu actions** — right-click → “Send to Client” or “Add Paused”.
 * ⚡ **Batch Send Bar** — A floating action bar automatically appears to send all detected torrents on a page simultaneously.
 * 💾 **Backup & Restore** — Easily Export/Import your configuration JSON.
@@ -38,17 +42,23 @@ With our smart-detection engine, right-clicking a link, hovering over a magnet, 
 ---
 
 ### 🧰 Supported Clients
+
 Purefusion supports almost every major BitTorrent client and Web UI natively out of the box! Connect directly to your existing home server or remote seedbox with ease.
 
 ---
 
 ### 🛠️ Quick Setup
+
 **In your torrent client’s Web UI:**
+
 ✅ Disable Cross-Site Request Forgery (CSRF) protection (usually under security/web limits)
+
 ✅ Leave “Use alternative Web UI” enabled if applicable
 
 **In Chrome:**
+
 ✅ Enable “Allow access to file URLs” for Purefusion TorrentBridge
+
 ✅ Open Options and check your server details using the live "Connection Test" dot!
 
 > These steps let the extension communicate securely with your Web UI.
@@ -56,6 +66,7 @@ Purefusion supports almost every major BitTorrent client and Web UI natively out
 ---
 
 ### 🔐 Privacy First
+
 * ❌ No telemetry or tracking
 * 🔐 All credentials stored locally only
 * 🚫 No third-party ads, analytics, or external requests
@@ -63,6 +74,7 @@ Purefusion supports almost every major BitTorrent client and Web UI natively out
 ---
 
 ### 👤 Perfect For
+
 * Advanced torrent users and remote seedbox owners
 * Home media servers and NAS automations (Plex / Jellyfin setups)
 * Anyone who wants a cleaner, vastly faster workflow for managing torrents
@@ -70,12 +82,14 @@ Purefusion supports almost every major BitTorrent client and Web UI natively out
 ---
 
 ### 🌍 Supported Languages
+
 Purefusion TorrentBridge is translated into:
 🇺🇸 English, 🇪🇸 Spanish, 🇫🇷 French, 🇩🇪 German, 🇷🇺 Russian, 🇧🇷 Portuguese (Brazil), 🇮🇹 Italian, 🇨🇳 Simplified Chinese, 🇰🇷 Korean, 🇳🇱 Dutch, 🇹🇷 Turkish, 🇵🇱 Polish, 🇸🇪 Swedish, 🇫🇮 Finnish, 🇯🇵 Japanese.
 
 ---
 
 ### 🚀 Highlights
+
 * ✅ Manifest V3 compliant & Chrome Store Safe
 * ✅ Built with modular ES6+ architecture
 * ✅ Minimal permissions — only triggers explicitly when interacting with URLs.
@@ -84,6 +98,7 @@ Purefusion TorrentBridge is translated into:
 ---
 
 ### 📦 Lightweight by Design
+
 No ads. No bloat. No tracking.
 Just a highly-polished, streamlined tool for power users who know what they need their browser to do.
 
@@ -92,7 +107,9 @@ Just a highly-polished, streamlined tool for power users who know what they need
 ---
 
 ### 📜 License & Credits
+
 MIT Licensed
 Created and maintained by **Eliminater74** (Florida, USA)
 Part of the **Purefusion Tools** project
+
 ---

@@ -16,7 +16,7 @@ With our smart-detection engine, right-clicking a link, hovering over a magnet, 
 • Dark/Light Themes — A beautiful custom UI system that naturally follows your OS preference.
 
 🧠 Core Features
-• Smart link detection for torrent and magnet URLs on nearly any site (including natively styling buttons for YTS, 1337x, Nyaa, TorrentGalaxy, EZTV, and TPB proxies!).
+• Smart link detection for torrent and magnet URLs on nearly any site (including natively styling buttons for popular trackers and major torrent indexers!).
 • Context-menu actions — right-click → “Send to Client” or “Add Paused”.
 • Batch Send Bar — A floating action bar automatically appears to send all detected torrents on a page simultaneously.
 • Backup & Restore — Easily Export/Import your configuration JSON.

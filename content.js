@@ -22,17 +22,12 @@ const TORRENT_PATTERNS = [
   /\/torrents\/download\/\d+/i,
   /^https:\/\/anidex\.info\/dl\/\d+$/i,
   /^https:\/\/animebytes\.tv\/torrent\/\d+\/download\/$/i,
-  // YTS
+  // Specialized link patterns
   /\/torrent\/download\/[A-F0-9]+/i,
-  // 1337x
   /\/torrent\/\d+\/.*\//i,
-  // Nyaa
   /nyaa\.(si|net)\/download\/\d+\.torrent/i,
-  // TorrentGalaxy
   /torrentgalaxy\.(to|mx)\/get\//i,
-  // EZTV
   /eztv\.(re|wf|ch)\/ep\/\d+/i,
-  // Piratebay proxies
   /\/torrent\/.+\.torrent$/i,
   // Generic tracker patterns
   /\/download\.php\?.*torrent/i,
