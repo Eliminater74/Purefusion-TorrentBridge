@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Purefusion TorrentBridge",
-  "version": "2.1.0",
-  "version_name": "2.1.0 – Power User Edition",
+  "version": "2.1.1",
+  "version_name": "2.1.1 - Optimized & Enhanced",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "offline_enabled": true,
@@ -41,8 +41,12 @@
   ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],

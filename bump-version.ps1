@@ -18,7 +18,7 @@ $oldVersion = $manifestJson.version
 Write-Host "Bumping version from $oldVersion to $Version..."
 
 $manifestJson.version = $Version
-$manifestJson.version_name = "$Version – Optimized & Enhanced" # You can customize this suffix pattern or pass it as an arg
+$manifestJson.version_name = "$Version - Optimized & Enhanced" # You can customize this suffix pattern or pass it as an arg
 
 $manifestJson | ConvertTo-Json -Depth 10 | Set-Content $manifestPath -Encoding UTF8
 Write-Host "Updated manifest.json"
