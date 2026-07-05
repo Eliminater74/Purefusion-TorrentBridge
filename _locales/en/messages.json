@@ -155,6 +155,10 @@
       "description": "Add error.",
       "message": "Failed to add torrent. $1"
    },
+   "torrentDuplicateError": {
+      "description": "Torrent already exists on the server.",
+      "message": "Torrent already exists on the server"
+   },
    "torrentAddedNotification": {
       "description": "Torrent added notification.",
       "message": "Torrent added"

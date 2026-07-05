@@ -476,6 +476,9 @@ function categorizeError(e) {
   if (/timeout|timed out|ETIMEDOUT/i.test(msg)) {
     return 'Connection timed out';
   }
+  if (/409|Conflict|already exists/i.test(msg)) {
+    return 'Torrent already exists on the server';
+  }
   if (/400|Bad Request/i.test(msg)) {
     return 'Bad request — the client rejected the torrent';
   }
