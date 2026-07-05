@@ -391,7 +391,7 @@ $('#import-file').addEventListener('change', (e) => {
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = (ev) => {
+  reader.onload = async (ev) => {
     try {
       const imported = JSON.parse(ev.target.result);
       if (!imported.globals || !imported.servers) {
@@ -399,10 +399,9 @@ $('#import-file').addEventListener('change', (e) => {
       }
       if (!Array.isArray(imported.servers)) throw new Error('Invalid servers list');
 
-      saveOptions(imported).then(() => {
-        showToast('Settings imported! Reloading…', 'success');
-        setTimeout(() => restoreOptions(), 500);
-      });
+      await saveOptions(imported);
+      showToast('Settings imported! Reloading…', 'success');
+      setTimeout(() => restoreOptions(), 500);
     } catch (err) {
       showToast(`Import failed: ${err.message}`, 'error');
     } finally {

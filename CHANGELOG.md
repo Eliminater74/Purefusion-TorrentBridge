@@ -2,6 +2,37 @@
 
 ---
 
+## [2.2.0] – Stability & Hardening
+
+**Release Date:** July 2026
+
+### 🐛 Bug Fixes
+
+* 🔁 **Smart Retry Logic** — `fetchWithRetry` no longer retries 4xx errors (401 auth, 400 bad request). Only network errors and 5xx server errors are retried, saving time and server load.
+* 🔄 **Transmission Recursion Guard** — `logIn()` now caps 409 session-ID retries at 3 attempts, preventing infinite loops against misconfigured Transmission servers.
+* 🔀 **Transmission Duplicate Detection** — Adding a torrent that already exists now returns a clear "Torrent already exists" message instead of a generic failure.
+* 🛠️ **qBittorrent 409 Handling** — `409 Conflict` (duplicate torrent) is now caught specifically and surfaced as a friendly user notification.
+* 🧩 **Whitelist Hoisting Fix** — `isTorrentUrl` in `util.js` previously referenced an array before its declaration. Patterns are now defined first and expanded to match all 16 tracker patterns.
+* 🗑️ **Deprecated API Removal** — Replaced deprecated `unescape(encodeURI())` in torrent name parser with modern `TextEncoder`.
+* 💀 **Dead Code Cleanup** — Removed unused `DragEvent` constructor in popup file picker that was never dispatched.
+* 📡 **Content Script Error Handling** — `sendMessage` now checks `chrome.runtime.lastError` so users see "Extension connection lost" instead of silent failures.
+* 📥 **Magnet Send Error Handling** — Popup magnet send button now shows error messages on failure instead of always displaying success.
+* 💾 **Import Settings Promise Fix** — Settings import in options page now uses `await` for reliable save completion.
+
+### ⚡ Enhancements
+
+* ⏱️ **Request Timeout** — All API requests now have a 15-second `AbortController` timeout, preventing indefinite hangs on unresponsive servers.
+* 📊 **Better Error Categorization** — Added detection for:
+  - `409 Conflict` / duplicate torrents → "Torrent already exists on the server"
+  - `5xx` server errors → "Server error — the torrent client may be down"
+  - Transmission `torrent-duplicate` results
+* 📡 **RSS Feed Error Messages** — RSS feed failures now go through error categorization for consistent, clear notifications.
+* 🔍 **Flexible Content-Type** — Torrent download now accepts `multipart/form-data` responses from trackers that use non-standard content types.
+* 🌍 **New Locale Strings** — Added `torrentDuplicateError` and `serverUnavailableError` i18n messages.
+* 🔗 **Unified URL Patterns** — `util.js` and `content.js` now share the same 16 torrent URL detection patterns with cross-reference documentation.
+
+---
+
 ## [2.1.0] – Power User Edition
 
 **Release Date:** April 2026

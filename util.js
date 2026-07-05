@@ -118,9 +118,29 @@ export function loadOptions() {
 
 export const saveOptions = opts => chrome.storage.sync.set(opts);
 
+/* ========= Torrent URL Patterns (shared with content.js) ========= */
+export const torrentPatterns = [
+  /\.torrent($|\?)/i,
+  /\/torrents\.php\?action=download&id=\d+/i,
+  /\/dl\/.+?\/\?jackett_apikey=[a-f0-9]{32}&path=/i,
+  /\/download\.php\?id=[a-f0-9]{40}&f=.+?&key=/i,
+  /\/torrents\/download\/\d+/i,
+  /^https:\/\/anidex\.info\/dl\/\d+$/i,
+  /^https:\/\/animebytes\.tv\/torrent\/\d+\/download\/$/i,
+  /\/torrent\/download\/[A-F0-9]+/i,
+  /\/torrent\/\d+\/.*\//i,
+  /nyaa\.(si|net)\/download\/\d+\.torrent/i,
+  /torrentgalaxy\.(to|mx)\/get\//i,
+  /eztv\.(re|wf|ch)\/ep\/\d+/i,
+  /\/torrent\/.+\.torrent$/i,
+  /\/download\.php\?.*torrent/i,
+  /\/dl\/[a-f0-9]{40}/i,
+  /\/get_torrent\?/i
+];
+
 /* ========= URL Helpers ========= */
 export const isMagnetUrl = url => /^magnet:/i.test(url);
-export const isTorrentUrl = url => whitelist.some(rx => rx.test(url));
+export const isTorrentUrl = url => torrentPatterns.some(rx => rx.test(url));
 
 export const getMagnetUrlName = url => {
   const dn = new URLSearchParams(url.substring(7)).get('dn');
@@ -135,11 +155,12 @@ export const getTorrentName = blob => new Promise(resolve => {
     if (!match) return resolve(false);
 
     const [, length] = match;
+    const encoder = new TextEncoder();
     let text = '', idx = match.index + match[0].length, bytes = 0;
     while (bytes < +length) {
       const ch = reader.result.charAt(idx + text.length);
       text += ch;
-      bytes += unescape(encodeURI(ch)).length;
+      bytes += encoder.encode(ch).length;
     }
     resolve(text);
   };
@@ -175,16 +196,7 @@ export function getURL({ hostname, username, password, application }) {
   return url.toString();
 }
 
-/* ========= Torrent URL Whitelist ========= */
-const whitelist = [
-  /\.torrent($|\?)/i,
-  /\/torrents\.php\?action=download&id=\d+/i,
-  /\/dl\/.+?\/\?jackett_apikey=[a-f0-9]{32}&path=/i,
-  /\/download\.php\?id=[a-f0-9]{40}&f=.+?&key=/i,
-  /\/torrents\/download\/\d+/i,
-  /^https:\/\/anidex\.info\/dl\/\d+$/i,
-  /^https:\/\/animebytes\.tv\/torrent\/\d+\/download\/$/i
-];
+
 
 /* ========= Transfer History Helpers ========= */
 const MAX_HISTORY = 50;

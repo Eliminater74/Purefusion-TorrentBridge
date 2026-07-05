@@ -159,6 +159,10 @@
       "description": "Torrent already exists on the server.",
       "message": "Torrent already exists on the server"
    },
+   "serverUnavailableError": {
+      "description": "Server error, torrent client may be down.",
+      "message": "Server error — the torrent client may be down"
+   },
    "torrentAddedNotification": {
       "description": "Torrent added notification.",
       "message": "Torrent added"

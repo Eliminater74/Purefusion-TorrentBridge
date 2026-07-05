@@ -432,7 +432,7 @@ async function fetchTorrent(url, referer) {
   }
 
   const ct = res.headers.get('content-type') || '';
-  if (!/(application\/x-bittorrent|application\/octet-stream)/i.test(ct)) {
+  if (!/(application\/(x-bittorrent|octet-stream)|multipart\/form-data)/i.test(ct)) {
     throw new Error(
       chrome.i18n.getMessage('torrentParseError', `Type: ${ct}`)
     );
@@ -458,7 +458,8 @@ async function addRssFeed(url) {
     await conn.addRssFeed(url);
     notify(chrome.i18n.getMessage('rssFeedAddedNotification'));
   } catch (e) {
-    notify(e.message);
+    const errorMsg = categorizeError(e);
+    notify(chrome.i18n.getMessage('rssFeedAddError', errorMsg) || `RSS error: ${errorMsg}`);
   } finally {
     await conn.logOut();
   }
@@ -476,11 +477,14 @@ function categorizeError(e) {
   if (/timeout|timed out|ETIMEDOUT/i.test(msg)) {
     return 'Connection timed out';
   }
-  if (/409|Conflict|already exists/i.test(msg)) {
+  if (/409|Conflict|already exists|duplicate/i.test(msg)) {
     return 'Torrent already exists on the server';
   }
   if (/400|Bad Request/i.test(msg)) {
     return 'Bad request — the client rejected the torrent';
+  }
+  if (/50[0-4]|Server Error|Bad Gateway|Service Unavailable|Gateway Timeout/i.test(msg)) {
+    return 'Server error — the torrent client may be down';
   }
   return msg;
 }

@@ -13,7 +13,10 @@ let batchBar = null;
 let toastTimeout = null;
 let catchUrlsEnabled = true; // Will be loaded from options (#9)
 
-/* ====== Torrent URL Detection Patterns (#5 expanded) ====== */
+/* ====== Torrent URL Detection Patterns ====== */
+// These patterns match what's in util.js torrentPatterns.
+// Content scripts can't use ES module imports, so we duplicate them here.
+// If you add patterns, update util.js torrentPatterns as well.
 const TORRENT_PATTERNS = [
   /\.torrent($|\?)/i,
   /\/torrents\.php\?action=download&id=\d+/i,
@@ -22,14 +25,12 @@ const TORRENT_PATTERNS = [
   /\/torrents\/download\/\d+/i,
   /^https:\/\/anidex\.info\/dl\/\d+$/i,
   /^https:\/\/animebytes\.tv\/torrent\/\d+\/download\/$/i,
-  // Specialized link patterns
   /\/torrent\/download\/[A-F0-9]+/i,
   /\/torrent\/\d+\/.*\//i,
   /nyaa\.(si|net)\/download\/\d+\.torrent/i,
   /torrentgalaxy\.(to|mx)\/get\//i,
   /eztv\.(re|wf|ch)\/ep\/\d+/i,
   /\/torrent\/.+\.torrent$/i,
-  // Generic tracker patterns
   /\/download\.php\?.*torrent/i,
   /\/dl\/[a-f0-9]{40}/i,
   /\/get_torrent\?/i
@@ -202,6 +203,16 @@ function sendLink(url, btn) {
   }
 
   chrome.runtime.sendMessage({ type: 'addTorrent', url }, (response) => {
+    if (chrome.runtime.lastError) {
+      console.warn('[TorrentBridge] sendMessage error:', chrome.runtime.lastError.message);
+      if (btn) {
+        btn.textContent = '✗';
+        btn.classList.remove('ptb-send-btn--sent');
+        btn.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a5a)';
+        showInlineToast('Extension connection lost — try reloading', 'error');
+      }
+      return;
+    }
     if (btn) {
       if (response?.ok !== false) {
         btn.textContent = '✓';

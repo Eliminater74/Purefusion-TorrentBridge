@@ -111,7 +111,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!isMagnetUrl(url)) return;
     sendBtn.disabled = true;
     sendBtn.textContent = '…';
-    chrome.runtime.sendMessage({ type: 'addTorrent', url }, () => {
+    chrome.runtime.sendMessage({ type: 'addTorrent', url }, (response) => {
+      if (chrome.runtime.lastError || response?.ok === false) {
+        showToast(response?.error || 'Failed to send magnet', 'error');
+        sendBtn.textContent = 'Send';
+        sendBtn.disabled = false;
+        return;
+      }
       showToast('Magnet sent to client!', 'success');
       magnetInput.value = '';
       magnetPreview.style.display = 'none';
@@ -176,29 +182,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     input.type = 'file';
     input.accept = '.torrent';
     input.addEventListener('change', () => {
-      if (input.files[0]) {
-        const evt = new DragEvent('drop', {
-          dataTransfer: new DataTransfer()
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        chrome.runtime.sendMessage({
+          type: 'addTorrentFile',
+          fileName: file.name,
+          data: Array.from(new Uint8Array(reader.result))
+        }, (response) => {
+          if (response?.ok !== false) {
+            showToast(`Uploading: ${file.name}`, 'success');
+            setTimeout(() => renderHistory(), 2000);
+          } else {
+            showToast(response?.error || 'Upload failed', 'error');
+          }
         });
-        // Simulate drop by reading the file directly
-        const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          chrome.runtime.sendMessage({
-            type: 'addTorrentFile',
-            fileName: file.name,
-            data: Array.from(new Uint8Array(reader.result))
-          }, (response) => {
-            if (response?.ok !== false) {
-              showToast(`Uploading: ${file.name}`, 'success');
-              setTimeout(() => renderHistory(), 2000);
-            } else {
-              showToast(response?.error || 'Upload failed', 'error');
-            }
-          });
-        };
-        reader.readAsArrayBuffer(file);
-      }
+      };
+      reader.readAsArrayBuffer(file);
     });
     input.click();
   });
