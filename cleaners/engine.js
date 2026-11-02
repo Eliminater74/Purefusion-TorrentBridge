@@ -134,7 +134,11 @@
   }
 
   function cleanUpPage() {
-    if (!isActive() || !document.documentElement) return;
+    if (!document.documentElement) return;
+    if (cleaner.showToggle && window.top === window && !document.getElementById('ptb-cleaner-toggle')) {
+      createToggle();
+    }
+    if (!isActive()) return;
 
     var selectors = cleaner.removeSelectors || [];
     selectors.forEach(function (sel) {
