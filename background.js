@@ -8,7 +8,9 @@ import {
   isMagnetUrl,
   getTorrentName,
   getMagnetUrlName,
-  getURL
+  getURL,
+  rememberDownload,
+  backfillDownloadLibrary
 } from './util.js';
 
 /* ========= Constants ========= */
@@ -34,6 +36,7 @@ loadOptions()
     buildMenus();
     registerListeners();
     updateBadge();
+    return backfillDownloadLibrary();
   })
   .catch((e) => console.error(`[${APP_NAME}] failed to load options`, e));
 
@@ -277,6 +280,7 @@ const registerListeners = () => {
             await conn.logOut();
             notify('Torrent added: ' + torrentName);
             await addHistoryEntry({ url: req.fileName, name: torrentName, status: 'success', server: svrName });
+            await rememberDownload(req.fileName, torrentName);
             sendResponse({ ok: true });
           } catch (e) {
             const errMsg = categorizeError(e);
@@ -401,11 +405,16 @@ async function addTorrent(url, referer = null, opts = {}) {
     const successMsg = (chrome.i18n.getMessage('torrentAddedNotification') || 'Torrent added') + (torrentName ? ' ' + torrentName : '');
     notify(successMsg);
     await addHistoryEntry({ url, name: torrentName, status: 'success', server: svrName });
+    await rememberDownload(url, torrentName);
 
   } catch (e) {
     if (conn.removeEventListeners) conn.removeEventListeners();
     const errorMsg = categorizeError(e);
     notify(chrome.i18n.getMessage('torrentAddError', errorMsg) || `Error: ${errorMsg}`);
+    if (/already exists|duplicate/i.test(errorMsg)) {
+      const ownedName = isMagnetUrl(url) ? (getMagnetUrlName(url) || url) : url;
+      await rememberDownload(url, ownedName);
+    }
     await addHistoryEntry({
       url,
       name: isMagnetUrl(url) ? getMagnetUrlName(url) : url,
