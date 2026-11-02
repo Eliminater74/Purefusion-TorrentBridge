@@ -86,7 +86,7 @@
     if (tag === 'HTML' || tag === 'BODY' || tag === 'HEAD' || tag === 'MAIN'
       || tag === 'HEADER' || tag === 'NAV' || tag === 'FOOTER') return true;
     if (el.id === 'ptb-cleaner-toggle' || el.id === 'ptb-cleaner-styles') return true;
-    if (el.closest && el.closest('#ptb-cleaner-toggle, #ptb-cleaner-styles, .ptb-send-btn, .ptb-batch-bar, .ptb-toast')) {
+    if (el.closest && el.closest('#ptb-cleaner-toggle, #ptb-cleaner-styles, .ptb-send-btn, .ptb-batch-bar, .ptb-toast, .ptb-library-badge, .ptb-owned-mark')) {
       return true;
     }
     if (isFalseFriend(el)) return true;
