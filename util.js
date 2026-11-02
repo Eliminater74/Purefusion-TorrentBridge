@@ -147,6 +147,105 @@ export const getMagnetUrlName = url => {
   return dn || false;
 };
 
+/* ========= Downloaded-torrent library ========= */
+const MAX_LIBRARY = 4000;
+
+export function normTitle(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function decodeReleaseName(name) {
+  const raw = String(name || '').replace(/\+/g, ' ');
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
+export function infoHashFromUrl(url) {
+  const match = String(url || '').match(/btih:([a-z0-9]{32,40})/i);
+  return match ? match[1].toLowerCase() : '';
+}
+
+/** Pull title, year, and quality out of a magnet display name or torrent name. */
+export function parseReleaseName(name) {
+  const decoded = decodeReleaseName(name);
+  const qualityMatch = decoded.match(/\b(2160p|1080p|720p|480p|3D)\b/i);
+  const yearMatch = decoded.match(/\b(19|20)\d{2}\b/);
+  let title = decoded.replace(/\[[^\]]*\]/g, ' ').replace(/\([^)]*\)/g, ' ');
+
+  if (yearMatch) {
+    const yearAt = title.search(new RegExp('\\b' + yearMatch[0] + '\\b'));
+    if (yearAt > 0) title = title.slice(0, yearAt);
+  }
+
+  title = title.replace(
+    /\b(2160p|1080p|720p|480p|bluray|webrip|web-dl|webdl|yts|x264|x265|hevc|aac|dts|10bit)\b.*/i,
+    ''
+  );
+
+  return {
+    title: normTitle(title),
+    year: yearMatch ? yearMatch[0] : '',
+    quality: qualityMatch ? qualityMatch[1].toLowerCase() : ''
+  };
+}
+
+export function downloadRecord(url, name) {
+  const parsed = parseReleaseName(name);
+  return {
+    hash: infoHashFromUrl(url),
+    title: parsed.title,
+    year: parsed.year,
+    quality: parsed.quality,
+    name: decodeReleaseName(name).slice(0, 180),
+    ts: Date.now()
+  };
+}
+
+function sameDownload(a, b) {
+  if (a.hash && b.hash && a.hash === b.hash) return true;
+  return !!(a.title && a.title === b.title && a.year === b.year && a.quality === b.quality);
+}
+
+function upsertDownload(list, url, name) {
+  const record = downloadRecord(url, name);
+  if (!record.hash && !record.title) return list;
+  const next = list.filter((item) => !sameDownload(item, record));
+  next.push(record);
+  while (next.length > MAX_LIBRARY) next.shift();
+  return next;
+}
+
+export function rememberDownload(url, name) {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['downloadLibrary'], (data) => {
+      const list = Array.isArray(data.downloadLibrary) ? data.downloadLibrary : [];
+      chrome.storage.local.set({ downloadLibrary: upsertDownload(list, url, name) }, () => resolve());
+    });
+  });
+}
+
+/** One-time copy of successful transfers into the long-term library. */
+export function backfillDownloadLibrary() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['downloadLibraryBoot', 'transferHistory', 'downloadLibrary'], (data) => {
+      if (data.downloadLibraryBoot) return resolve();
+      let list = Array.isArray(data.downloadLibrary) ? data.downloadLibrary.slice() : [];
+      (data.transferHistory || []).forEach((entry) => {
+        if (entry?.status === 'success') list = upsertDownload(list, entry.url, entry.name);
+      });
+      chrome.storage.local.set({ downloadLibrary: list, downloadLibraryBoot: true }, () => resolve());
+    });
+  });
+}
+
 export const getTorrentName = blob => new Promise(resolve => {
   const reader = new FileReader();
   reader.onerror = () => resolve(false);
