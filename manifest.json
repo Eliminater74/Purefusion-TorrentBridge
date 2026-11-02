@@ -43,12 +43,21 @@
                                   ],
     "content_scripts":  [
                             {
-                                "matches":  [
-                                                "\u003call_urls\u003e"
-                                            ],
-                                "js":  [
-                                           "content.js"
-                                       ],
+                                "matches":  ["<all_urls>"],
+                                "js":  ["cleaners/registry.js", "cleaners/page-guard.js"],
+                                "run_at":  "document_start",
+                                "world":  "MAIN",
+                                "all_frames":  true
+                            },
+                            {
+                                "matches":  ["<all_urls>"],
+                                "js":  ["cleaners/registry.js", "cleaners/engine.js"],
+                                "run_at":  "document_start",
+                                "all_frames":  true
+                            },
+                            {
+                                "matches":  ["<all_urls>"],
+                                "js":  ["content.js"],
                                 "run_at":  "document_idle"
                             }
                         ],
