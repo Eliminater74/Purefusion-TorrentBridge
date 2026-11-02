@@ -62,6 +62,112 @@ function applyTheme(mode) {
   if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 
+/* ========= Site cleaners ========= */
+const CLEANER_STORAGE_KEY = 'siteCleaners';
+let cleanerSettings = { master: true, sites: {} };
+let cleanerEventsBound = false;
+
+function loadCleanerSettings() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get([CLEANER_STORAGE_KEY], (data) => {
+      const stored = data[CLEANER_STORAGE_KEY] || {};
+      resolve({
+        master: stored.master !== false,
+        sites: Object.assign({}, stored.sites)
+      });
+    });
+  });
+}
+
+function makeCleanerToggle({ id, cleanerId, label, desc, checked }) {
+  const row = document.createElement('div');
+  row.className = 'toggle-item';
+
+  const copy = document.createElement('div');
+  const title = document.createElement('div');
+  title.className = 'toggle-item__label';
+  title.textContent = label;
+  const detail = document.createElement('div');
+  detail.className = 'toggle-item__desc';
+  detail.textContent = desc;
+  copy.append(title, detail);
+
+  const wrap = document.createElement('label');
+  wrap.className = 'toggle-switch';
+  const input = document.createElement('input');
+  input.type = 'checkbox';
+  input.id = id;
+  input.checked = checked;
+  if (cleanerId) input.dataset.cleanerId = cleanerId;
+  const slider = document.createElement('span');
+  slider.className = 'toggle-switch__slider';
+  wrap.append(input, slider);
+
+  row.append(copy, wrap);
+  return row;
+}
+
+function syncCleanerDisabledState() {
+  const paused = !cleanerSettings.master;
+  $all('[data-cleaner-id]', $('#site-cleaners-list')).forEach((input) => {
+    input.disabled = paused;
+    const row = input.closest('.toggle-item');
+    if (row) row.classList.toggle('toggle-item--disabled', paused);
+  });
+}
+
+function bindCleanerEvents() {
+  const root = $('#site-cleaners-list');
+  if (!root || cleanerEventsBound) return;
+  cleanerEventsBound = true;
+
+  root.addEventListener('change', () => {
+    const master = $('#cleaner-master');
+    if (master) cleanerSettings.master = master.checked;
+
+    $all('[data-cleaner-id]', root).forEach((input) => {
+      cleanerSettings.sites[input.dataset.cleanerId] = input.checked;
+    });
+
+    chrome.storage.local.set({ [CLEANER_STORAGE_KEY]: cleanerSettings });
+    syncCleanerDisabledState();
+  });
+}
+
+async function renderSiteCleaners() {
+  const root = $('#site-cleaners-list');
+  if (!root) return;
+
+  const profiles = globalThis.PTB_SITE_CLEANERS?.list || [];
+  cleanerSettings = await loadCleanerSettings();
+  root.replaceChildren();
+
+  root.appendChild(makeCleanerToggle({
+    id: 'cleaner-master',
+    label: 'Enable site cleaners',
+    desc: 'Master switch for popup and ad cleanup. Each site below can still be paused on its own.',
+    checked: cleanerSettings.master
+  }));
+
+  profiles.forEach((site) => {
+    root.appendChild(makeCleanerToggle({
+      id: 'cleaner-site-' + site.id,
+      cleanerId: site.id,
+      label: site.name,
+      desc: `${site.description} Hosts: ${site.hosts.join(', ')}.`,
+      checked: cleanerSettings.sites[site.id] !== false
+    }));
+  });
+
+  const hint = document.createElement('p');
+  hint.className = 'toggle-item__desc';
+  hint.textContent = 'Matched sites also show an on-page button. To support another site, add a profile to cleaners/registry.js and reload the extension.';
+  root.appendChild(hint);
+
+  syncCleanerDisabledState();
+  bindCleanerEvents();
+}
+
 /* ========= Persist ========= */
 async function persistOptions() {
   options.globals.contextMenu         = ~~$('[name="contextmenu"]:checked').value;
@@ -151,6 +257,7 @@ function restoreOptions() {
 
     restoreServerList();
     restoreServer(serverSelect.value);
+    renderSiteCleaners();
   });
 
   saveButton.setAttribute('disabled', 'true');
@@ -361,8 +468,8 @@ $('#check-connection').addEventListener('click', async (e) => {
 /* ========= Import / Export ========= */
 $('#export-settings').addEventListener('click', (e) => {
   e.preventDefault();
-  loadOptions().then((opts) => {
-    const data = JSON.stringify(opts, null, 2);
+  Promise.all([loadOptions(), loadCleanerSettings()]).then(([opts, cleaners]) => {
+    const data = JSON.stringify({ ...opts, siteCleaners: cleaners }, null, 2);
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
@@ -399,7 +506,10 @@ $('#import-file').addEventListener('change', (e) => {
       }
       if (!Array.isArray(imported.servers)) throw new Error('Invalid servers list');
 
-      await saveOptions(imported);
+      await saveOptions({ globals: imported.globals, servers: imported.servers });
+      if (imported.siteCleaners && typeof imported.siteCleaners === 'object') {
+        await chrome.storage.local.set({ siteCleaners: imported.siteCleaners });
+      }
       showToast('Settings imported! Reloading…', 'success');
       setTimeout(() => restoreOptions(), 500);
     } catch (err) {

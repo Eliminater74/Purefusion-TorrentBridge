@@ -348,6 +348,10 @@ select {
   margin-top: 2px;
 }
 
+.toggle-item--disabled {
+  opacity: 0.45;
+}
+
 .toggle-switch {
   position: relative;
   width: 44px;
