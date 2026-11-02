@@ -197,6 +197,6 @@
    },
    "extensionDescription": {
       "description": "Extension description",
-      "message": "Add torrent and magnet links to your BitTorrent client's web interface."
+      "message": "Add torrent and magnet links to your BitTorrent client, and clear popups on supported sites."
    }   
 }

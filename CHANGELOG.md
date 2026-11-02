@@ -2,6 +2,25 @@
 
 ---
 
+## [2.3.0] – Site Cleaners
+
+**Release Date:** November 2026
+
+### 🚀 Major Features
+
+* 🧹 **Site Cleaners** — Popup, overlay, and ad-frame cleanup now lives in the extension. YTS mirrors (`yts.mx`, `yts.rs`, `yts.pm`, `yts.lt`, `yts.ag`, `yifytorrent`) are the first profile.
+* 🎛️ **On-page switch** — Matched sites show a top-right button that pauses cleanup for that site. The same choice is in the options page, under a master switch.
+* 🧩 **Add another site in one file** — Append a profile to `cleaners/registry.js`. The engine, popup blocker, and options list pick it up after a reload.
+
+### 🛠️ Behavior
+
+* Magnet links, `.torrent` links, and download blocks are kept. Broad "ads" selectors are not applied to anything whose id or class contains `download`.
+* `window.open` is blocked only on a registered site, and only while that cleaner is on.
+* Clicks on links, buttons, and form fields still go through. Clicks on empty page space do not trigger the site's hijack handler.
+* Settings export and import include the cleaner switches.
+
+---
+
 ## [2.2.0] – Stability & Hardening
 
 **Release Date:** July 2026

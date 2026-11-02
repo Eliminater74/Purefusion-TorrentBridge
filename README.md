@@ -2,7 +2,7 @@
 
 ![Logo](icon/icon_128.svg)
 
-[![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge)
+[![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/your-extension-id.svg?label=Chrome%20Web%20Store)](https://chrome.google.com/webstore/detail/purefusion-torrentbridge/your-extension-id)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Eliminater74/Purefusion-TorrentBridge.svg)](https://github.com/Eliminater74/Purefusion-TorrentBridge/stargazers)
@@ -38,6 +38,7 @@ As of 2025, many beloved torrent extensions stopped working due to Chromeâ€�
 * ðŸ–±ï¸ **Context Menu Actions**: Right-click to "Send to Client", "Add Paused", or "Add with Label".
 * ðŸž **Interactive Toasts**: Replaces generic alerts with modern, styled notifications.
 * ðŸ’¾ **Backup & Restore**: Export your configuration to JSON and restore it instantly on a new install.
+* **Site Cleaners**: Strip popups, overlays, and ad frames on supported torrent sites. YTS mirrors are built in, and more sites can be added from one registry file.
 
 ---
 
@@ -109,6 +110,16 @@ You can configure:
 
 ---
 
+## Site Cleaners
+
+Popup and ad cleanup runs only on sites listed in `cleaners/registry.js`. YTS mirrors are included: `yts.mx`, `yts.rs`, `yts.pm`, `yts.lt`, `yts.ag`, and `yifytorrent`. Every other site is left alone.
+
+Pause a cleaner from the options page, or with the button at the top-right of that site. Magnet links, `.torrent` links, and download blocks are not removed.
+
+To add another site, append a profile to `cleaners/registry.js` and reload the extension. Set the hostnames, what to remove, and whether to block popups and click hijacks. The options page lists the new profile on its own.
+
+---
+
 ## ðŸ§© Project Structure
 
 ```text
@@ -118,6 +129,7 @@ You can configure:
 ðŸ“ view/         â†’ Options page (HTML/CSS/JS)
 ðŸ“„ manifest.json â†’ Chrome metadata and permissions
 ðŸ“„ background.js â†’ Context menu and dispatcher logic
+ðŸ“ cleaners/     â†’ Site cleaner profiles and the shared engine
 ðŸ“„ content.js    â†’ Magnet and torrent link detection
 ðŸ“„ base64.js     â†’ Base64 upload helper
 ðŸ“„ bump-version.ps1 â†’ Automation script

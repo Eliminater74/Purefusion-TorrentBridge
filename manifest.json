@@ -1,8 +1,8 @@
 ﻿{
     "manifest_version":  3,
     "name":  "Purefusion TorrentBridge",
-    "version":  "2.2.0",
-    "version_name":  "2.2.0 - Optimized \u0026 Enhanced",
+    "version":  "2.3.0",
+    "version_name":  "2.3.0 - Site Cleaners",
     "description":  "__MSG_extensionDescription__",
     "default_locale":  "en",
     "offline_enabled":  true,
