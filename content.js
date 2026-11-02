@@ -288,6 +288,7 @@ function scan() {
   // Count all hooked links
   const allHooked = document.querySelectorAll('a[data-ptb-hooked]');
   updateBatchBar(allHooked.length);
+  markDownloaded();
 }
 
 function scanDebounced() {
@@ -369,6 +370,233 @@ function showInlineToast(msg, type = 'success') {
   toastTimeout = setTimeout(() => toast.remove(), 3000);
 }
 
+/* ====== Already-downloaded badges ====== */
+let downloadLibrary = [];
+let libraryTimer = null;
+
+function injectLibraryStyles() {
+  if (document.getElementById('ptb-library-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'ptb-library-styles';
+  style.textContent = `
+    [data-ptb-positioned="1"] { position: relative; }
+    .ptb-library-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 4;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #00b894;
+      color: #fff;
+      font: 700 11px/1.2 "Segoe UI", sans-serif;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+    .ptb-owned {
+      outline: 1px solid #00b894;
+      border-radius: 4px;
+    }
+    .ptb-owned-mark {
+      display: inline-block;
+      margin-left: 4px;
+      color: #00b894;
+      font-weight: 700;
+      font-size: 11px;
+      pointer-events: none;
+    }
+  `;
+  (document.head || document.documentElement).appendChild(style);
+}
+
+function normTitle(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function hashFromHref(href) {
+  const match = String(href || '').match(/btih:([a-z0-9]{32,40})/i);
+  return match ? match[1].toLowerCase() : '';
+}
+
+function qualityOf(el) {
+  if (!el || el.childElementCount > 3) return '';
+  let raw = '';
+  el.childNodes.forEach((node) => {
+    if (node.nodeType === 3) raw += node.textContent;
+  });
+  raw = raw.replace(/\s+/g, ' ').trim();
+  if (!raw || raw.length > 24) return '';
+  const match = raw.match(/^(2160p|1080p|720p|480p|3D)(?:\b|[^a-z0-9].*)?$/i);
+  return match ? match[1].toLowerCase() : '';
+}
+
+function libraryIndex(list) {
+  const hashes = new Set();
+  const byMovie = new Map();
+  (list || []).forEach((item) => {
+    if (item.hash) hashes.add(String(item.hash).toLowerCase());
+    if (!item.title) return;
+    const key = item.title + '|' + (item.year || '');
+    if (!byMovie.has(key)) byMovie.set(key, new Set());
+    byMovie.get(key).add((item.quality || '').toLowerCase());
+  });
+  return { hashes, byMovie };
+}
+
+function flagOwned(el) {
+  if (!el || el.dataset.ptbOwned === '1') return;
+  el.dataset.ptbOwned = '1';
+  el.classList.add('ptb-owned');
+  el.title = el.title ? el.title : 'Already sent to your client';
+  if (el.querySelector(':scope > .ptb-owned-mark')) return;
+  const mark = document.createElement('span');
+  mark.className = 'ptb-owned-mark';
+  mark.textContent = '✓';
+  mark.setAttribute('aria-hidden', 'true');
+  el.appendChild(mark);
+}
+
+function posterCount(node) {
+  return [...node.querySelectorAll('img')].filter((img) => {
+    const width = img.clientWidth || parseInt(img.getAttribute('width'), 10) || 0;
+    const height = img.clientHeight || parseInt(img.getAttribute('height'), 10) || 0;
+    if (width >= 60 || height >= 80) return true;
+    if (width > 0 && width < 40) return false;
+    const hint = (img.getAttribute('src') || '') + ' ' + (img.className || '');
+    return !/icon|flag|star/i.test(hint);
+  }).length;
+}
+
+function findCard(el) {
+  const known = el.closest('.browse-movie-wrap, .browse-movie');
+  if (known) return known;
+
+  let node = el.parentElement;
+  let best = null;
+  while (node && node !== document.body) {
+    const posters = posterCount(node);
+    if (posters > 1) break;
+    if (posters === 1) best = node;
+    node = node.parentElement;
+  }
+  return best;
+}
+
+function cardIdentity(card) {
+  const titleEl = card.querySelector('.browse-movie-title, [class*="movie-title"]');
+  let title = titleEl ? titleEl.textContent.trim() : '';
+  const yearEl = card.querySelector('.browse-movie-year, [class*="movie-year"]');
+  let year = yearEl && /^\d{4}$/.test(yearEl.textContent.trim()) ? yearEl.textContent.trim() : '';
+
+  if (!title) {
+    const alt = card.querySelector('img[alt]')?.getAttribute('alt') || '';
+    const yearInAlt = alt.match(/\b(19|20)\d{2}\b/);
+    if (!year && yearInAlt) year = yearInAlt[0];
+    title = alt.replace(/\b(19|20)\d{2}\b.*/, '').replace(/download/ig, '').trim();
+  }
+  if (!year) {
+    const found = (card.innerText || '').match(/\b(19|20)\d{2}\b/);
+    if (found) year = found[0];
+  }
+  return { title: normTitle(title), year };
+}
+
+function ownedQualities(index, title, year) {
+  if (!title || title.length < 3) return null;
+  if (year && index.byMovie.has(title + '|' + year)) return index.byMovie.get(title + '|' + year);
+  if (!year && index.byMovie.has(title + '|')) return index.byMovie.get(title + '|');
+  return null;
+}
+
+function placePosterBadge(card) {
+  if (card.querySelector('.ptb-library-badge')) return;
+  const host = card.querySelector('figure, .browse-movie-link') || card;
+  if (getComputedStyle(host).position === 'static') host.dataset.ptbPositioned = '1';
+  const badge = document.createElement('div');
+  badge.className = 'ptb-library-badge';
+  badge.textContent = 'Downloaded';
+  host.appendChild(badge);
+}
+
+function markDownloaded() {
+  if (!downloadLibrary.length || !document.body) return;
+  try {
+  injectLibraryStyles();
+  const index = libraryIndex(downloadLibrary);
+
+  document.querySelectorAll('a[href*="btih:" i], a[href*="urn:btih" i]').forEach((link) => {
+    const hash = hashFromHref(link.href);
+    if (!hash || !index.hashes.has(hash)) return;
+    flagOwned(link);
+    const row = link.closest('.modal-torrent, tr, li') || link.parentElement;
+    if (!row) return;
+    row.querySelectorAll('a, span, div, p, td').forEach((el) => {
+      if (qualityOf(el)) flagOwned(el);
+    });
+    const card = findCard(link);
+    if (card) placePosterBadge(card);
+  });
+
+  document.querySelectorAll('a, span, button, div, p, li, td').forEach((el) => {
+    if (el.closest('.ptb-batch-bar, .ptb-toast, #ptb-cleaner-toggle')) return;
+    const quality = qualityOf(el);
+    if (!quality) return;
+    const card = findCard(el);
+    if (!card) return;
+    const { title, year } = cardIdentity(card);
+    const owned = ownedQualities(index, title, year);
+    if (!owned) return;
+    if (owned.has(quality)) flagOwned(el.closest('a') || el);
+    if (owned.has(quality) || owned.has('')) placePosterBadge(card);
+  });
+  } catch (err) {
+    console.debug('[Purefusion TorrentBridge] download badges failed', err);
+  }
+}
+
+function clearDownloadMarks() {
+  document.querySelectorAll('.ptb-owned-mark, .ptb-library-badge').forEach((el) => el.remove());
+  document.querySelectorAll('[data-ptb-owned]').forEach((el) => {
+    el.classList.remove('ptb-owned');
+    delete el.dataset.ptbOwned;
+  });
+}
+
+function scheduleLibraryMark() {
+  if (libraryTimer) clearTimeout(libraryTimer);
+  libraryTimer = setTimeout(() => {
+    libraryTimer = null;
+    markDownloaded();
+  }, 200);
+}
+
+function bootDownloadBadges() {
+  chrome.storage.local.get(['downloadLibrary'], (data) => {
+    downloadLibrary = data.downloadLibrary || [];
+    markDownloaded();
+  });
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local' || !changes.downloadLibrary) return;
+    downloadLibrary = changes.downloadLibrary.newValue || [];
+    clearDownloadMarks();
+    markDownloaded();
+  });
+
+  if (!catchUrlsEnabled && document.body) {
+    const observer = new MutationObserver((mutations) => {
+      if (mutations.some((mutation) => mutation.addedNodes.length > 0)) scheduleLibraryMark();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+}
+
 /* ====== Clipboard read (for keyboard shortcut) ====== */
 chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
   if (req.type === 'readClipboard') {
@@ -382,6 +610,8 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
 /* ====== Init — Check catchUrls option first (#9) ====== */
 chrome.storage.sync.get(['globals'], (data) => {
   catchUrlsEnabled = data?.globals?.catchUrls !== false;
+
+  bootDownloadBadges();
 
   if (catchUrlsEnabled) {
     injectStyles();
